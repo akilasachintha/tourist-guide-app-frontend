@@ -9,7 +9,6 @@ import LocationComponent from "./components/pages/dashboard/locations/LocationCo
 import "./App.css";
 import RegistrationComponent from "./components/pages/registration/RegistrationComponent";
 
-const baseUrl = "https://tourist-guide-app-backend.herokuapp.com";
 
 const App = () => {
   return (
