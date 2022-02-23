@@ -45,7 +45,7 @@ const columns = [
 ];
 
 const LocationComponent = () => {
-  const url = " http://localhost:8080/api/location";
+  const url = "https://tourist-guide-app-backend.herokuapp.com/api/location";
   const [locations, setLocations] = useState([]);
 
   const rows = locations;

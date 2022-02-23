@@ -38,7 +38,7 @@ const AddNewLocationForm = () => {
       const value = JSON.stringify(values, null, 2);
       console.log(value);
 
-      const url = "http://localhost:8080/api/location";
+      const url = "https://tourist-guide-app-backend.herokuapp.com/api/location";
 
       axios
         .post(url, {
