@@ -8,8 +8,8 @@ const LoginComponent = ({ handleClose }) => {
 //   const classes = useStyles();
   // create state variables for each input
   const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+  //const [lastName, setLastName] = useState('');
+  //const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = e => {
