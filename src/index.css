@@ -1,37 +1,37 @@
-@import url("https://fonts.googleapis.com/css2?family=Nunito&display=swap");
-* {
-  font-family: "Nunito", sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 
 ::-webkit-scrollbar {
-  width: 8px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(transparent, #242424);
-  border-radius: 12px;
+    background: linear-gradient(transparent, #242424);
+    border-radius: 12px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(#d7dbdd, #242424);
+    background: linear-gradient(#d7dbdd, #242424);
 }
 
 @media (max-width: 576px) {
-  ::-webkit-scrollbar {
-    width: 4px;
-  }
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(transparent, #242424);
-    border-radius: 6px;
-  }
+    ::-webkit-scrollbar-thumb {
+        background: linear-gradient(transparent, #242424);
+        border-radius: 6px;
+    }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(#d7dbdd, #242424);
-  }
+    ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(#d7dbdd, #242424);
+    }
 }
 
-a{
-  text-decoration: none;
+a {
+    text-decoration: none;
 }
 

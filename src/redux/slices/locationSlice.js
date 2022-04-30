@@ -6,11 +6,7 @@ import { getLocationDetails } from "./locationApiHandle";
 const initialState = {
   location: {},
   status: "idle", // "idle" | "loading" | "succeeded" | "faild",
-  images: [
-    {
-      url: loadingImg,
-    },
-  ],
+  images: [loadingImg],
 };
 
 export const locationSlice = createSlice({
@@ -22,7 +18,7 @@ export const locationSlice = createSlice({
       state.status = "locading";
     });
     builder.addCase(getLocationDetails.fulfilled, (state, action) => {
-      state.images = action.payload.locationImages;
+      state.images = action.payload.urls;
       state.location = action.payload;
       state.status = "succeeded";
     });

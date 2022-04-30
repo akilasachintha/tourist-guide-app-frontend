@@ -1,54 +1,58 @@
 import React from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
+import {ToastContainer} from "react-toastify";
 
-import NotFound from "./components/error/Error";
-import Footer from "./components/footer/Footer";
-import Navbar from "./components/header/Navbar";
-import AddNewLocation from "./pages/dashboard/adminDashboard/AddNewLocation";
-import AdminDashboard from "./pages/dashboard/adminDashboard/AdminDashboard";
+
+import UserViewRoute from "./routes/UserViewRoute";
+import AuthRoutes from "./routes/AuthRoutes";
 import HomePage from "./pages/home/HomePage";
-import LocationDetails from "./pages/location/LocationDetails";
 import LocationList from "./pages/location/LocationList";
 import VehicleList from "./pages/vehicles/VehicleList";
+import LocationDetails from "./pages/location/LocationDetails";
+import NotFound from "./components/error/NotFound";
+import Login from "./pages/authentication/login/Login";
+import Register from "./pages/authentication/registration/Register";
+import DriverDashboardHome from "./pages/dashboard/driversDashboard/DriverDashboardHome";
+import AddNewLocation from "./pages/dashboard/adminDashboard/AddNewLocation";
+import AdminDashboardLocationList from "./pages/dashboard/adminDashboard/AdminDashboardLocationList";
+import AdminDashboardHome from "./pages/dashboard/adminDashboard/AdminDashboardHome";
+import AdminUserProfile from "./pages/dashboard/adminDashboard/AdminUserProfile";
 
 const App = () => {
-  return (
-    <Router>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
-      <ToastContainer />
-
-      <Navbar />
-      <Routes>
-        <Route exact path="/" element={<HomePage />}></Route>
-        <Route path="*" element={<NotFound error="404" errorDescription="Page Not Found"/>}></Route>
-        <Route
-          exact
-          path="/dashboard/admin"
-          element={<AdminDashboard />}
-        ></Route>
-        <Route exact path="/locations" element={<LocationList />}></Route>
-        <Route
-          exact
-          path="/locations/:locationId"
-          element={<LocationDetails />}
-        ></Route>
-        <Route path="/locations/add" element={<AddNewLocation />}></Route>
-        <Route path="/vehicles/" element={<VehicleList />}></Route>
-      </Routes>
-      <Footer />
-    </Router>
-  );
+    return (
+        <Router>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+            />
+            <Routes>
+                <Route path="" element={<UserViewRoute/>}>
+                    <Route path="" element={<HomePage/>}/>
+                    <Route path="locations" element={<LocationList/>}/>
+                    <Route path="locations/:locationId" element={<LocationDetails/>}/>
+                    <Route path="vehicles" element={<VehicleList/>}/>
+                </Route>
+                <Route path="auth" element={<AuthRoutes/>}>
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="register" element={<Register/>}/>
+                </Route>
+                <Route path="dashboard/admin" element={<AdminDashboardHome/>}>
+                    <Route path="locations" element={<AdminDashboardLocationList/>}/>
+                    <Route path="profile" element={<AdminUserProfile/>}/>
+                    <Route path="locations/add" element={<AddNewLocation/>}/>
+                </Route>
+                <Route path="driver" element={<DriverDashboardHome/>}/>
+                <Route path="*" element={<NotFound error="404" errorDescription="Page Not Found"/>}/>
+            </Routes>
+        </Router>
+    );
 };
 
 export default App;

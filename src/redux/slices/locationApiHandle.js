@@ -21,3 +21,23 @@ export const getLocationDetails = createAsyncThunk(
     }
   }
 );
+
+export const getVehicles = createAsyncThunk(
+  "vehicles/getVehicles",
+  async () => {
+    const response = await touristGuideAppApi.get("/vehicles");
+    return [...response.data.vehicles];
+  }
+);
+
+export const getUserDetails = createAsyncThunk(
+  "user/getUserDetails",
+  async (userId) => {
+    try {
+      const response = await touristGuideAppApi.get(`/drivers/${userId}`);
+      return response.data;
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
+);
