@@ -1,0 +1,32 @@
+
+
+.Form{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid black;
+}
+
+.base-container{
+
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    padding-bottom: 100px;
+    border: 1px solid black;
+    
+}
+.header{
+    font-size: 24px;
+    font-family: "sans-serif","Open-sans";
+}
+.content{
+    display: flex;
+    flex-direction: column;
+}
+.login-form-button{
+    width: 100px;
+}
