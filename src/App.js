@@ -16,6 +16,9 @@ import VehicleList from "./pages/vehicles/VehicleList";
 import DriverDashboardHome from "./pages/dashboard/driver/DriverDashboardHome";
 import DriverDashboardVehicleList from "./pages/dashboard/driver/DriverDashboardVehicleList";
 import AddNewVehicle from "./pages/dashboard/driver/AddNewVehicle";
+import RegistrationComponent from "./pages/auth/registration/RegistrationComponent";
+import NewpasswordComponent from "./pages/auth/newpassword/NewpasswordComponent";
+import ForgotpasswordComponent from "./pages/auth/forgotpassword/ForgotpasswordComponent";
 
 const App = () => {
   return (
@@ -40,6 +43,9 @@ const App = () => {
             <Route path="locations/add" element={<AddNewVehicle />} />
           </Route>
           <Route path="auth/login" element={<Login />} />
+          <Route path="auth/register" element={<RegistrationComponent />} />
+          <Route path="auth/forgotpassword" element={<ForgotpasswordComponent />} />
+          <Route path="auth/newpassword" element={<NewpasswordComponent />} />
           <Route path="/test" element={<TestScreens />}></Route>
           <Route path="*" element={<PageNotFoundError />} />
         </Routes>
