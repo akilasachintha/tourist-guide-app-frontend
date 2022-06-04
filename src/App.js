@@ -5,9 +5,7 @@ import Location from "./pages/locations/Location";
 import PageNotFoundError from "./components/errors/PageNotFoundError";
 import UserViewRoutes from "./routes/userViewRoutes/UserViewRoutes";
 import LocationDetailPage from "./pages/locations/LocationDetailPage";
-import Vehicle from "./pages/vehicles/Vehicle";
 import ScrollToTop from "./components/scrollToTop/ScrollToTop";
-import TestScreens from "./test/TestScreens";
 import AdminDashboardHome from "./pages/dashboard/admin/AdminDashboardHome";
 import AdminDashboardLocations from "./pages/dashboard/admin/AdminDashboardLocations";
 import Login from "./pages/auth/login/Login";
@@ -56,10 +54,7 @@ const App = () => {
             <Route path="hotels/add/hotelfeatures" element={<AddHotelFeatures />} />
           </Route>
           <Route path="auth/login" element={<Login />} />
-          <Route path="/test" element={<TestScreens />}></Route>
           <Route path="*" element={<PageNotFoundError />} />
-          
-
         </Routes>
       </Router>
     </div>

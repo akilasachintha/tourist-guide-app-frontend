@@ -2,67 +2,31 @@ import React, { useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { toast } from "react-toastify";
-import { fetchLocations } from "../../../redux/store/locationsSlice";
 
 const PER_PAGE = 4;
 
 const DriverDashboardVehicleList = () => {
-  const { loading, locations } = useSelector((state) => state.locations);
+  const { vehicles } = useSelector((state) => state.vehicles);
   const [currentPage, setCurrentPage] = useState(0);
-  const dispatch = useDispatch();
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(locations.length / PER_PAGE);
+  const pageCount = Math.ceil(vehicles.length / PER_PAGE);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
     setCurrentPage(selectedPage);
   };
 
-  const deleteLocation = (locationId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        touristGuideAppApi
-          .delete(`locations/${locationId}`)
-          .then((res) => {
-            console.log(res.data);
-            dispatch(fetchLocations());
-          })
-          .catch((err) => {
-            console.log("Err", err);
-            toast.error("Deletion Error");
-          });
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
-  };
-
-  const currentPageData = locations
+  const currentPageData = vehicles
     .slice(offset, offset + PER_PAGE)
-    .map((location) => (
+    .map((vehicle) => (
       <tr
         className="h-16 rounded border border-gray-100 focus:outline-none"
-        key={location.locationId}
+        key={vehicle.vehicleNo}
       >
         <td>
           <div className="ml-5">
             <div className="relative flex flex-shrink-0 items-center justify-center rounded-sm bg-gray-200">
-              <img
-                className="h-10 w-10 rounded"
-                src={location.urls[0]}
-                alt="Default avatar"
-              />
               <div className="check-icon hidden rounded-sm bg-indigo-700 text-white">
                 <svg
                   className="icon icon-tabler icon-tabler-check"
@@ -86,7 +50,7 @@ const DriverDashboardVehicleList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-              {location.locationName}
+              {vehicle.vehicleNo}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +101,7 @@ const DriverDashboardVehicleList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.category}
+              {vehicle.vehicleType}
             </p>
           </div>
         </td>
@@ -194,7 +158,7 @@ const DriverDashboardVehicleList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.district}
+              {vehicle.availability}
             </p>
           </div>
         </td>
@@ -237,7 +201,7 @@ const DriverDashboardVehicleList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.town}
+              {vehicle.vehicleCondition}
             </p>
           </div>
         </td>
@@ -284,14 +248,6 @@ const DriverDashboardVehicleList = () => {
                 <li className="list-item">
                   <button className="dropdown-item" type="button">
                     <i className="bi bi-pencil"></i> Edit
-                  </button>
-                </li>
-                <li
-                  className="list-item"
-                  onClick={() => deleteLocation(location.locationId)}
-                >
-                  <button className="dropdown-item icon-red" type="button">
-                    <i className="bi bi-trash"></i> Delete
                   </button>
                 </li>
               </ul>
@@ -385,7 +341,7 @@ const DriverDashboardVehicleList = () => {
               </div>
             </div>
             <Link
-              to="/dashboard/admin/locations/add"
+              to="/dashboard/drivers/addVehicles"
               className="hover:bg-black-600 mt-4 inline-flex items-start justify-start rounded bg-black px-6 py-3 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:mt-0"
             >
               <p className="text-sm font-medium leading-none text-white">

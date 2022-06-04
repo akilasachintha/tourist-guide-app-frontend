@@ -18,7 +18,7 @@ export default function DriverDashboardHome() {
             </div>
             {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
             <ul aria-orientation="vertical" className=" py-6">
-              <NavLink to="/dashboard/admin" className="side-item-active">
+              <NavLink to="/dashboard/drivers" className="side-item-active">
                 <li className="cursor-pointer pl-6 text-base text-sm leading-3">
                   <div className="flex items-center">
                     <div>
