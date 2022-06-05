@@ -1,12 +1,46 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useFormik } from "formik";
+import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
+import { useDispatch } from "react-redux";
+import { authLogin } from "../../../redux/store/authSlice";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 export default function Login() {
-  const [showpass, setShowPass] = useState(false);
+  const [showPass, setShowPass] = useState(false);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: ""
+    },
+    onSubmit: (values) => {
+      touristGuideAppApi
+        .post("/user/auth/login", {
+          email: values.email,
+          password: values.password
+        })
+        .then((res) => {
+          console.log(res.data);
+          localStorage.setItem("user", JSON.stringify(res.data));
+
+          if (res.data.status && res.data.userType === "driver") {
+            navigate("/dashboard/drivers/");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  });
   return (
     <>
-      <div className="bg-indigo-50">
-        <div className="items-center justify-center px-4 py-3 sm:px-6 md:flex md:px-10 md:py-12 xl:px-20 2xl:container 2xl:mx-auto">
+      <form className="bg-indigo-50" onSubmit={formik.handleSubmit}>
+        <div
+          className="items-center justify-center px-4 py-3 sm:px-6 md:flex md:px-10 md:py-12 xl:px-20 2xl:container 2xl:mx-auto">
           <div className=" mb-6 sm:mb-8 md:hidden">
             <svg
               width={191}
@@ -137,10 +171,13 @@ export default function Login() {
               </label>
               <input
                 id="email"
+                name="email"
                 aria-labelledby="email"
                 type="email"
                 className="mt-2 w-full rounded border bg-gray-200 py-3 pl-3 text-xs font-medium leading-none text-gray-800 placeholder-gray-800"
                 placeholder="e.g: john@gmail.com "
+                onChange={formik.handleChange}
+                value={formik.values.email}
               />
             </div>
             <div className="mt-6 w-full">
@@ -153,12 +190,15 @@ export default function Login() {
               </label>
               <div className="relative flex items-center justify-center">
                 <input
-                  id="myInput"
-                  type={showpass ? "text" : "password"}
+                  id="password"
+                  name="password"
+                  type={showPass ? "text" : "password"}
                   className="mt-2 w-full rounded border bg-gray-200 py-3 pl-3 text-xs font-medium leading-none text-gray-800"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
                 />
                 <div
-                  onClick={() => setShowPass(!showpass)}
+                  onClick={() => setShowPass(!showPass)}
                   className="absolute right-0 mt-2 mr-3 cursor-pointer"
                 >
                   <div id="show">
@@ -199,7 +239,7 @@ export default function Login() {
             </div>
             <div className="mt-8">
               <button
-                type="button"
+                type="submit"
                 className="w-full rounded border bg-indigo-700 py-4 text-sm font-semibold leading-none text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"
               >
                 Sign In
@@ -270,7 +310,7 @@ export default function Login() {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
 }

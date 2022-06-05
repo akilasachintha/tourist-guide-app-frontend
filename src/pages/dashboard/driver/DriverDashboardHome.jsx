@@ -1,9 +1,20 @@
-import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 export default function DriverDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const { appUser } = useSelector((state) => state.appUser);
+  const user = localStorage.getItem("user");
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(user);
+    dispatch(fetchAppUser(user.userId));
+  }, [dispatch]);
+
 
   return (
     <div>
@@ -303,7 +314,7 @@ export default function DriverDashboardHome() {
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
-                          Jane Doe
+                          {appUser.name}
                         </p>
                       </div>
                       <ul className="flex">
@@ -467,10 +478,11 @@ export default function DriverDashboardHome() {
                             src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
                             alt="avatar"
                           />
-                          <div className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
+                          <div
+                            className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
                         </div>
                       </div>
-                      <p className="mx-3 text-sm text-gray-800">Jane Doe</p>
+                      <p className="mx-3 text-sm text-gray-800"> {appUser.name} </p>
                       <div className="cursor-pointer text-gray-600">
                         <svg
                           aria-haspopup="true"

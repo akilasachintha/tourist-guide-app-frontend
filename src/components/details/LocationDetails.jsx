@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import beachVideo2 from "../../assets/videos/beachVideo2.mp4";
 
 const LocationDetails = () => {
@@ -94,7 +94,8 @@ const LocationDetails = () => {
                     <p className="text-sm leading-none">{location[0].town}</p>
                   </div>
                 </div>
-                <button
+                <Link
+                  to="/hotels"
                   className="
 						flex w-full items-center justify-center
 						bg-gray-800
@@ -147,7 +148,7 @@ const LocationDetails = () => {
                     />
                   </svg>
                   Book a Hotel Near to Location
-                </button>
+                </Link>
                 <div>
                   <p className="mt-7 text-base leading-normal lg:leading-tight">
                     {location[0].description}

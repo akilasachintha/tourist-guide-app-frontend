@@ -3,6 +3,8 @@ import Vehicle from "./Vehicle";
 import VehicleH from "./VehicleH";
 import { useState } from "react";
 import HeroVehicle from "../../components/hero/HeroVehicle";
+import { useSelector } from "react-redux";
+import Image from "../../assets/images/cards/img-1.jpg";
 
 const categories = ["All Vehicles", "Cars", "Vans", "Jeeps", "Buses"];
 
@@ -74,6 +76,7 @@ function FilterMenuLeft() {
 
 function VehicleList() {
   const [viewType, setViewType] = useState({ grid: true });
+  const { vehicles } = useSelector((state) => state.vehicles);
 
   function changeViewType() {
     setViewType({
@@ -194,16 +197,42 @@ function VehicleList() {
                   (viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2")
                 }
               >
-                {Array.from({ length: 10 }, (_, i) => {
+
+                { vehicles.map((vehicle) => {
                   if (viewType.grid) {
                     return (
-                      <Vehicle key={i} percentOff={i % 2 === 0 ? 15 : null} />
+                      <div className="col">
+                        <div className="card shadow-sm">
+                          <Link to="/vehicles/1">
+                            <img
+                              className="card-img-top bg-dark cover"
+                              height="200"
+                              alt=""
+                              src={Image}
+                            />
+                          </Link>
+                          <div className="card-body">
+                            <h5 className="card-title text-center text-dark text-truncate">
+                              {vehicle.vehicleName}
+                            </h5>
+                            <p className="card-text text-center text-muted mb-0">10000</p>
+                            <div className="d-grid d-block">
+                              <button className="btn btn-outline-dark mt-3">
+                                View Details
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     );
                   }
                   return (
-                    <VehicleH key={i} percentOff={i % 4 === 0 ? 15 : null} />
+                    <VehicleH />
                   );
                 })}
+
+
+
               </div>
             </div>
           </div>

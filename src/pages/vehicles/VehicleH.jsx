@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 
 import Image from "../../assets/images/cards/img-1.jpg";
+import { useSelector } from "react-redux";
 
 function VehicleH(props) {
+
   const price = 10000;
   let percentOff;
   let offPrice = `${price}Ks`;
@@ -16,7 +18,6 @@ function VehicleH(props) {
         {props.percentOff}% OFF
       </div>
     );
-
     offPrice = (
       <>
         <del>{price}Ks</del> {price - (props.percentOff * price) / 100}Ks

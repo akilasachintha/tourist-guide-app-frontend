@@ -24,7 +24,7 @@ const PageNotFoundError = () => {
           go.
         </p>
         <Link to="">
-          <button className="focus:ring-teal my-4 w-full rounded-md border bg-teal-400 px-1 py-5 text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-opacity-50 sm:px-16 lg:w-auto">
+          <button className="focus:ring-teal w-full rounded-md border bg-teal-400 p-3 text-white hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-opacity-50 sm:px-16 lg:w-auto">
             Go back to Homepage
           </button>
         </Link>

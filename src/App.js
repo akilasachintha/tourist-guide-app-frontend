@@ -22,6 +22,7 @@ import HotelDashboardHome from "./pages/dashboard/hotels/HotelDashboardHome";
 import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
 import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
+import Register from "./pages/auth/register/Register";
 
 const App = () => {
   return (
@@ -54,6 +55,7 @@ const App = () => {
             <Route path="hotels/add/hotelfeatures" element={<AddHotelFeatures />} />
           </Route>
           <Route path="auth/login" element={<Login />} />
+          <Route path="auth/register" element={<Register />} />
           <Route path="*" element={<PageNotFoundError />} />
         </Routes>
       </Router>

@@ -21,3 +21,4 @@ root.render(
 
 store.dispatch(fetchLocations());
 store.dispatch(fetchVehicles());
+
