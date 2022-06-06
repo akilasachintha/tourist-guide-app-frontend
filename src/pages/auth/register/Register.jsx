@@ -6,13 +6,40 @@ import { useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { storage } from "../../../config/firebase";
+import { v4 } from "uuid";
 
 const Register = () => {
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [selectedLocationId, setSelectedLocationId] = useState(0);
   const [startDate, setStartDate] = useState(new Date());
   const { locations } = useSelector((state) => state.locations);
   const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const newImage = e.target.files[0];
+    setImage(newImage);
+  };
+
+  const handleUpload = () => {
+    if (image == null) {
+      return;
+    }
+
+    const uploadTask = ref(storage, `profileImages/${"img" + v4()}`);
+
+    uploadBytes(uploadTask, image)
+      .then((snapshot) => {
+
+        getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url);
+          setUrl(url);
+        });
+      });
+  };
 
   function handleChangeTitle(e) {
     setTitle(e.target.value);
@@ -24,7 +51,7 @@ const Register = () => {
       password: "",
       name: "",
       dob: "",
-      photoUrl: "",
+      userPhotoUrl: "",
       licenceNo: "",
       availability: "",
       phoneNo: "",
@@ -40,7 +67,7 @@ const Register = () => {
             password: values.password,
             name: values.name,
             dob: startDate,
-            photoUrl: values.photoUrl,
+            userPhotoUrl: url,
             licenceNo: values.licenceNo,
             phoneNo: values.phoneNo,
             availability: values.availability,
@@ -66,7 +93,7 @@ const Register = () => {
             password: values.password,
             name: values.name,
             dob: startDate,
-            photoUrl: values.photoUrl,
+            userPhotoUrl: url,
             phoneNo: values.phoneNo,
             passport: values.password,
             country: values.country
@@ -91,7 +118,7 @@ const Register = () => {
             password: values.password,
             name: values.name,
             dob: startDate,
-            photoUrl: values.photoUrl,
+            userPhotoUrl: url,
             phoneNo: values.phoneNo
           })
           .then((res) => {
@@ -114,7 +141,7 @@ const Register = () => {
             password: values.password,
             name: values.name,
             dob: startDate,
-            photoUrl: values.photoUrl,
+            userPhotoUrl: values.photoUrl,
             phoneNo: values.phoneNo,
             nic: values.nic
           })
@@ -155,6 +182,19 @@ const Register = () => {
                  placeholder="Password"
                  onChange={formik.handleChange}
                  value={formik.values.password} />
+          <div className="flex justify-center">
+            <div className="my-3 w-100">
+              <label htmlFor="formFile" className="form-label inline-block mx-2 text-gray-700">Upload Your Profile
+                Photo</label>
+              <input
+                className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                type="file" id="inputGroupFile02" onChange={handleChange}
+                aria-describedby="inputGroupFileAddon02"
+                onClick={handleUpload}
+                aria-label="Upload" />
+            </div>
+          </div>
+
           <input type="password" name="repeat-password"
                  className="px-4 mt-4 py-3 w-full rounded-md border border-black focus:border-gray-500 focus:bg-white focus:ring-1 text-sm"
                  placeholder="Repeat Password"
@@ -162,10 +202,7 @@ const Register = () => {
                  value={formik.values.password} />
           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
                       className="px-4 py-3 mt-4 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" />
-          {/*<input type="date" name="date"*/}
-          {/*       className="px-4 py-3 mt-4 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"*/}
-          {/*       onChange={formik.handleChange}*/}
-          {/*       value={formik.values.date} />*/}
+
           <div className="relative" placeholder="Select your role">
             <select
               className="mt-4 bg-white block w-full appearance-none rounded border border-black py-3 px-4 pr-8 leading-tight text-gray-700 focus:border-gray-500 focus:bg-white focus:outline-none"

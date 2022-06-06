@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../logo/Logo";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppUser } from "../../redux/store/appUserSlice";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
-  const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   let user = JSON.parse(localStorage.getItem("user"));
+  const { appUser } = useSelector((state) => state.appUser);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchAppUser());
+    };
+  }, [dispatch]);
+
 
   const handleNav = () => {
     setNav(!nav);
@@ -44,7 +54,20 @@ const Navbar = () => {
   ];
 
   function navigateToProfile() {
-    navigate("/dashboard/drivers");
+    if(user.userType === "tourist"){
+      navigate("/dashboard/tourists");
+    }
+    else if(user.userType === "driver"){
+      navigate("/dashboard/drivers");
+    }
+    else if(user.userType === "hotelOwner"){
+      navigate("/dashboard/hotels");
+    }
+    else if(user.userType === "guide"){
+      navigate("/dashboard/guides");
+    }else{
+      navigate("/auth/login");
+    }
   }
 
   return (
@@ -127,7 +150,7 @@ const Navbar = () => {
               <div className="relative">
                 <img
                   className="h-10 w-10 rounded-full object-cover"
-                  src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
+                  src={appUser.userPhotoUrl}
                   alt="avatar"
                 />
                 <div

@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
-
-import Image from "../../assets/images/cards/img-1.jpg";
 import { useSelector } from "react-redux";
 
 function VehicleH(props) {
+  const { vehicles } = useSelector((state) => state.vehicles);
 
   const price = 10000;
   let percentOff;
@@ -26,37 +25,39 @@ function VehicleH(props) {
   }
   return (
     <div className="col">
-      <div className="card shadow-sm">
-        <div className="row g-0">
-          <div className="col-4">
-            <Link to="/products/1" href="!#" replace>
-              {percentOff}
-              <img
-                className="rounded-start bg-dark cover w-100 h-100"
-                alt=""
-                src={Image}
-              />
-            </Link>
-          </div>
-          <div className="col-8">
-            <div className="card-body h-100">
-              <div className="d-flex flex-column h-100">
-                <h5 className="card-title text-dark text-truncate mb-1">
-                  Toyota Land Cruser Prado 2021
-                </h5>
-                <span className="card-text text-muted mb-2 flex-shrink-0">
-                  {offPrice}
+      {vehicles.map((vehicle) => (
+        <div className="card shadow-sm" key={vehicle.vehicleNo}>
+          <div className="row g-0">
+            <div className="col-4">
+              <Link to="/products/1">
+                {percentOff}
+                <img
+                  className="rounded-start bg-dark cover w-100 h-100"
+                  alt=""
+                  src={vehicle.vehiclePhotoUrl}
+                />
+              </Link>
+            </div>
+            <div className="col-8">
+              <div className="card-body h-100">
+                <div className="d-flex flex-column h-100">
+                  <h5 className="card-title text-dark text-truncate mb-1">
+                    {vehicle.vehicleName}
+                  </h5>
+                  <span className="card-text text-muted mb-2 flex-shrink-0">
+                  {vehicle.vehicleType}
                 </span>
-                <div className="mt-auto d-flex">
-                  <button className="btn btn-outline-dark ms-auto">
-                     View Details
-                  </button>
+                  <div className="mt-auto d-flex">
+                    <button className="btn btn-outline-dark ms-auto">
+                      View Details
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ))}
     </div>
   );
 }

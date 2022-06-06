@@ -7,45 +7,39 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 import { storage } from "../../../config/firebase";
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { fetchLocations } from "../../../redux/store/locationsSlice";
-import { useDispatch } from "react-redux";
 import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
 
 export default function AddNewVehicle() {
-  const [image, setImage] = useState("");
-  const [url, setUrl] = useState([]);
+  const [image, setImage] = useState(null);
+  const [url, setUrl] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    const newImage = e.target.file;
-    newImage["id"] = Math.random();
-    setImage((prevState) => newImage);
+    const newImage = e.target.files[0];
+    setImage(newImage);
   };
 
   const handleUpload = () => {
-    image.map((image) => {
-      const uploadTask = ref(storage, `vehicleImages/${"img" + v4()}`);
-      uploadBytes(uploadTask, image)
-        .then((snapshot) => {
-          getDownloadURL(snapshot.ref).then((url) => {
-            setUrl(url);
-          });
-          toast.success("Successfully Uploaded !");
-        })
-        .catch(() => {
-          Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "Something went wrong!",
-            footer: '<a href="">Why do I have this issue?</a>',
-          });
+    if (image == null) {
+      return;
+    }
+
+    const uploadTask = ref(storage, `vehicleImages/${"img" + v4()}`);
+
+    uploadBytes(uploadTask, image)
+      .then((snapshot) => {
+
+        getDownloadURL(snapshot.ref).then((url) => {
+          console.log(url);
+          setUrl(url);
         });
-      return null;
-    });
+      });
   };
+
 
   const formik = useFormik({
     initialValues: {
@@ -54,12 +48,12 @@ export default function AddNewVehicle() {
       vehicleName: "",
       seats: 0,
       priceForKm: 0,
+      vehiclePhotoUrl: "",
       vehicleCondition: "",
-      photoUrl: "",
       userId: 0
     },
     onSubmit: (values) => {
-      const obj = url.map((url) => ({ url }));
+
       let user = JSON.parse(localStorage.getItem("user"));
 
       touristGuideAppApi
@@ -70,7 +64,7 @@ export default function AddNewVehicle() {
           seats: values.seats,
           priceForKm: values.priceForKm,
           vehicleCondition: values.vehicleCondition,
-          photoUrl: values.photoUrl,
+          vehiclePhotoUrl: url,
           userId: user.userId
         })
         .then((res) => {
@@ -160,6 +154,21 @@ export default function AddNewVehicle() {
                         value={formik.values.vehicleNo}
                       />
                     </div>
+                  </div>
+
+                  <div>
+
+                    <label className="block">
+                      <span className="sr-only">Choose File</span>
+                      <input type="file"
+                             id="inputGroupFile01"
+                             className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                             onChange={handleChange}
+                             aria-describedby="inputGroupFileAddon01"
+                             onClick={handleUpload}
+                             aria-label="Upload"
+                      />
+                    </label>
                   </div>
 
                   <div className="grid grid-cols-6 gap-6">

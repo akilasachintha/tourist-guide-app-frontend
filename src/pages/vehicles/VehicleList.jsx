@@ -1,13 +1,10 @@
 import { Link } from "react-router-dom";
-import Vehicle from "./Vehicle";
 import VehicleH from "./VehicleH";
 import { useState } from "react";
 import HeroVehicle from "../../components/hero/HeroVehicle";
 import { useSelector } from "react-redux";
-import Image from "../../assets/images/cards/img-1.jpg";
 
 const categories = ["All Vehicles", "Cars", "Vans", "Jeeps", "Buses"];
-
 const brands = ["Toyota", "Honda", "Benz", "BMW"];
 
 function FilterMenuLeft() {
@@ -201,14 +198,14 @@ function VehicleList() {
                 { vehicles.map((vehicle) => {
                   if (viewType.grid) {
                     return (
-                      <div className="col">
+                      <div className="col" key={vehicle.vehicleNo}>
                         <div className="card shadow-sm">
                           <Link to="/vehicles/1">
                             <img
                               className="card-img-top bg-dark cover"
                               height="200"
                               alt=""
-                              src={Image}
+                              src={vehicle.vehiclePhotoUrl}
                             />
                           </Link>
                           <div className="card-body">
@@ -227,12 +224,9 @@ function VehicleList() {
                     );
                   }
                   return (
-                    <VehicleH />
+                    <VehicleH key={vehicle.vehicleNo}/>
                   );
                 })}
-
-
-
               </div>
             </div>
           </div>

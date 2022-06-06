@@ -12,6 +12,7 @@ export default function DriverDashboardHome() {
 
   useEffect(() => {
     dispatch(fetchAppUser());
+    console.log(appUser.userPhotoUrl);
   }, [dispatch]);
 
   function logOut() {
@@ -313,7 +314,7 @@ export default function DriverDashboardHome() {
                       <div className="flex items-center">
                         <img
                           alt="profile-pic"
-                          src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
+                          src={appUser.photoUrl}
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
@@ -478,7 +479,7 @@ export default function DriverDashboardHome() {
                         <div className="relative">
                           <img
                             className="h-10 w-10 rounded-full object-cover"
-                            src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
+                            src={ appUser.userPhotoUrl || "https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"}
                             alt="avatar"
                           />
                           <div
