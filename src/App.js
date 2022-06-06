@@ -14,7 +14,7 @@ import VehicleList from "./pages/vehicles/VehicleList";
 import DriverDashboardHome from "./pages/dashboard/driver/DriverDashboardHome";
 import DriverDashboardVehicleList from "./pages/dashboard/driver/DriverDashboardVehicleList";
 import AddNewVehicle from "./pages/dashboard/driver/AddNewVehicle";
-
+import TouristDashboardHome from "./pages/dashboard/tourist/TouristDashboardHome";
 
 import List from "./pages/hotels/List";
 import HomeH from "./pages/hotels/HomeH";
@@ -25,6 +25,7 @@ import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
 import Register from "./pages/auth/register/Register";
 import { ToastContainer } from "react-toastify";
 import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
+import Userprofile from "./pages/dashboard/tourist/Userprofile";
 
 const App = () => {
   return (
@@ -48,9 +49,10 @@ const App = () => {
             <Route path="locations" element={<Location />} />
             <Route path="locations/:id" element={<LocationDetailPage />} />
             <Route path="vehicles" element={<VehicleList />} />
-            <Route path="/hotels/" element={<HomeH/>}/>
-          <Route path="/hotels/list" element={<List/>}/>
+            <Route path="/hotels/" element={<HomeH />} />
+            <Route path="/hotels/list" element={<List />} />
           </Route>
+
           <Route path="dashboard/admin" element={<AdminDashboardHome />}>
             <Route path="locations" element={<AdminDashboardLocations />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
@@ -61,14 +63,21 @@ const App = () => {
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="addVehicles" element={<AddNewVehicle />} />
           </Route>
-          <Route path="dashboard/guides" element={<GuideDashboardHome />}>
-
+          <Route path="dashboard/tourists" element={<TouristDashboardHome />}>
+            <Route path="" element={<Userprofile />} />
           </Route>
+          <Route
+            path="dashboard/guides"
+            element={<GuideDashboardHome />}
+          ></Route>
           <Route path="dashboard/hotels" element={<HotelDashboardHome />}>
             <Route path="hotellist" element={<HotelDashboardList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="hotels/add" element={<AddNewHotel />} />
-            <Route path="hotels/add/hotelfeatures" element={<AddHotelFeatures />} />
+            <Route
+              path="hotels/add/hotelfeatures"
+              element={<AddHotelFeatures />}
+            />
           </Route>
           <Route path="auth/login" element={<Login />} />
           <Route path="auth/register" element={<Register />} />

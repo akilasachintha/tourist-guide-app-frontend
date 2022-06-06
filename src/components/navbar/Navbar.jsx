@@ -44,7 +44,7 @@ const Navbar = () => {
   ];
 
   function navigateToProfile() {
-    navigate("/dashboard/drivers");
+    navigate("/dashboard/tourists");
   }
 
   return (
@@ -94,7 +94,9 @@ const Navbar = () => {
                         <circle cx={12} cy={7} r={4} />
                         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                       </svg>
+                      <Link to="pages/dashboard/tourist">
                       <span className="ml-2 text-sm" onClick={() => navigateToProfile()}>My Profile</span>
+                      </Link>
                     </div>
                   </li>
                   <li
