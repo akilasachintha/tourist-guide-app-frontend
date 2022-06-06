@@ -25,6 +25,7 @@ import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
 import Register from "./pages/auth/register/Register";
 import { ToastContainer } from "react-toastify";
 import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
+import DriverHome from "./pages/dashboard/driver/DriverHome";
 
 const App = () => {
   return (
@@ -57,6 +58,7 @@ const App = () => {
             <Route path="locations/add" element={<AddNewLocation />} />
           </Route>
           <Route path="dashboard/drivers" element={<DriverDashboardHome />}>
+            <Route path="" element={<DriverHome />} />
             <Route path="vehicles" element={<DriverDashboardVehicleList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="addVehicles" element={<AddNewVehicle />} />
