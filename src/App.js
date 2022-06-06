@@ -15,6 +15,8 @@ import DriverDashboardHome from "./pages/dashboard/driver/DriverDashboardHome";
 import DriverDashboardVehicleList from "./pages/dashboard/driver/DriverDashboardVehicleList";
 import AddNewVehicle from "./pages/dashboard/driver/AddNewVehicle";
 import TouristDashboardHome from "./pages/dashboard/tourist/TouristDashboardHome";
+import TouristDashboardBookingList from "./pages/dashboard/tourist/TouristDashboardBookingList";
+import BookingDetails from "./pages/dashboard/tourist/BookingDetails";
 
 import List from "./pages/hotels/List";
 import HomeH from "./pages/hotels/HomeH";
@@ -68,6 +70,8 @@ const App = () => {
           </Route>
           <Route path="dashboard/tourists" element={<TouristDashboardHome />}>
             <Route path="" element={<Userprofile />} />
+            <Route path="bookings" element={<TouristDashboardBookingList />} />
+            <Route path="bookings/:id" element={<BookingDetails />} />
           </Route>
           <Route
             path="dashboard/guides"

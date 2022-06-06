@@ -109,7 +109,7 @@ export default function TouristDashboardHome() {
                   </div>
                 </li>
               </NavLink>
-
+              <NavLink to="/dashboard/tourists/bookings">
               <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
                 <div className="flex items-center">
                   <svg
@@ -132,9 +132,10 @@ export default function TouristDashboardHome() {
                   <span className="ml-2">Bookings</span>
                 </div>
               </li>
+              </NavLink>
             </ul>
           </div>
-
+          
           {/*Mobile responsive sidebar*/}
           <div
             className={
