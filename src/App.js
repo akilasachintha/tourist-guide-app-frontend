@@ -59,7 +59,7 @@ const App = () => {
           <Route path="dashboard/drivers" element={<DriverDashboardHome />}>
             <Route path="vehicles" element={<DriverDashboardVehicleList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
-            <Route path="locations/add" element={<AddNewVehicle />} />
+            <Route path="addVehicles" element={<AddNewVehicle />} />
           </Route>
           <Route path="dashboard/guides" element={<GuideDashboardHome />}>
 

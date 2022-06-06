@@ -43,6 +43,10 @@ const Navbar = () => {
     },
   ];
 
+  function navigateToProfile() {
+    navigate("/dashboard/drivers");
+  }
+
   return (
     <nav className="absolute z-10 flex h-20 w-full items-center justify-between px-4 text-white md:text-2xl">
       <div>
@@ -90,7 +94,7 @@ const Navbar = () => {
                         <circle cx={12} cy={7} r={4} />
                         <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
                       </svg>
-                      <span className="ml-2 text-sm">My Profile</span>
+                      <span className="ml-2 text-sm" onClick={() => navigateToProfile()}>My Profile</span>
                     </div>
                   </li>
                   <li
