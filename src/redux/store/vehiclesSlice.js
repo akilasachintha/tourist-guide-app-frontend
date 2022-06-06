@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import touristGuideAppAPI from "../../apis/touristGuideAppAPI";
 
-// First, create the thunk
 export const fetchVehicles = createAsyncThunk(
   "vehicles/fetchVehicles",
   async () => {

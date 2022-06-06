@@ -1,23 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchVehiclesById } from "../../../redux/store/vehiclesByIdSlice";
 
 const PER_PAGE = 4;
 
 const DriverDashboardVehicleList = () => {
+  const { vehiclesById } = useSelector((state) => state.vehiclesById);
   const { vehicles } = useSelector((state) => state.vehicles);
   const [currentPage, setCurrentPage] = useState(0);
+  const dispatch = useDispatch();
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(vehicles.length / PER_PAGE);
+  const pageCount = Math.ceil(vehiclesById.length / PER_PAGE);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
     setCurrentPage(selectedPage);
   };
 
-  const currentPageData = vehicles
+  useEffect(() => {
+    return () => {
+      dispatch(fetchVehiclesById());
+    };
+  }, [dispatch]);
+
+
+  const currentPageData = vehiclesById
     .slice(offset, offset + PER_PAGE)
     .map((vehicle) => (
       <tr
@@ -50,7 +60,7 @@ const DriverDashboardVehicleList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-              {vehicle.vehicleNo}
+              {vehicle.vehicleName}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"

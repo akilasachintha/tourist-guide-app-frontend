@@ -3,6 +3,7 @@ import vehiclesReducer from "./vehiclesSlice";
 import locationsReducer from "./locationsSlice";
 import appUserReducer from "./appUserSlice";
 import authSlice from "./authSlice";
+import vehiclesByIdSlice from "./vehiclesByIdSlice";
 
 
 export default configureStore({
@@ -10,6 +11,7 @@ export default configureStore({
     locations: locationsReducer,
     vehicles: vehiclesReducer,
     appUser: appUserReducer,
-    auth: authSlice
+    auth: authSlice,
+    vehiclesById: vehiclesByIdSlice
   },
 });

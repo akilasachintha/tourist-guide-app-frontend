@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
-export default function DriverDashboardHome() {
+export default function GuideDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   const { appUser } = useSelector((state) => state.appUser);
@@ -32,7 +32,7 @@ export default function DriverDashboardHome() {
             </div>
             {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
             <ul aria-orientation="vertical" className=" py-6">
-              <NavLink to="/dashboard/drivers" className="side-item-active">
+              <NavLink to="/dashboard/guides" className="side-item-active">
                 <li className="cursor-pointer pl-6 text-base text-sm leading-3">
                   <div className="flex items-center">
                     <div>
@@ -60,33 +60,7 @@ export default function DriverDashboardHome() {
                 </li>
               </NavLink>
 
-              <NavLink
-                to="/dashboard/drivers/vehicles"
-                className="side-item-active bg-black"
-              >
-                <li className="mt-4 mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
-                  <div className="flex items-center">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="icon icon-tabler icon-tabler-puzzle"
-                      width={20}
-                      height={20}
-                      viewBox="0 0 24 24"
-                      strokeWidth="1.5"
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" />
-                      <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
-                    </svg>
-                    <span className="ml-2">Vehicles</span>
-                  </div>
-                </li>
-              </NavLink>
-
-              <NavLink to="/dashboard/drivers/profile">
+              <NavLink to="/dashboard/guides/profile">
                 <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
                   <div className="flex items-center">
                     <svg

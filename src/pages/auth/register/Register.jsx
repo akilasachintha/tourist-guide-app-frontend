@@ -59,6 +59,78 @@ const Register = () => {
             console.log(err);
           });
       }
+      else if(title === "tourist"){
+        touristGuideAppApi
+          .post("/user/tourist/add", {
+            email: values.email,
+            password: values.password,
+            name: values.name,
+            dob: startDate,
+            photoUrl: values.photoUrl,
+            phoneNo: values.phoneNo,
+            passport: values.password,
+            country: values.country
+          })
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire(
+              "Successfully Added!",
+              "Your file has been deleted.",
+              "success"
+            );
+            navigate("/auth/login");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      else if(title === "hotelOwner"){
+        touristGuideAppApi
+          .post("/user/hotelOwner/add", {
+            email: values.email,
+            password: values.password,
+            name: values.name,
+            dob: startDate,
+            photoUrl: values.photoUrl,
+            phoneNo: values.phoneNo
+          })
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire(
+              "Successfully Added!",
+              "Your file has been deleted.",
+              "success"
+            );
+            navigate("/auth/login");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+      else if(title === "guide"){
+        touristGuideAppApi
+          .post("/user/guide/add", {
+            email: values.email,
+            password: values.password,
+            name: values.name,
+            dob: startDate,
+            photoUrl: values.photoUrl,
+            phoneNo: values.phoneNo,
+            nic: values.nic
+          })
+          .then((res) => {
+            console.log(res.data);
+            Swal.fire(
+              "Successfully Added!",
+              "Your file has been deleted.",
+              "success"
+            );
+            navigate("/auth/login");
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
     }
   });
 

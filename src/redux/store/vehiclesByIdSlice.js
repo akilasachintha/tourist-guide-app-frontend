@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import touristGuideAppAPI from "../../apis/touristGuideAppAPI";
 
-export const fetchAppUser = createAsyncThunk(
-  "appUser/fetchAppUser",
+export const fetchVehiclesById = createAsyncThunk(
+  "vehiclesById/fetchVehiclesById",
   async () => {
     try {
       let user = JSON.parse(localStorage.getItem('user'));
-      const response = await touristGuideAppAPI.get(`/user/${user.userId}`);
+      const response = await touristGuideAppAPI.get(`/vehicles/${user.userId}`);
       console.log(response.data);
       return response.data;
     } catch (error) {
@@ -16,27 +16,27 @@ export const fetchAppUser = createAsyncThunk(
 );
 
 const initialState = {
-  appUser: {},
-  loading: "idle", //"idle" | "pending" | "succeeded" | "failed"
+  vehiclesById: [],
+  loading: "idle" //"idle" | "pending" | "succeeded" | "failed"
 };
 
 // Then, handle actions in your reducers:
-const appUserSlice = createSlice({
-  name: "appUser",
+const vehiclesByIdSlice = createSlice({
+  name: "vehiclesById",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAppUser.pending, (state) => {
+    builder.addCase(fetchVehiclesById.pending, (state) => {
       state.loading = "pending";
     });
-    builder.addCase(fetchAppUser.fulfilled, (state, action) => {
-      state.appUser = action.payload;
+    builder.addCase(fetchVehiclesById.fulfilled, (state, action) => {
+      state.vehiclesById = action.payload;
       state.loading = "succeeded";
     });
-    builder.addCase(fetchAppUser.rejected, (state) => {
+    builder.addCase(fetchVehiclesById.rejected, (state) => {
       state.loading = "failed";
     });
-  },
+  }
 });
 
-export default appUserSlice.reducer;
+export default vehiclesByIdSlice.reducer;

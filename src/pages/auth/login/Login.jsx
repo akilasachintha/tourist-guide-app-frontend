@@ -3,8 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { useDispatch } from "react-redux";
-import { authLogin } from "../../../redux/store/authSlice";
-import { fetchAppUser } from "../../../redux/store/appUserSlice";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
@@ -27,8 +26,24 @@ export default function Login() {
           console.log(res.data);
           localStorage.setItem("user", JSON.stringify(res.data));
 
-          if (res.data.status && res.data.userType === "driver") {
+          if(!res.data.status){
+            toast.error("Email or Password Incorrect");
+          }
+          else if (res.data.status && res.data.userType === "driver") {
+            toast.success("Successfully Logged In");
             navigate("/dashboard/drivers/");
+          }
+          else if (res.data.status && res.data.userType === "tourist") {
+            toast.success("Successfully Logged In");
+            navigate("/");
+          }
+          else if (res.data.status && res.data.userType === "hotelOwner") {
+            toast.success("Successfully Logged In");
+            navigate("/dashboard/hotels/");
+          }
+          else if (res.data.status && res.data.userType === "guide") {
+            toast.success("Successfully Logged In");
+            navigate("/dashboard/guides/");
           }
         })
         .catch((err) => {

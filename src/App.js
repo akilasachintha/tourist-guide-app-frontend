@@ -23,12 +23,25 @@ import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
 import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
 import Register from "./pages/auth/register/Register";
+import { ToastContainer } from "react-toastify";
+import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
 
 const App = () => {
   return (
     <div className="font-raleway">
       <Router>
         <ScrollToTop />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
         <Routes>
           <Route path="/" element={<UserViewRoutes />}>
             <Route path="" element={<Home />} />
@@ -47,6 +60,9 @@ const App = () => {
             <Route path="vehicles" element={<DriverDashboardVehicleList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="locations/add" element={<AddNewVehicle />} />
+          </Route>
+          <Route path="dashboard/guides" element={<GuideDashboardHome />}>
+
           </Route>
           <Route path="dashboard/hotels" element={<HotelDashboardHome />}>
             <Route path="hotellist" element={<HotelDashboardList />} />
