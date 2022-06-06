@@ -87,7 +87,7 @@ export default function Login() {
             >
               Dont have account?{" "}
               <Link
-                to="auth/register"
+                to="/auth/register"
                 className="cursor-pointer text-sm font-medium leading-none text-gray-800 hover:text-gray-500 hover:underline focus:text-gray-500 focus:underline focus:outline-none"
               >
                 {" "}
