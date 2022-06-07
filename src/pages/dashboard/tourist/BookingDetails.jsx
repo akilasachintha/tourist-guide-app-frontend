@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { fetchBookings } from "../../../redux/store/bookingsSlice";
 import img2 from "./pics/vehicle.jpg";
 
 function BookingDetails() {
   const { id } = useParams();
+  const { bookings } = useSelector((state) => state.bookings);
+  const [showHotel,setShowHotel] = useState(false)
+  const [showDriver,setShowDriver] = useState(false)
+  const [showGuide,setShowGuide] = useState(false)
+  const dispatch = useDispatch()
+
+
+  const booking = bookings.filter(({ bookingId }) => {
+    return bookingId.toString() === id;
+  });
+
+
   return (
     <div>
       <div className="container mx-auto my-5 p-5">
@@ -48,47 +62,50 @@ function BookingDetails() {
                 <span className="tracking-wide">About</span>
               </div>
               <div className="text-gray-700">
-                <div className="grid text-sm md:grid-cols-2">
+              {booking.length !== 0 &&(               
+                   <div className="grid text-sm md:grid-cols-2">
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Full Name</div>
-                    <div className="px-4 py-2">Pulini Tilanka</div>
+                    <div className="px-4 py-2 font-semibold">Booking ID</div>
+                    <div className="px-4 py-2">{booking[0].bookingId}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Contact No.</div>
-                    <div className="px-4 py-2">+94 705334841</div>
+                    <div className="px-4 py-2 font-semibold">Booking Status</div>
+                    <div className="px-4 py-2">{booking[0].bookingStatus}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Email.</div>
-                    <div className="px-4 py-2">
-                      <a
-                        className="text-blue-800"
-                        href="mailto:jane@example.com"
-                      >
-                        jane@example.com
-                      </a>
-                    </div>
+                    <div className="px-4 py-2 font-semibold">Check In Date</div>
+                    <div className="px-4 py-2">{booking[0].checkInDate}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Country</div>
-                    <div className="px-4 py-2">Australia</div>
+                    <div className="px-4 py-2 font-semibold">Check Out Date</div>
+                    <div className="px-4 py-2">{booking[0].checkOutDate}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Passport No</div>
-                    <div className="px-4 py-2">123456789</div>
+                    <div className="px-4 py-2 font-semibold">Paid Amount</div>
+                    <div className="px-4 py-2">{booking[0].paidAmount}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">NIC</div>
-                    <div className="px-4 py-2">986291431V</div>
+                    <div className="px-4 py-2 font-semibold">Paid Date</div>
+                    <div className="px-4 py-2">{booking[0].date}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Check in Date</div>
-                    <div className="px-4 py-2">26/02/2022</div>
+                    <div className="px-4 py-2 font-semibold">Paid Time</div>
+                    <div className="px-4 py-2">{booking[0].time}</div>
                   </div>
                   <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">
-                      Check out Date
-                    </div>
-                    <div className="px-4 py-2">28/02/2022</div>
+                    <div className="px-4 py-2 font-semibold">Advance Payment </div>
+                    <div className="px-4 py-2">{booking[0].advancedPayment}</div>
+                  </div>
+                  <div className="grid grid-cols-2">
+                      {
+                          showHotel&<div>
+                          <div className="grid grid-cols-2">
+                    <div className="px-4 py-2 font-semibold">Advance Payment </div>
+                    <div className="px-4 py-2">{booking[0].advancedPayment}</div>
+                  </div>
+                          </div>
+                      }
+
                   </div>
                   <button class="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
                     Update
@@ -96,7 +113,9 @@ function BookingDetails() {
                   <button class="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
                     Delete
                   </button>
+
                 </div>
+              )}
               </div>
             </div>
           </div>
