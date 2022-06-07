@@ -1,5 +1,9 @@
 import "../../styles/hotels/searchitemh.css"
 import img1 from "../../assets/images/cards/img-1.jpg"
+import { fetchHotels } from "../../redux/store/hotelslice"
+
+
+
 
 const SearchItemH = () => {
   return (

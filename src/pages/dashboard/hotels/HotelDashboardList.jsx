@@ -1,68 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { toast } from "react-toastify";
-import { fetchLocations } from "../../../redux/store/locationsSlice";
+import { fetchHotels, fetchLocations } from "../../../redux/store/hotelslice";
 
 const PER_PAGE = 4;
 
 const HotelDashboardList = () => {
-  const { loading, locations } = useSelector((state) => state.locations);
+  const { loading, hotels } = useSelector((state) => state.hotels);
   const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(locations.length / PER_PAGE);
+  const pageCount = Math.ceil(10 / PER_PAGE);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
     setCurrentPage(selectedPage);
   };
 
-  const deleteLocation = (locationId) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        touristGuideAppApi
-          .delete(`locations/${locationId}`)
-          .then((res) => {
-            console.log(res.data);
-            dispatch(fetchLocations());
-          })
-          .catch((err) => {
-            console.log("Err", err);
-            toast.error("Deletion Error");
-          });
-        Swal.fire("Deleted!", "Your file has been deleted.", "success");
-      }
-    });
-  };
 
-  const currentPageData = locations
+  useEffect(() => {
+    dispatch(fetchHotels());
+   
+  }, [dispatch])
+  
+
+
+  const currentPageData = hotels
     .slice(offset, offset + PER_PAGE)
-    .map((location) => (
+    .map((hotel) => (
       <tr
         className="h-16 rounded border border-gray-100 focus:outline-none"
-        key={location.locationId}
+        key={hotel.hotelId}
       >
         <td>
           <div className="ml-5">
             <div className="relative flex flex-shrink-0 items-center justify-center rounded-sm bg-gray-200">
-              <img
-                className="h-10 w-10 rounded"
-                src={location.urls[0]}
-                alt="Default avatar"
-              />
+              
               <div className="check-icon hidden rounded-sm bg-indigo-700 text-white">
                 <svg
                   className="icon icon-tabler icon-tabler-check"
@@ -86,7 +64,7 @@ const HotelDashboardList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-              {location.locationName}
+              {hotel.name}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -137,7 +115,7 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.category}
+              {hotel.category}
             </p>
           </div>
         </td>
@@ -194,7 +172,7 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.district}
+              {hotel.district}
             </p>
           </div>
         </td>
@@ -237,7 +215,7 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {location.town}
+              {hotel.town}
             </p>
           </div>
         </td>
@@ -286,14 +264,14 @@ const HotelDashboardList = () => {
                     <i className="bi bi-pencil"></i> Edit
                   </button>
                 </li>
-                <li
+                {/* <li
                   className="list-item"
-                  onClick={() => deleteLocation(location.locationId)}
+                  onClick={() => deleteLocation(hotel.hotelId)}
                 >
                   <button className="dropdown-item icon-red" type="button">
                     <i className="bi bi-trash"></i> Delete
                   </button>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>
@@ -375,7 +353,9 @@ const HotelDashboardList = () => {
               </div>
               <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
-                  <p>Rooms</p>
+                  <Link to="/roomdetails">
+                   <p>Rooms</p>
+                  </Link>
                 </div>
               </div>
               <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">

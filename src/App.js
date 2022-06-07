@@ -29,6 +29,8 @@ import { ToastContainer } from "react-toastify";
 import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
 import Userprofile from "./pages/dashboard/tourist/Userprofile";
 import DriverHome from "./pages/dashboard/driver/DriverHome";
+import Hoteldetails from "./pages/hotels/Hoteldetails";
+import HotelRoomDetails from "./pages/dashboard/hotels/HotelRoomDetails";
 
 
 const App = () => {
@@ -55,6 +57,7 @@ const App = () => {
             <Route path="vehicles" element={<VehicleList />} />
             <Route path="/hotels/" element={<HomeH />} />
             <Route path="/hotels/list" element={<List />} />
+            <Route path="/hotels/list/:id" element={<Hoteldetails/>}/>
           </Route>
 
           <Route path="dashboard/admin" element={<AdminDashboardHome />}>
@@ -81,6 +84,7 @@ const App = () => {
             <Route path="hotellist" element={<HotelDashboardList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="hotels/add" element={<AddNewHotel />} />
+            <Route path="hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route
               path="hotels/add/hotelfeatures"
               element={<AddHotelFeatures />}
