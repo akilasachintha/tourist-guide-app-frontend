@@ -9,8 +9,8 @@ import { fetchLocations } from "./redux/store/locationsSlice";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchVehicles } from "./redux/store/vehiclesSlice";
-import { fetchBookings } from "./redux/store/bookingsSlice";
 import { fetchAppUser } from "./redux/store/appUserSlice";
+import { fetchGuides } from "./redux/store/guidesSlice";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let user = JSON.parse(localStorage.getItem('user'));
@@ -25,5 +25,6 @@ root.render(
 store.dispatch(fetchLocations());
 store.dispatch(fetchVehicles());
 store.dispatch(fetchAppUser());
+store.dispatch(fetchGuides());
 
 

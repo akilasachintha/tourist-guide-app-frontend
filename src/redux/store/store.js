@@ -5,6 +5,7 @@ import appUserReducer from "./appUserSlice";
 import authSlice from "./authSlice";
 import vehiclesByIdSlice from "./vehiclesByIdSlice";
 import bookingsSlice from "./bookingsSlice";
+import guidesSlice from "./guidesSlice";
 
 export default configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export default configureStore({
     auth: authSlice,
     vehiclesById: vehiclesByIdSlice,
     bookings: bookingsSlice,
+    guides: guidesSlice
   },
 });
