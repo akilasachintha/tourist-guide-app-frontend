@@ -15,7 +15,7 @@ export const fetchGuides = createAsyncThunk(
 
 const initialState = {
   guides: [],
-  loading: "idle", //"idle" | "pending" | "succeeded" | "failed"
+  loading: "idle" //"idle" | "pending" | "succeeded" | "failed"
 };
 
 const hotelsSlice = createSlice({

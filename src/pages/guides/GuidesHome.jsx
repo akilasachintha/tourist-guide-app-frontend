@@ -24,7 +24,7 @@ function GuidesHome() {
                         </h2>
                       </div>
                     </div>
-                    <div className="mt-1 text-xl font-semibold">$3.00</div>
+                    <div className="mt-1 text-xl font-semibold">{guide.rati}</div>
                   </div>
                 </div>
               </div>
