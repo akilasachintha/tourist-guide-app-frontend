@@ -1,31 +1,31 @@
 import React, { useState } from "react";
 import { AiOutlineDown, AiOutlineSearch } from "react-icons/ai";
-import beachVideo2 from "../../assets/videos/vehicleVideo.mp4";
+import vehicleVideo from "../../assets/videos/vehicleVideo.mp4";
 import { useSelector } from "react-redux";
 import { GrClose } from "react-icons/gr";
 import { Link } from "react-router-dom";
 import { FiChevronRight } from "react-icons/fi";
 
 const HeroVehicle = () => {
-  const { locations } = useSelector((state) => state.locations);
-  const [filteredLocations, setFilteredLocations] = useState([]);
+  const { vehicles } = useSelector((state) => state.vehicles);
+  const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   const handleFilter = (event) => {
     const wordEntered = event.target.value;
     setSearchValue(wordEntered);
-    const newFilter = locations.filter(({ locationName }) => {
-      return locationName.toLowerCase().includes(wordEntered.toLowerCase());
+    const newFilter = vehicles.filter(({ vehicleName }) => {
+      return vehicleName.toLowerCase().includes(wordEntered.toLowerCase());
     });
     if (wordEntered === "") {
-      setFilteredLocations([]);
+      setFilteredVehicles([]);
     } else {
-      setFilteredLocations(newFilter);
+      setFilteredVehicles(newFilter);
     }
   };
 
   const clearInput = () => {
-    setFilteredLocations([]);
+    setFilteredVehicles([]);
     setSearchValue("");
   };
 
@@ -33,7 +33,7 @@ const HeroVehicle = () => {
     <section className="relative h-screen w-full snap-center">
       <video
         className="h-full w-full object-cover"
-        src={beachVideo2}
+        src={vehicleVideo}
         autoPlay={true}
         loop={true}
         muted={true}
@@ -41,7 +41,7 @@ const HeroVehicle = () => {
       <div className="absolute top-0 left-0 h-full w-full bg-gray-900/30"></div>
       <div className="absolute top-0 flex h-full w-full flex-col justify-center p-4 text-center text-white">
         <div className="mt-32">
-          {filteredLocations.length === 0 && (
+          {filteredVehicles.length === 0 && (
             <div>
               <h1 className="text-7xl sm:text-6xl">
                 Search Your Rental Vehicle
@@ -54,10 +54,10 @@ const HeroVehicle = () => {
               className="font-light focus:outline-none sm:w-[400px]"
               type="text"
               value={searchValue}
-              placeholder="Search Destinations"
+              placeholder="Search Rental Vehicles"
               onChange={handleFilter}
             />
-            {filteredLocations.length === 0 ? (
+            {filteredVehicles.length === 0 ? (
               <AiOutlineSearch size={20} className="icon text-black" />
             ) : (
               <GrClose
@@ -66,19 +66,19 @@ const HeroVehicle = () => {
               />
             )}
           </div>
-          {filteredLocations.length !== 0 && (
+          {filteredVehicles.length !== 0 && (
             <div className="search-filter mx-auto my-6 flex max-h-56 w-full max-w-[700px] flex-col overflow-hidden overflow-y-auto rounded-lg bg-transparent text-black">
-              {filteredLocations.map(({ locationName, urls, locationId }) => (
-                <Link to={`${locationId}`} key={locationId}>
+              {filteredVehicles.map(({ vehicleName, vehiclePhotoUrl, vehicleId }) => (
+                <Link to={`${vehicleId}`} key={vehicleId}>
                   <div className="bg-blue-200/10 py-3 px-5 text-white hover:bg-blue-200/30">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <img
-                          alt={locationName}
-                          src={urls[0]}
+                          alt={vehicleName}
+                          src={vehiclePhotoUrl}
                           className="h-12 rounded-lg object-cover"
                         />
-                        <p className="mx-4">{locationName}</p>
+                        <p className="mx-4">{vehicleName}</p>
                       </div>
                       <FiChevronRight className="" />
                     </div>
@@ -89,7 +89,7 @@ const HeroVehicle = () => {
           )}
         </div>
         <div>
-          {filteredLocations.length === 0 && (
+          {filteredVehicles.length === 0 && (
             <div>
               <p className="text-gray h- mt-10">Scroll Down to Find more...</p>
               <Link to="#location-grid">

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import touristGuideAppAPI from "../../apis/touristGuideAppAPI";
+import avatar from "../../assets/images/avatar/avatar.png";
 
 export const fetchAppUser = createAsyncThunk(
   "appUser/fetchAppUser",
@@ -16,8 +17,10 @@ export const fetchAppUser = createAsyncThunk(
 );
 
 const initialState = {
-  appUser: {},
-  loading: "idle", //"idle" | "pending" | "succeeded" | "failed"
+  appUser: {
+    userPhotoUrl: avatar
+  },
+  loading: "idle" //"idle" | "pending" | "succeeded" | "failed"
 };
 
 // Then, handle actions in your reducers:

@@ -9,6 +9,7 @@ import Swal from "sweetalert2";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 import { v4 } from "uuid";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [image, setImage] = useState(null);
@@ -24,19 +25,23 @@ const Register = () => {
     setImage(newImage);
   };
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
+    e.preventDefault();
+
     if (image == null) {
       return;
     }
-
     const uploadTask = ref(storage, `profileImages/${"img" + v4()}`);
 
     uploadBytes(uploadTask, image)
       .then((snapshot) => {
-
         getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
           setUrl(url);
+          toast.success("Successfully Uploaded");
+        }).catch((err) => {
+          console.log(err);
+          toast.error("Uploading Error");
         });
       });
   };
@@ -190,8 +195,8 @@ const Register = () => {
                 className="form-control block w-full px-3 py-1.5 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
                 type="file" id="inputGroupFile02" onChange={handleChange}
                 aria-describedby="inputGroupFileAddon02"
-                onClick={handleUpload}
                 aria-label="Upload" />
+              <button onClick={handleUpload}>Upload</button>
             </div>
           </div>
 

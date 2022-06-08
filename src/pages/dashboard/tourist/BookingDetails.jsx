@@ -107,10 +107,10 @@ function BookingDetails() {
                       }
 
                   </div>
-                  <button class="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
+                  <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
                     Update
                   </button>
-                  <button class="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
+                  <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
                     Delete
                   </button>
 

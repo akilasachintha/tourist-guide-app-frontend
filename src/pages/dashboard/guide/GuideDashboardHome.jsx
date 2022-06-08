@@ -61,7 +61,7 @@ export default function GuideDashboardHome() {
               </NavLink>
 
               <NavLink to="/dashboard/guides/profile">
-                <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
+                <li className="my-4 cursor-pointer py-2 pl-6 text-sm leading-3">
                   <div className="flex items-center">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"

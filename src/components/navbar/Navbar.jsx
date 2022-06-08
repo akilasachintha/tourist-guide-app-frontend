@@ -5,6 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import Logo from "../logo/Logo";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAppUser } from "../../redux/store/appUserSlice";
+import avatar from "../../assets/images/avatar/avatar.png";
 
 const Navbar = () => {
   const [nav, setNav] = useState(false);
@@ -150,7 +151,7 @@ const Navbar = () => {
               <div className="relative">
                 <img
                   className="h-10 w-10 rounded-full object-cover"
-                  src={appUser.userPhotoUrl}
+                  src={appUser.userPhotoUrl || avatar}
                   alt="avatar"
                 />
                 <div
@@ -223,7 +224,6 @@ const Navbar = () => {
               {navItem.name}
             </div>
           ))}
-
           <Link to="/auth/login">
             <button className="my-6">Sign In</button>
           </Link>

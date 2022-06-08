@@ -1,36 +1,16 @@
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-function VehicleH(props) {
+function VehicleH() {
   const { vehicles } = useSelector((state) => state.vehicles);
 
-  const price = 10000;
-  let percentOff;
-  let offPrice = `${price}Ks`;
-
-  if (props.percentOff && props.percentOff > 0) {
-    percentOff = (
-      <div
-        className="badge bg-dim py-2 text-white position-absolute"
-        style={{ top: "0.5rem", left: "0.5rem" }}
-      >
-        {props.percentOff}% OFF
-      </div>
-    );
-    offPrice = (
-      <>
-        <del>{price}Ks</del> {price - (props.percentOff * price) / 100}Ks
-      </>
-    );
-  }
   return (
     <div className="col">
       {vehicles.map((vehicle) => (
         <div className="card shadow-sm" key={vehicle.vehicleNo}>
           <div className="row g-0">
             <div className="col-4">
-              <Link to="/products/1">
-                {percentOff}
+              <Link to={`/vehicles/${vehicle.vehicleId}`}>
                 <img
                   className="rounded-start bg-dark cover w-100 h-100"
                   alt=""
@@ -48,9 +28,11 @@ function VehicleH(props) {
                   {vehicle.vehicleType}
                 </span>
                   <div className="mt-auto d-flex">
-                    <button className="btn btn-outline-dark ms-auto">
-                      View Details
-                    </button>
+                    <Link to={`/vehicles/${vehicle.vehicleId}`} className={"btn btn-outline-dark ms-auto"}>
+                      <button>
+                        View Details
+                      </button>
+                    </Link>
                   </div>
                 </div>
               </div>

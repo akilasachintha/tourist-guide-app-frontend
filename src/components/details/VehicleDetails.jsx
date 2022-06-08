@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import beachVideo2 from "../../assets/videos/beachVideo2.mp4";
+import vehicleVideo from "../../assets/videos/vehicleVideo.mp4";
 
-const LocationDetails = () => {
+const VehicleDetails = () => {
   const [active, setActive] = useState(0);
   const { id } = useParams();
 
-  const { locations } = useSelector((state) => state.locations);
+  const { vehicles } = useSelector((state) => state.vehicles);
 
-  const location = locations.filter(({ locationId }) => {
-    return locationId.toString() === id;
+  const vehicle = vehicles.filter(({ vehicleId }) => {
+    return vehicleId.toString() === id;
   });
 
   const handleCarole = (index) => {
@@ -21,7 +21,7 @@ const LocationDetails = () => {
     <div className="relative h-screen w-full">
       <video
         className="h-full w-full object-cover"
-        src={beachVideo2}
+        src={vehicleVideo}
         autoPlay={true}
         loop={true}
         muted={true}
@@ -29,25 +29,14 @@ const LocationDetails = () => {
       <div className="absolute top-0 left-0 h-full w-full bg-gray-900/30"></div>
       <div className="absolute top-0 flex h-full w-full flex-col justify-center p-4 text-center text-white">
         <div className="m-auto mt-48 w-9/12 overflow-hidden rounded-xl bg-blue-200 bg-opacity-25">
-          {location.length !== 0 && (
+          {vehicle.length !== 0 && (
             <div className="items-start justify-center rounded-xl p-10 shadow-lg md:flex">
               <div className="lg:w-[38rem]">
                 <img
-                  className="hidden rounded-lg object-cover lg:block lg:h-[22rem] lg:w-[38rem]"
-                  alt="img of a girl posing"
-                  src={location[0].urls[active]}
+                  className="hidden rounded-lg object-cover lg:block h-[440px]"
+                  alt="img of a vehicle"
+                  src={vehicle[0].vehiclePhotoUrl}
                 />
-                <div className="mt-3 flex items-center justify-between  space-x-4 space-x-0 overflow-hidden">
-                  {location[0].urls.map((url, index) => (
-                    <img
-                      alt="img-tag-one"
-                      key={index}
-                      className="hidden rounded-lg object-cover lg:block lg:h-48 lg:w-48 lg:w-full"
-                      src={url}
-                      onClick={() => handleCarole(index)}
-                    />
-                  ))}
-                </div>
               </div>
 
               <div className="mt-6 md:ml-6 md:mt-0 md:w-1/2 lg:ml-8 lg:w-[30rem] xl:w-2/5">
@@ -61,7 +50,7 @@ const LocationDetails = () => {
 
 						"
                   >
-                    {location[0].locationName}
+                    {vehicle[0].vehicleName}
                   </h1>
                 </div>
                 <div className="flex items-center justify-between border-b border-gray-200 py-4">
@@ -73,25 +62,25 @@ const LocationDetails = () => {
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-b border-gray-200 py-4">
-                  <p className="text-base leading-4 ">Category</p>
+                  <p className="text-base leading-4 ">Vehicle Type</p>
                   <div className="flex items-center justify-center">
                     <p className="text-sm leading-none">
-                      {location[0].category}
+                      {vehicle[0].vehicleType}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between border-b border-gray-200 py-4">
-                  <p className="text-base leading-4">District</p>
+                  <p className="text-base leading-4">Condition</p>
                   <div className="flex items-center justify-center">
                     <p className="text-sm leading-none">
-                      {location[0].district}
+                      {vehicle[0].vehicleCondition}
                     </p>
                   </div>
                 </div>
                 <div className="flex items-center justify-between py-4">
-                  <p className="leading-40 text-base">Town</p>
+                  <p className="leading-40 text-base">Price For Km</p>
                   <div className="flex items-center justify-center">
-                    <p className="text-sm leading-none">{location[0].town}</p>
+                    <p className="text-sm leading-none">{vehicle[0].priceForKm}</p>
                   </div>
                 </div>
                 <Link
@@ -147,11 +136,11 @@ const LocationDetails = () => {
                       strokeLinejoin="round"
                     />
                   </svg>
-                  Book a Hotel Near to Location
+                  Book This Vehicle
                 </Link>
                 <div>
                   <p className="mt-7 text-base leading-normal lg:leading-tight">
-                    {location[0].description}
+                    {/*{location[0].description}*/}
                   </p>
                 </div>
               </div>
@@ -163,4 +152,4 @@ const LocationDetails = () => {
   );
 };
 
-export default LocationDetails;
+export default VehicleDetails;

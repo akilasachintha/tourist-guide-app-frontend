@@ -36,6 +36,10 @@ export default function AddNewVehicle() {
         getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
           setUrl(url);
+          toast.success("Upload Successfully");
+        }).catch((err) => {
+          console.log(err);
+          toast.error("Upload Error");
         });
       });
   };
@@ -57,7 +61,7 @@ export default function AddNewVehicle() {
       let user = JSON.parse(localStorage.getItem("user"));
 
       touristGuideAppApi
-        .post(`/vehicles/`, {
+        .post(`vehicles/`, {
           vehicleNo: values.vehicleNo,
           vehicleType: values.vehicleType,
           vehicleName: values.vehicleName,

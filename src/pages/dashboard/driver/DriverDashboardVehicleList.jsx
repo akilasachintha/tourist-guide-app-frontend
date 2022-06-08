@@ -3,12 +3,14 @@ import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchVehiclesById } from "../../../redux/store/vehiclesByIdSlice";
+import Swal from "sweetalert2";
+import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
+import { toast } from "react-toastify";
 
 const PER_PAGE = 4;
 
 const DriverDashboardVehicleList = () => {
   const { vehiclesById } = useSelector((state) => state.vehiclesById);
-  const { vehicles } = useSelector((state) => state.vehicles);
   const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
 
@@ -26,6 +28,32 @@ const DriverDashboardVehicleList = () => {
     };
   }, [dispatch]);
 
+  function deleteVehicle(vehicleId) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        touristGuideAppApi
+          .delete(`/vehicles/${vehicleId}`)
+          .then((res) => {
+            console.log(vehicleId)
+            console.log(res.data);
+            dispatch(fetchVehiclesById());
+          })
+          .catch((err) => {
+            console.log("Err", err);
+            toast.error("Deletion Error");
+          });
+        Swal.fire("Deleted!", "Your file has been deleted.", "success");
+      }
+    });
+  }
 
   const currentPageData = vehiclesById
     .slice(offset, offset + PER_PAGE)
@@ -37,6 +65,11 @@ const DriverDashboardVehicleList = () => {
         <td>
           <div className="ml-5">
             <div className="relative flex flex-shrink-0 items-center justify-center rounded-sm bg-gray-200">
+              <img
+                className="h-10 w-10 rounded"
+                src={vehicle.vehiclePhotoUrl}
+                alt="Default avatar"
+              />
               <div className="check-icon hidden rounded-sm bg-indigo-700 text-white">
                 <svg
                   className="icon icon-tabler icon-tabler-check"
@@ -260,55 +293,17 @@ const DriverDashboardVehicleList = () => {
                     <i className="bi bi-pencil"></i> Edit
                   </button>
                 </li>
+                <li
+                  className="list-item"
+                  onClick={() => deleteVehicle(vehicle.vehicleId)}
+                >
+                  <button className="dropdown-item icon-red" type="button">
+                    <i className="bi bi-trash"></i> Delete
+                  </button>
+                </li>
               </ul>
             </div>
           </div>
-          {/*<div className="relative px-5 pt-2">*/}
-          {/*  <button*/}
-          {/*    className="rounded-md focus:outline-none focus:ring-2"*/}
-          {/*    role="button"*/}
-          {/*    aria-label="option"*/}
-          {/*  >*/}
-          {/*    <svg*/}
-          {/*      className="dropbtn"*/}
-          {/*      xmlns="http://www.w3.org/2000/svg"*/}
-          {/*      width={20}*/}
-          {/*      height={20}*/}
-          {/*      viewBox="0 0 20 20"*/}
-          {/*      fill="none"*/}
-          {/*    >*/}
-          {/*      <path*/}
-          {/*        d="M4.16667 10.8332C4.62691 10.8332 5 10.4601 5 9.99984C5 9.5396 4.62691 9.1665 4.16667 9.1665C3.70643 9.1665 3.33334 9.5396 3.33334 9.99984C3.33334 10.4601 3.70643 10.8332 4.16667 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*      <path*/}
-          {/*        d="M10 10.8332C10.4602 10.8332 10.8333 10.4601 10.8333 9.99984C10.8333 9.5396 10.4602 9.1665 10 9.1665C9.53976 9.1665 9.16666 9.5396 9.16666 9.99984C9.16666 10.4601 9.53976 10.8332 10 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*      <path*/}
-          {/*        d="M15.8333 10.8332C16.2936 10.8332 16.6667 10.4601 16.6667 9.99984C16.6667 9.5396 16.2936 9.1665 15.8333 9.1665C15.3731 9.1665 15 9.5396 15 9.99984C15 10.4601 15.3731 10.8332 15.8333 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*    </svg>*/}
-          {/*  </button>*/}
-          {/*  <div className="dropdown-content absolute right-0 z-30 mr-6 hidden w-24 bg-white shadow">*/}
-          {/*    <div className="w-full cursor-pointer py-4 px-4 text-xs hover:bg-indigo-700 hover:text-white focus:text-indigo-600 focus:outline-none">*/}
-          {/*      <p>Edit</p>*/}
-          {/*    </div>*/}
-          {/*    <div className="w-full cursor-pointer py-4 px-4 text-xs hover:bg-indigo-700 hover:text-white focus:text-indigo-600 focus:outline-none">*/}
-          {/*      <p>Delete</p>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
         </td>
       </tr>
     ));

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
+import { fetchBookings } from "../../../redux/store/bookingsSlice";
 
 export default function TouristDashboardHome() {
   const [show, setShow] = useState(false);
@@ -12,6 +13,9 @@ export default function TouristDashboardHome() {
 
   useEffect(() => {
     dispatch(fetchAppUser());
+
+
+
   }, [dispatch]);
 
   function logOut() {
@@ -61,7 +65,7 @@ export default function TouristDashboardHome() {
               </NavLink>
 
               <NavLink
-                to="/dashboard/drivers/vehicles"
+                to="/dashboard/tourists/"
                 className="side-item-active bg-black"
               >
                 <li className="mt-4 mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
@@ -86,7 +90,7 @@ export default function TouristDashboardHome() {
                 </li>
               </NavLink>
 
-              <NavLink to="/dashboard/drivers/profile">
+              <NavLink to="/dashboard/tourists/profile">
                 <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
                   <div className="flex items-center">
                     <svg
@@ -314,7 +318,7 @@ export default function TouristDashboardHome() {
                       <div className="flex items-center">
                         <img
                           alt="profile-pic"
-                          src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
+                          src={appUser.userPhotoUrl}
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
@@ -479,7 +483,7 @@ export default function TouristDashboardHome() {
                         <div className="relative">
                           <img
                             className="h-10 w-10 rounded-full object-cover"
-                            src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
+                            src={appUser.userPhotoUrl}
                             alt="avatar"
                           />
                           <div
@@ -539,9 +543,9 @@ export default function TouristDashboardHome() {
             </nav>
             {/* Navigation ends */}
 
-            {/* Remove class [ h-64 ] when adding a card block */}
+            {/* Remove Name [ h-64 ] when adding a card block */}
             <div className="md:w-5/5 container mx-auto w-11/12 py-10 px-6">
-              {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
+              {/* Remove className [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
               <div className="h-full w-full rounded">
                 {/* Place your content here */}
                 <Outlet />

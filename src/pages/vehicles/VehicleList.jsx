@@ -180,12 +180,14 @@ function VehicleList() {
                       placeholder="Search Vehicles..."
                       aria-label="search input"
                     />
-                    <button className="btn btn-dark"></button>
+                    <button className="btn btn-dark"><i className="bi bi-search"></i></button>
                   </div>
                   <button
                     className="btn btn-dark ms-2 d-none d-lg-inline"
                     onClick={changeViewType}
-                  ></button>
+                  >
+                    <i className="bi bi-arrow-down-square"></i>
+                  </button>
                 </div>
               </div>
               <div
@@ -200,11 +202,10 @@ function VehicleList() {
                     return (
                       <div className="col" key={vehicle.vehicleNo}>
                         <div className="card shadow-sm">
-                          <Link to="/vehicles/1">
+                          <Link to={`/vehicles/${vehicle.vehicleId}`}>
                             <img
-                              className="card-img-top bg-dark cover"
-                              height="200"
-                              alt=""
+                              className="card-img-top bg-dark cover h-[300px] overflow-auto"
+                              alt={vehicle.vehicleName}
                               src={vehicle.vehiclePhotoUrl}
                             />
                           </Link>
@@ -214,9 +215,11 @@ function VehicleList() {
                             </h5>
                             <p className="card-text text-center text-muted mb-0">10000</p>
                             <div className="d-grid d-block">
-                              <button className="btn btn-outline-dark mt-3">
-                                View Details
-                              </button>
+                              <Link to={`/vehicles/${vehicle.vehicleId}`} className="btn btn-outline-dark mt-3">
+                                <button >
+                                  View Details
+                                </button>
+                              </Link>
                             </div>
                           </div>
                         </div>

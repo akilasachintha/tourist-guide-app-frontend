@@ -1,16 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Logo from "../logo/Logo";
 import LogoTeal from "../logo/LogoTeal";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppUser } from "../../redux/store/appUserSlice";
 
 const NavbarWhite = () => {
   const [nav, setNav] = useState(false);
+  const { appUser } = useSelector((state) => state.appUser);
+  let user = JSON.parse(localStorage.getItem("user"));
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchAppUser());
+    };
+  }, [dispatch]);
 
   const handleNav = () => {
     setNav(!nav);
   };
+
+  function logOut() {
+    localStorage.removeItem("user");
+    navigate("/");
+  }
+
+  function navigateToProfile() {
+    if(user.userType === "tourist"){
+      navigate("/dashboard/tourists");
+    }
+    else if(user.userType === "driver"){
+      navigate("/dashboard/drivers");
+    }
+    else if(user.userType === "hotelOwner"){
+      navigate("/dashboard/hotels");
+    }
+    else if(user.userType === "guide"){
+      navigate("/dashboard/guides");
+    }else{
+      navigate("/auth/login");
+    }
+  }
+
 
   const navItems = [
     {
@@ -58,7 +93,7 @@ const NavbarWhite = () => {
         <button className="mx-2 my-2 rounded border border-white bg-white px-6 py-2 text-base text-black hover:bg-transparent hover:text-white active:bg-white">
           Sign In
         </button>
-        <button className="mx-2 my-2 rounded border border-white bg-transparent px-6 py-2 text-base  text-white hover:bg-white hover:text-black">
+        <button className="mx-2 my-2 rounded border border-white bg-transparent px-6 py-2 text-base  text-black hover:bg-white hover:text-black">
           Sign Up
         </button>
       </div>
