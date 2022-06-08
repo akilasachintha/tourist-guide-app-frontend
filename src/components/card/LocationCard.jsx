@@ -57,7 +57,7 @@ const LocationCard = ({ locations }) => {
             </p>
           </div>
           <p className=" cursor-pointer text-base font-normal leading-4 text-gray-600 duration-100 hover:underline">
-            Showing {locations.length} products
+            Showing {locations.length} locations
           </p>
         </div>
 
@@ -100,7 +100,7 @@ const LocationCard = ({ locations }) => {
         ) : (
           <div className=" flex items-center justify-center">
             <button
-              className=" mt-10 w-full bg-gray-800 py-5 text-base font-medium leading-4 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 md:mt-12 md:w-auto md:px-16 lg:mt-28"
+              className=" mt-10 w-full bg-gray-800 py-3 text-base font-medium leading-4 text-white hover:bg-gray-700 focus:ring-2 focus:ring-gray-800 focus:ring-offset-2 md:mt-12 md:w-auto md:px-16 lg:mt-28"
               onClick={() => loadMore()}
             >
               Load More

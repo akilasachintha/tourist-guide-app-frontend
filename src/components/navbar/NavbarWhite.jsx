@@ -71,7 +71,7 @@ const NavbarWhite = () => {
   ];
 
   return (
-    <nav className="fixed top-0 z-10 flex h-20 w-full items-center justify-between bg-white px-4 text-black md:text-2xl">
+    <nav className="fixed top-0 z-10 flex h-20 w-full items-center justify-between bg-teal-400 px-4 text-black md:text-2xl">
       <div>
         <LogoTeal />
       </div>
