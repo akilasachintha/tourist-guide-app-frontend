@@ -152,20 +152,25 @@ export default function AddNewLocation() {
                     </div>
 
                     <div className="col-span-6 sm:col-span-3">
-                      <label
-                        htmlFor="district"
-                        className="block text-sm font-medium text-gray-700"
-                      >
-                        District
-                      </label>
-                      <input
-                        type="text"
-                        name="district"
-                        autoComplete="family-name"
-                        className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                        value={formik.values.district}
-                        onChange={formik.handleChange}
-                      />
+                      {/*<label*/}
+                      {/*  htmlFor="district"*/}
+                      {/*  className="block text-sm font-medium text-gray-700"*/}
+                      {/*>*/}
+                      {/*  District*/}
+                      {/*</label>*/}
+                      {/*<input*/}
+                      {/*  type="text"*/}
+                      {/*  name="district"*/}
+                      {/*  autoComplete="family-name"*/}
+                      {/*  className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"*/}
+                      {/*  value={formik.values.district}*/}
+                      {/*  onChange={formik.handleChange}*/}
+                      {/*/>*/}
+                      <select className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {districts.map((district) => (
+                          <option>{district}</option>
+                        ))}
+                      </select>
                     </div>
                   </div>
 

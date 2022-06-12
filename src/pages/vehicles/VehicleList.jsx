@@ -226,9 +226,11 @@ function VehicleList() {
                       </div>
                     );
                   }
-                  return (
-                    <VehicleH key={vehicle.vehicleNo}/>
-                  );
+                  else{
+                    return (
+                      <VehicleH key={vehicle.vehicleNo}/>
+                    );
+                  }
                 })}
               </div>
             </div>

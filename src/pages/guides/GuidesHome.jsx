@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 function GuidesHome() {
   const { guides } = useSelector((state) => state.guides);
+  console.log(guides);
 
   return (
     <div>
@@ -14,7 +15,7 @@ function GuidesHome() {
               <div className="p-3 bg-white rounded shadow-md">
                 <div>
                   <div className="relative w-full mb-3 h-62 lg:mb-0">
-                    <img src={guide.userPhotoUrl} alt="Just a flower" className="object-fill w-full h-full rounded" />
+                    <img src={guide.userPhotoUrl} alt="Not Submit Image" className="object-fill w-full h-full rounded" />
                   </div>
                   <div className="flex-auto p-2 justify-evenly">
                     <div className="flex flex-wrap ">
@@ -24,7 +25,8 @@ function GuidesHome() {
                         </h2>
                       </div>
                     </div>
-                    <div className="mt-1 text-xl font-semibold">{guide.rati}</div>
+                    <div className="mt-1 text-xl font-semibold">{guide.rating}</div>
+                    <div className="mt-1 text-xl font-semibold">{guide.nic}</div>
                   </div>
                 </div>
               </div>
