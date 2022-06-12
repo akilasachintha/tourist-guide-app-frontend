@@ -63,7 +63,7 @@ const App = () => {
             <Route path="/hotels/" element={<HomeH />} />
             <Route path="/driver/" element={<DriverDashboardHome />} />
             <Route path="/hotels/list" element={<List />} />
-            <Route path="/hotels/list/:id" element={<Hoteldetails/>}/>
+            <Route path="/hotels/list/exathotel" element={<Hoteldetails/>}/>
           </Route>
 
             <Route path="guides" element={<UserViewRoutesTwo />}>

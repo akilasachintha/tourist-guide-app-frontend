@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
-import { fetchBookings } from "../../../redux/store/bookingsSlice";
 
 export default function TouristDashboardHome() {
   const [show, setShow] = useState(false);
@@ -13,14 +12,11 @@ export default function TouristDashboardHome() {
 
   useEffect(() => {
     dispatch(fetchAppUser());
-
-
-
   }, [dispatch]);
 
   function logOut() {
-      localStorage.removeItem("user");
-      navigate("/auth/login");
+    localStorage.removeItem("user");
+    navigate("/auth/login");
   }
 
   return (
@@ -36,7 +32,7 @@ export default function TouristDashboardHome() {
             </div>
             {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
             <ul aria-orientation="vertical" className=" py-6">
-              <NavLink to="/dashboard/drivers" className="side-item-active">
+              <NavLink to="/dashboard/tourists" className="side-item-active">
                 <li className="cursor-pointer pl-6 text-base text-sm leading-3">
                   <div className="flex items-center">
                     <div>
@@ -65,7 +61,7 @@ export default function TouristDashboardHome() {
               </NavLink>
 
               <NavLink
-                to="/dashboard/tourists/"
+                to="/dashboard/tourists/profile"
                 className="side-item-active bg-black"
               >
                 <li className="mt-4 mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
@@ -90,7 +86,7 @@ export default function TouristDashboardHome() {
                 </li>
               </NavLink>
 
-              <NavLink to="/dashboard/tourists/profile">
+              <NavLink to="/dashboard/tourists">
                 <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
                   <div className="flex items-center">
                     <svg
@@ -114,32 +110,32 @@ export default function TouristDashboardHome() {
                 </li>
               </NavLink>
               <NavLink to="/dashboard/tourists/bookings">
-              <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-code"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="7 8 3 12 7 16" />
-                    <polyline points="17 8 21 12 17 16" />
-                    <line x1={14} y1={4} x2={10} y2={20} />
-                  </svg>
-                  <span className="ml-2">Bookings</span>
-                </div>
-              </li>
+                <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
+                  <div className="flex items-center">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="icon icon-tabler icon-tabler-code"
+                      width={20}
+                      height={20}
+                      viewBox="0 0 24 24"
+                      strokeWidth="1.5"
+                      stroke="currentColor"
+                      fill="none"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" />
+                      <polyline points="7 8 3 12 7 16" />
+                      <polyline points="17 8 21 12 17 16" />
+                      <line x1={14} y1={4} x2={10} y2={20} />
+                    </svg>
+                    <span className="ml-2">Bookings</span>
+                  </div>
+                </li>
               </NavLink>
             </ul>
           </div>
-          
+
           {/*Mobile responsive sidebar*/}
           <div
             className={
@@ -455,7 +451,10 @@ export default function TouristDashboardHome() {
                                 <span className="ml-2 text-sm">My Profile</span>
                               </div>
                             </li>
-                            <li className="mt-2 flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700" onClick={() => logOut()}>
+                            <li
+                              className="mt-2 flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700"
+                              onClick={() => logOut()}
+                            >
                               <div className="flex items-center">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -486,11 +485,13 @@ export default function TouristDashboardHome() {
                             src={appUser.userPhotoUrl}
                             alt="avatar"
                           />
-                          <div
-                            className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
+                          <div className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
                         </div>
                       </div>
-                      <p className="mx-3 text-sm text-gray-800"> {appUser.name} </p>
+                      <p className="mx-3 text-sm text-gray-800">
+                        {" "}
+                        {appUser.name}{" "}
+                      </p>
                       <div className="cursor-pointer text-gray-600">
                         <svg
                           aria-haspopup="true"

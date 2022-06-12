@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { toast } from "react-toastify";
-import { fetchHotels, fetchLocations } from "../../../redux/store/hotelslice";
+import { fetchHotels } from "../../../redux/store/hotelslice";
 
 const PER_PAGE = 4;
 
@@ -217,6 +217,9 @@ const HotelDashboardList = () => {
             <p className="ml-2 text-sm leading-none text-gray-600">
               {hotel.town}
             </p>
+            <p className="ml-2 text-sm leading-none text-gray-600">
+              {hotel.district}
+            </p>
           </div>
         </td>
         <td className="pl-5">
@@ -353,7 +356,7 @@ const HotelDashboardList = () => {
               </div>
               <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
-                  <Link to="/roomdetails">
+                  <Link to="./roomdetails">
                    <p>Rooms</p>
                   </Link>
                 </div>

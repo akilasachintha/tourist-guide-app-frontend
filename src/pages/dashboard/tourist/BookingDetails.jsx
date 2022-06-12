@@ -7,11 +7,13 @@ import img2 from "./pics/vehicle.jpg";
 function BookingDetails() {
   const { id } = useParams();
   const { bookings } = useSelector((state) => state.bookings);
-  const [showHotel,setShowHotel] = useState(false)
-  const [showDriver,setShowDriver] = useState(false)
-  const [showGuide,setShowGuide] = useState(false)
-  const dispatch = useDispatch()
-
+  const { hotels } = useSelector((state) => state.hotels);
+  const [showHotel, setShowHotel] = useState(false);
+  const [showDriver, setShowDriver] = useState(false);
+  const [showGuide, setShowGuide] = useState(false);
+  const dispatch = useDispatch();
+  const { myHotelId, setMyHotelId } = useState(4);
+  const { myHotel, setMyHotel } = useState([]);
 
   const booking = bookings.filter(({ bookingId }) => {
     return bookingId.toString() === id;
@@ -62,60 +64,73 @@ function BookingDetails() {
                 <span className="tracking-wide">About</span>
               </div>
               <div className="text-gray-700">
-              {booking.length !== 0 &&(               
-                   <div className="grid text-sm md:grid-cols-2">
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Booking ID</div>
-                    <div className="px-4 py-2">{booking[0].bookingId}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Booking Status</div>
-                    <div className="px-4 py-2">{booking[0].bookingStatus}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Check In Date</div>
-                    <div className="px-4 py-2">{booking[0].checkInDate}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Check Out Date</div>
-                    <div className="px-4 py-2">{booking[0].checkOutDate}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Paid Amount</div>
-                    <div className="px-4 py-2">{booking[0].paidAmount}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Paid Date</div>
-                    <div className="px-4 py-2">{booking[0].date}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Paid Time</div>
-                    <div className="px-4 py-2">{booking[0].time}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Advance Payment </div>
-                    <div className="px-4 py-2">{booking[0].advancedPayment}</div>
-                  </div>
-                  <div className="grid grid-cols-2">
-                      {
-                          showHotel&<div>
+                {booking.length !== 0 && (
+                  <div className="grid text-sm md:grid-cols-2">
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">Booking ID</div>
+                      <div className="px-4 py-2">{booking[0].bookingId}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Booking Status
+                      </div>
+                      <div className="px-4 py-2">{booking[0].hotelId}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Check In Date
+                      </div>
+                      <div className="px-4 py-2">{booking[0].checkInDate}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Check Out Date
+                      </div>
+                      <div className="px-4 py-2">{booking[0].checkOutDate}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">Paid Amount</div>
+                      <div className="px-4 py-2">{booking[0].paidAmount}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">Paid Date</div>
+                      <div className="px-4 py-2">{booking[0].date}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">Paid Time</div>
+                      <div className="px-4 py-2">{booking[0].time}</div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      <div className="px-4 py-2 font-semibold">
+                        Advance Payment{" "}
+                      </div>
+                      <div className="px-4 py-2">
+                        {booking[0].advancedPayment}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2">
+                      {showHotel &
+                      (
+                        <div>
                           <div className="grid grid-cols-2">
-                    <div className="px-4 py-2 font-semibold">Advance Payment </div>
-                    <div className="px-4 py-2">{booking[0].advancedPayment}</div>
-                  </div>
+                            <div className="px-4 py-2 font-semibold">
+                              Advance Payment{" "}
+                            </div>
+                            <div className="px-4 py-2">
+                              {booking[0].advancedPayment}
+                            </div>
                           </div>
-                      }
-
+                        </div>
+                      )}
+                    </div>
+                    <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
+                      Update
+                    </button>
+                    <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
+                      Delete
+                    </button>
                   </div>
-                  <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
-                    Update
-                  </button>
-                  <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
-                    Delete
-                  </button>
-
-                </div>
-              )}
+                )}
               </div>
             </div>
           </div>

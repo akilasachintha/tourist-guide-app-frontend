@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation } from 'react-router-dom';
-
 import "../../styles/hotels/list.css"
-
 import {format} from "date-fns"
 import { DateRange } from 'react-date-range';
 import SearchItemH from '../../components/hotel/SearchItemH';
@@ -68,13 +66,6 @@ const List = () => {
 
           </div>
           <div className="listResult">
-           <SearchItemH />
-           <SearchItemH />
-           <SearchItemH />
-           <SearchItemH />
-           <SearchItemH />
-           <SearchItemH />
-           <SearchItemH />
            <SearchItemH />
           </div>
         </div>

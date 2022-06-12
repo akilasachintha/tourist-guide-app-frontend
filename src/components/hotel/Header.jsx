@@ -42,31 +42,10 @@ const Header = () => {
   return (
     <div className="header">
         <div className="headerContainer">
-        <div className="headerlist">
-            <div className="headerListItem active">
-            <FontAwesomeIcon icon={faBed} />
-            <span>Stays</span>
-            </div>
-            <div className="headerListItem">
-            <FontAwesomeIcon icon={faPlane} />
-            <span>Flights</span>
-            </div>
-            <div className="headerListItem">
-            <FontAwesomeIcon icon={faCar} />
-            <span>car rentals</span>
-            </div>
-            <div className="headerListItem">
-            <FontAwesomeIcon icon={faBed} />
-            <span>Attractions</span>
-            </div>
-            <div className="headerListItem">
-            <FontAwesomeIcon icon={faTaxi} />
-            <span>Airport taxis</span>
-            </div>
-        </div>
-        <h1 className="headerTitle">A lifetime of discounts? It's genius</h1>
-        <p className="headerDiscription">get lot of travel benifits acording to your reqvirment</p>
-        <button className="headerBtn">Sign in / Register</button>
+
+        <h1 className="headerTitle">Enjoyy trvelmate Hotel Booking </h1>
+        <p className="headerDiscription">Looking For Best Place</p>
+        
         <div className="headerSearch">
         <div className="headerSearchItem">
             <FontAwesomeIcon icon={faBed} className="headerIcon" />

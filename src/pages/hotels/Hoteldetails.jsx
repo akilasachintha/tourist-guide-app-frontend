@@ -53,8 +53,6 @@ const Hoteldetails = () => {
   
     return (
       <div>
-        
-        
         <div className="hotelContainer">
           {open && (
             <div className="slider">

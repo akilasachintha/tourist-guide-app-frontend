@@ -91,14 +91,16 @@ export default function AddNewHotel() {
       price:0,
       categoryType:"",
       locationId:0,
-      owner:0
+      owner:0,
+      no:0,
+      description:""
 
     },
     onSubmit: (values) => {
       const obj = urls.map((url) => ({ url }));
       console.log(obj);
 
-      const hotel={name:values.name,town:values.town}
+      const hotel={name:values.name,town:values.town,no:values.no,description:values.description,district:values.district}
       touristGuideAppApi
         .post("/hotel/add", {
           hotel,
@@ -171,7 +173,7 @@ export default function AddNewHotel() {
                             htmlFor="district"
                             className="block text-sm font-medium text-gray-700"
                           >
-                            District
+                            Location
                           </label>
                           <input
                             type="text"
@@ -179,6 +181,39 @@ export default function AddNewHotel() {
                             autoComplete="family-name"
                             className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             value={formik.values.locationId}
+                            onChange={formik.handleChange}
+                          />
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="district"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            DistrictName
+                          </label>
+                          <input
+                            type="text"
+                            name="district"
+                            
+                            className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            value={formik.values.district}
+                            onChange={formik.handleChange}
+                          />
+                          
+                        </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="streetno"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Street No
+                          </label>
+                          <input
+                            type="text"
+                            name="no"
+                            
+                            className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            value={formik.values.no}
                             onChange={formik.handleChange}
                           />
                         </div>
@@ -216,6 +251,24 @@ export default function AddNewHotel() {
                             onChange={formik.handleChange}
                           />
                         </div>
+                        <div className="col-span-6 sm:col-span-3">
+                          <label
+                            htmlFor="category"
+                            className="block text-sm font-medium text-gray-700"
+                          >
+                            Description
+                        
+                          </label>
+                          <input
+                            name="description"
+                            type="text"
+                            className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                            value={formik.values.description}
+                            onChange={formik.handleChange}
+                          />
+                        </div>
+                        
+                        
                       </div>
 
                       

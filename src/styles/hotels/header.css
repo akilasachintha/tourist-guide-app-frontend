@@ -1,5 +1,5 @@
 .header{
-    background-color: #003580;
+    background-color:purple;
     color: white;
     display: flex;
     justify-content: center;
@@ -9,8 +9,12 @@
  .headerContainer{
      width: 100%;
      max-width: 1024px;
-     margin: 70px 0px 100px 0px;
+     margin: 100px 0px 100px 0px;
+
  
+ }
+ .headerTitle{
+     padding-top: 10px;
  }
  .headerlist{
      display: flex;
@@ -21,6 +25,9 @@
      align-items: center;
      gap: 10px;
  
+ }
+ .headerSearchItem>input{
+     color: black;
  }
  .headerListItem.active{
      border: 1px solid white;

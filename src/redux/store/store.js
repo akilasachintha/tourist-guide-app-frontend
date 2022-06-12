@@ -5,6 +5,7 @@ import appUserReducer from "./appUserSlice";
 import authSlice from "./authSlice";
 import vehiclesByIdSlice from "./vehiclesByIdSlice";
 import bookingsSlice from "./bookingsSlice";
+import hotelslice from "./hotelslice";
 import guidesSlice from "./guidesSlice";
 
 export default configureStore({
@@ -14,6 +15,7 @@ export default configureStore({
     appUser: appUserReducer,
     auth: authSlice,
     vehiclesById: vehiclesByIdSlice,
+    hotels:hotelslice,
     bookings: bookingsSlice,
     guides: guidesSlice
   },
