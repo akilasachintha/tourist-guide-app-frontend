@@ -314,7 +314,7 @@ export default function TouristDashboardHome() {
                       <div className="flex items-center">
                         <img
                           alt="profile-pic"
-                          src={appUser.userPhotoUrl}
+                          src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
@@ -482,7 +482,7 @@ export default function TouristDashboardHome() {
                         <div className="relative">
                           <img
                             className="h-10 w-10 rounded-full object-cover"
-                            src={appUser.userPhotoUrl}
+                            src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
                             alt="avatar"
                           />
                           <div className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
@@ -544,9 +544,9 @@ export default function TouristDashboardHome() {
             </nav>
             {/* Navigation ends */}
 
-            {/* Remove Name [ h-64 ] when adding a card block */}
+            {/* Remove class [ h-64 ] when adding a card block */}
             <div className="md:w-5/5 container mx-auto w-11/12 py-10 px-6">
-              {/* Remove className [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
+              {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
               <div className="h-full w-full rounded">
                 {/* Place your content here */}
                 <Outlet />

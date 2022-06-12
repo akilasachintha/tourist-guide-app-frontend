@@ -1,7 +1,9 @@
 import React, {  } from "react";
 import { Link } from "react-router-dom";
-const Userprofile = () => {
+const Userprofile = () => {    
+
 return (
+
     <div className="container mx-auto my-5 p-5">
       <div className="md:flex no-wrap md:-mx-2 ">
         <div className="w-full md:w-3/12 md:mx-2">
@@ -75,7 +77,7 @@ return (
               </div>
             </div>
             <Link to="auth/register">
-            <button type="button" className="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Update My Account</button>
+            <button type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Update My Account</button>
             </Link>
           </div>
          

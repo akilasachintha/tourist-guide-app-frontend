@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { fetchBookings } from "../../../redux/store/bookingsSlice";
 import img2 from "./pics/vehicle.jpg";
+import img5 from "./pics/booking.png"
 
 function BookingDetails() {
   const { id } = useParams();
@@ -22,22 +22,19 @@ function BookingDetails() {
 
   return (
     <div>
+      <div>
       <div className="container mx-auto my-5 p-5">
         <div className="no-wrap md:-mx-2 md:flex ">
           <div className="w-full md:mx-2 md:w-3/12">
             <div className="border-t-4 border-green-400 bg-white p-3">
               <div className="image overflow-hidden">
-                <img
-                  className="mx-auto h-30 w-40"
-                  src={img2}
-                  alt=""
-                />
+                <img className="h-30 mx-auto w-40" src={img5} alt="" />
               </div>
               <h1 className="my-1 text-xl font-bold leading-8 text-gray-900">
-                Toyota Corolla
+                Booking
               </h1>
               <p className="text-sm leading-6 text-gray-500 hover:text-gray-600">
-                Car
+              {booking[0].bookingId}
               </p>
             </div>
             <div className="my-4" />
@@ -120,15 +117,17 @@ function BookingDetails() {
                               {booking[0].advancedPayment}
                             </div>
                           </div>
-                        </div>
+                        </div>                       
                       )}
-                    </div>
-                    <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
-                      Update
+                      
+    <button className="rounded-full white py-1 px-3 font-bold text-white hover:bg-black">
+                      
                     </button>
                     <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
-                      Delete
+                      Change Booking
                     </button>
+    </div>
+                    
                   </div>
                 )}
               </div>
@@ -136,6 +135,8 @@ function BookingDetails() {
           </div>
         </div>
       </div>
+      
+    </div>
     </div>
   );
 }
