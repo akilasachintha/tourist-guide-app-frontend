@@ -18,7 +18,7 @@ const LocationDetails = () => {
   };
 
   return (
-    <div className="relative h-screen w-full">
+    <div className="relative h-full w-full">
       <video
         className="h-full w-full object-cover"
         src={beachVideo2}
@@ -27,8 +27,8 @@ const LocationDetails = () => {
         muted={true}
       />
       <div className="absolute top-0 left-0 h-full w-full bg-gray-900/30"></div>
-      <div className="absolute top-0 flex h-full w-full flex-col justify-center p-4 text-center text-white">
-        <div className="m-auto mt-48 w-9/12 overflow-hidden rounded-xl bg-blue-200 bg-opacity-25">
+      <div className="absolute top-0 flex h-full w-full flex-col justify-center p-2 text-center text-white">
+        <div className="m-auto mt-32 w-9/12 overflow-hidden rounded-xl bg-blue-200 bg-opacity-25">
           {location.length !== 0 && (
             <div className="items-start justify-center rounded-xl p-10 shadow-lg md:flex">
               <div className="lg:w-[38rem]">
@@ -95,7 +95,7 @@ const LocationDetails = () => {
                   </div>
                 </div>
                 <Link
-                  to="/hotels"
+                  to="/checking"
                   className="
 						flex w-full items-center justify-center
 						bg-gray-800
