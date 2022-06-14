@@ -30,11 +30,12 @@ import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
 import Userprofile from "./pages/dashboard/tourist/Userprofile";
 import DriverHome from "./pages/dashboard/driver/DriverHome";
 import VehicleDetailPage from "./pages/vehicles/VehicleDetailPage";
-import Hoteldetails from "./pages/hotels/Hoteldetails";
+import HotelDetails from "./pages/hotels/HotelDetails";
 import HotelRoomDetails from "./pages/dashboard/hotels/HotelRoomDetails";
 import GuideProfile from "./pages/dashboard/guide/GuideProfile";
 import GuidesHome from "./pages/guides/GuidesHome";
 import UserViewRoutesTwo from "./routes/userViewRoutes/UserViewRoutesTwo";
+import HotelBookingForm from "./pages/hotels/HotelBookingForm";
 
 
 const App = () => {
@@ -63,7 +64,8 @@ const App = () => {
             <Route path="/hotels/" element={<HomeH />} />
             <Route path="/driver/" element={<DriverDashboardHome />} />
             <Route path="/hotels/list" element={<List />} />
-            <Route path="/hotels/list/exathotel" element={<Hoteldetails/>}/>
+            <Route path="/hotels/list/:id" element={<HotelDetails/>}/>
+            <Route path="/hotels/list/:id/bookingform" element={<HotelBookingForm/>}/>
           </Route>
 
             <Route path="guides" element={<UserViewRoutesTwo />}>
@@ -93,6 +95,7 @@ const App = () => {
             <Route path="hotellist" element={<HotelDashboardList />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="hotels/add" element={<AddNewHotel />} />
+            <Route path="hotels/add/hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route path="hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route
               path="hotels/add/hotelfeatures"

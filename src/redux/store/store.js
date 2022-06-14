@@ -7,6 +7,7 @@ import vehiclesByIdSlice from "./vehiclesByIdSlice";
 import bookingsSlice from "./bookingsSlice";
 import hotelslice from "./hotelslice";
 import guidesSlice from "./guidesSlice";
+import roomCategorySlice from "./roomCategorySlice";
 
 export default configureStore({
   reducer: {
@@ -17,6 +18,7 @@ export default configureStore({
     vehiclesById: vehiclesByIdSlice,
     hotels:hotelslice,
     bookings: bookingsSlice,
-    guides: guidesSlice
+    guides: guidesSlice,
+    category:roomCategorySlice
   },
 });

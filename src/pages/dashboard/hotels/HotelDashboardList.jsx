@@ -7,7 +7,7 @@ import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { toast } from "react-toastify";
 import { fetchHotels } from "../../../redux/store/hotelslice";
 
-const PER_PAGE = 4;
+const PER_PAGE = 6;
 
 const HotelDashboardList = () => {
   const { loading, hotels } = useSelector((state) => state.hotels);
@@ -15,20 +15,17 @@ const HotelDashboardList = () => {
   const dispatch = useDispatch();
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(10 / PER_PAGE);
+  const pageCount = Math.ceil(hotels.length / PER_PAGE);
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
     setCurrentPage(selectedPage);
   };
 
-
   useEffect(() => {
     dispatch(fetchHotels());
    
   }, [dispatch])
-  
-
 
   const currentPageData = hotels
     .slice(offset, offset + PER_PAGE)
@@ -267,14 +264,14 @@ const HotelDashboardList = () => {
                     <i className="bi bi-pencil"></i> Edit
                   </button>
                 </li>
-                {/* <li
+                { <li
                   className="list-item"
-                  onClick={() => deleteLocation(hotel.hotelId)}
+
                 >
                   <button className="dropdown-item icon-red" type="button">
                     <i className="bi bi-trash"></i> Delete
                   </button>
-                </li> */}
+                </li> }
               </ul>
             </div>
           </div>
@@ -357,13 +354,13 @@ const HotelDashboardList = () => {
               <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
                   <Link to="./roomdetails">
-                   <p>Rooms</p>
+                   <p>Add Rooms</p>
                   </Link>
                 </div>
               </div>
               <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
-                  <p>Features</p>
+                  <p>Room Status</p>
                 </div>
               </div>
             </div>

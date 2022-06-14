@@ -33,38 +33,39 @@ const List = () => {
               </DateRange>)
               }
 
-        
+
             </div>
             <div className="isitem">
               <label>Options</label>
               <div className="isOptions">
-              <div className="isOptionitem">
-                <span className="listoptionText">Min price <small>per night</small></span>
-                 <input type="number"  className="isOptionInput" />
+                <div className="isOptionitem">
+                  <span className="listoptionText">Min price <small>per night</small></span>
+                  <input type="number"  className="isOptionInput" />
+                </div>
+                <div className="isOptionitem">
+                  <span className="listoptionText">Max price <small>per night</small></span>
+                  <input type="number" className="isOptionInput" />
+                </div>
+                <div className="isOptionitem">
+                  <span className="listoptionText">Adult</span>
+                  <input type="number" min={1} className="isOptionInput" placeholder={options.adult} />
+                </div>
+                <div className="isOptionitem">
+                  <span className="listoptionText">Children</span>
+                  <input type="number" min={0} className="isOptionInput" placeholder={options.children} />
+                </div>
+                <div className="isOptionitem">
+                  <span className="listoptionText">Room</span>
+                  <input type="number" min={1} className="isOptionInput" placeholder={options.room} />
+                </div>
+
               </div>
-              <div className="isOptionitem">
-                <span className="listoptionText">Max price <small>per night</small></span>
-                 <input type="number" className="isOptionInput" />
-              </div>
-              <div className="isOptionitem">
-                <span className="listoptionText">Adult</span>
-                 <input type="number" min={1} className="isOptionInput" placeholder={options.adult} />
-              </div>
-              <div className="isOptionitem">
-                <span className="listoptionText">Children</span>
-                 <input type="number" min={0} className="isOptionInput" placeholder={options.children} />
-              </div>
-              <div className="isOptionitem">
-                <span className="listoptionText">Room</span>
-                 <input type="number" min={1} className="isOptionInput" placeholder={options.room} />
-              </div>
-              
-             </div>
-            
+
             </div>
             <button>Search</button>
 
           </div>
+
           <div className="listResult">
            <SearchItemH />
           </div>
