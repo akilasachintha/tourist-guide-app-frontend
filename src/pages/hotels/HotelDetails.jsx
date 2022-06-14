@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 
 
-const Hoteldetails = () => {
+const HotelDetails = () => {
     const [slideNumber, setSlideNumber] = useState(0);
     const [open, setOpen] = useState(false);
   
@@ -137,4 +137,4 @@ const Hoteldetails = () => {
     )
 }
 
-export default Hoteldetails
+export default HotelDetails
