@@ -1,10 +1,14 @@
-import "../../styles/hotels/hoteldetails.css";
+import "../../../styles/hotels/hoteldetails.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCircleArrowLeft,
+  faCircleArrowRight,
+  faCircleXmark,
+  faLocationDot
+} from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-
 
 const HotelDetails = () => {
   const [slideNumber, setSlideNumber] = useState(0);
@@ -56,7 +60,7 @@ const HotelDetails = () => {
 
   return (
     <div>
-      {hotels.length !== 0 && (<div className="hotelContainer">
+      {hotels.length !== 0 &&(<div className="hotelContainer">
         {open && (
           <div className="slider">
             <FontAwesomeIcon
@@ -93,18 +97,16 @@ const HotelDetails = () => {
               Book a stay over $114 at this property and get a free airport taxi
             </span>
           <div className="hotelImages">
-            {
-              photos.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <img
-                    onClick={() => handleOpen(i)}
-                    src={photo.src}
-                    alt=""
-                    className="hotelImg"
-                  />
-                </div>
-              ))
-            }
+            {photos.map((photo, i) => (
+              <div className="hotelImgWrapper" key={i}>
+                <img
+                  onClick={() => handleOpen(i)}
+                  src={photo.src}
+                  alt=""
+                  className="hotelImg"
+                />
+              </div>
+            ))}
           </div>
           <div className="hotelDetails">
             <div className="hotelDetailsTexts">

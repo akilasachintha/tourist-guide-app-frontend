@@ -75,9 +75,14 @@ function VehicleList() {
   const [viewType, setViewType] = useState({ grid: true });
   const { vehicles } = useSelector((state) => state.vehicles);
 
+  const filteredVehicles = vehicles.filter(({ vehicleStatus }) => {
+    return vehicleStatus !== "pending";
+  });
+
+
   function changeViewType() {
     setViewType({
-      grid: !viewType.grid,
+      grid: !viewType.grid
     });
   }
 
@@ -197,7 +202,7 @@ function VehicleList() {
                 }
               >
 
-                { vehicles.map((vehicle) => {
+                {filteredVehicles.map((vehicle) => {
                   if (viewType.grid) {
                     return (
                       <div className="col" key={vehicle.vehicleNo}>
@@ -213,10 +218,10 @@ function VehicleList() {
                             <h5 className="card-title text-center text-dark text-truncate">
                               {vehicle.vehicleName}
                             </h5>
-                            <p className="card-text text-center text-muted mb-0">10000</p>
+                            <p className="card-text text-center text-muted mb-0">{vehicle.priceForKm}</p>
                             <div className="d-grid d-block">
                               <Link to={`/vehicles/${vehicle.vehicleId}`} className="btn btn-outline-dark mt-3">
-                                <button >
+                                <button>
                                   View Details
                                 </button>
                               </Link>

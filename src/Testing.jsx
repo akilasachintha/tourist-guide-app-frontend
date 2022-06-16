@@ -1,89 +1,74 @@
-import React, { useState } from "react";
-import DatePicker from "react-datepicker";
+import { useState } from "react";
+import { StarIcon } from "@heroicons/react/solid";
+import { RadioGroup } from "@headlessui/react";
+
+
+const product = {
+  name: "Basic Tee 6-Pack",
+  price: "$192",
+  href: "#",
+  breadcrumbs: [
+    { id: 1, name: "Men", href: "#" },
+    { id: 2, name: "Clothing", href: "#" }
+  ],
+  images: [
+    {
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg",
+      alt: "Two each of gray, white, and black shirts laying flat."
+    },
+    {
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg",
+      alt: "Model wearing plain black basic tee."
+    },
+    {
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg",
+      alt: "Model wearing plain gray basic tee."
+    },
+    {
+      src: "https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg",
+      alt: "Model wearing plain white basic tee."
+    }
+  ],
+  colors: [
+    { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
+    { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
+    { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" }
+  ],
+  sizes: [
+    { name: "XXS", inStock: false },
+    { name: "XS", inStock: true },
+    { name: "S", inStock: true },
+    { name: "M", inStock: true },
+    { name: "L", inStock: true },
+    { name: "XL", inStock: true },
+    { name: "2XL", inStock: true },
+    { name: "3XL", inStock: true }
+  ],
+  description:
+    "The Basic Tee 6-Pack allows you to fully express your vibrant personality with three grayscale options. Feeling adventurous? Put on a heather gray tee. Want to be a trendsetter? Try our exclusive colorway: \"Black\". Need to add an extra pop of color to your outfit? Our white tee has you covered.",
+  highlights: [
+    "Hand cut and sewn locally",
+    "Dyed with our proprietary colors",
+    "Pre-washed & pre-shrunk",
+    "Ultra-soft 100% cotton"
+  ],
+  details:
+    "The 6-Pack includes two black, two white, and two heather gray Basic Tees. Sign up for our subscription service and be the first to get new, exciting colors, like our upcoming \"Charcoal Gray\" limited release."
+};
+const reviews = { href: "#", average: 4, totalCount: 117 };
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
 
 const Testing = () => {
-  const [startDate, setStartDate] = useState(new Date());
+
+  const [selectedColor, setSelectedColor] = useState(product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(product.sizes[2]);
+
   return (
-    <div>
-      <div className="container my-5">
-        <div className="row">
-          <div className="col-md-10 mx-auto col-12 card shadow-lg border-0 p-4">
-            <div>
-              <h1 className="text-3xl text-black align-middle my-2 text-center">Vehicle Booking</h1>
-            </div>
-            <div className="row">
-              <div className="col-md-6 col-12 my-auto">
-                <img
-                  src="https://education.github.com/assets/pack/opengraph-image-c6d692948bb5fbf237b8a72d6576b4dcc84586335b522a6036904fc16ec7eccd.png"
-                  className="w-75" alt="selected room" />
-              </div>
-              <div className="col-md-6 col-12">
-                <table className="table">
-                  <thead className="thead-light">
-                  <tr>
-                    <th>Room Type</th>
-                    <td>Room Type</td>
-                  </tr>
-                  <tr>
-                    <th>Capacity</th>
-                    <td>Capacity</td>
-                  </tr>
-                  <tr>
-                    <th>Size</th>
-                    <td>Size sqft.</td>
-                  </tr>
-                  <tr>
-                    <th>Breakfast</th>
-                    <td>Not Included</td>
-                  </tr>
-                  <tr>
-                    <th>Pets</th>
-                    <td>Allowed</td>
-                  </tr>
-                  </thead>
-                </table>
-              </div>
-            </div>
-            <div className="row my-3">
-              <div className="col-md-6 col-12">
-                <div className="form-group">
-                  <label htmlFor="Fromdate" className="font-weight-bolder mr-3">From Date </label>
-                  <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="form-control" />
-                  {/*<DatePicker selected={this.state.startDate} onChange={this.handleChangeStart}*/}
-                  {/*            className="form-control" />*/}
-                </div>
-              </div>
-              <div className="col-md-6 col-12">
-                <div className="form-group">
-                  <label htmlFor="Todate" className="font-weight-bolder mr-3">To Date </label>
-                  <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} className="form-control" />
-                  {/*<DatePicker selected={this.state.endDate} onChange={this.handleChangeEnd} className="form-control" />*/}
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6 col-12">
-                <h6 className="font-weight-bolder my-2">Number of days : 0</h6>
-                <mark>Please make sure Checkin time is from 9 am to 12 pm</mark>
-              </div>
-              <div className="col-md-6 col-12">
-                <h6 className="font-weight-bold my-2">Price per day : <span className="badge badge-info">Rs 1000</span>
-                </h6>
-                <h6 className="font-weight-bold">Total Price to be paid : <span
-                  className="text-primary">Rs 1400</span></h6>
-              </div>
-            </div>
-
-            <button
-              className="flex my-4 btn btn-block btn-outline-primary justify-center content-center items-center">Confirm
-              Booking
-            </button>
-          </div>
-        </div>
-      </div>
-
-    </div>
+    <div>sdgg</div>
   );
 };
-
 export default Testing;

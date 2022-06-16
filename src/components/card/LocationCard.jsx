@@ -65,7 +65,7 @@ const LocationCard = ({ locations }) => {
           {locations.length !== 0 &&
             sliceArr.map(
               ({ locationId, urls, locationName, category, district }) => (
-                <Link to={`/locations/${locationId}`}>
+                <Link to={`/locations/${locationId}`} key={locationId}>
                   <div className="max-w-sm rounded overflow-hidden shadow-lg" key={locationId}>
                     <img className="w-full object-cover h-[270px]" src={urls[0]}
                          alt="Sunset in the mountains" />

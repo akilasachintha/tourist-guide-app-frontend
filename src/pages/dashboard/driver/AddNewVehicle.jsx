@@ -74,9 +74,9 @@ export default function AddNewVehicle() {
         .then((res) => {
           console.log(res.data);
           Swal.fire(
-            "Successfully Added!",
-            "Your file has been deleted.",
-            "success"
+            "Please Wait for Approval of Admin!",
+            "Your vehicle is reviewed by admin of the System. Please be patient.",
+            "info"
           );
           navigate("/dashboard/drivers");
           dispatch(fetchVehicles());

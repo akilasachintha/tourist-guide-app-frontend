@@ -33,7 +33,7 @@ const VehicleDetails = () => {
               <div className="items-start justify-center rounded-xl p-10 shadow-lg md:flex">
                 <div className="lg:w-[38rem]">
                   <img
-                    className="hidden rounded-lg object-cover lg:block h-[440px]"
+                    className="hidden rounded-lg object-cover lg:block h-[480px]"
                     alt="img of a vehicle"
                     src={vehicle[0].vehiclePhotoUrl}
                   />
@@ -66,6 +66,14 @@ const VehicleDetails = () => {
                     <div className="flex items-center justify-center">
                       <p className="text-sm leading-none">
                         {vehicle[0].vehicleType}
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between border-b border-gray-200 py-4">
+                    <p className="text-base leading-4 ">Vehicle Modal</p>
+                    <div className="flex items-center justify-center">
+                      <p className="text-sm leading-none">
+                        {vehicle[0].vehicleModal}
                       </p>
                     </div>
                   </div>
@@ -151,7 +159,7 @@ const VehicleDetails = () => {
       </div>
 
       {showModal && (
-        <div>
+        <div className="shadow-lg">
           <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
             <div className="p-2 rounded w-75">
               <div className="my-5">
@@ -163,7 +171,7 @@ const VehicleDetails = () => {
                     <div className="row">
                       <div className="col-md-4 col-12 my-auto">
                         <img
-                          src="https://education.github.com/assets/pack/opengraph-image-c6d692948bb5fbf237b8a72d6576b4dcc84586335b522a6036904fc16ec7eccd.png"
+                          src={vehicle[0].vehiclePhotoUrl}
                           alt="selected room" />
                       </div>
                       <div className="col-md-8 col-12">
@@ -187,22 +195,22 @@ const VehicleDetails = () => {
                                         className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
                                     </div>
                                   </div>
-                                  <p className="mx-3 text-sm text-black"> Akila Sachintha </p>
+                                  <p className="mx-3 text-sm text-black"> {appUser.name} </p>
                                 </div>
                               </div>
                             </td>
                           </tr>
                           <tr>
                             <th>Vehicle Modal</th>
-                            <td>Toyota</td>
+                            <td> {vehicle[0].vehicleModal} </td>
                           </tr>
                           <tr>
                             <th>Vehicle Type</th>
-                            <td>Car</td>
+                            <td>{vehicle[0].vehicleType}</td>
                           </tr>
                           <tr>
                             <th>Price Per Km</th>
-                            <td>Rs. 1500</td>
+                            <td>{vehicle[0].priceForKm}</td>
                           </tr>
                           <tr>
                             <th>Ratings</th>
@@ -217,7 +225,7 @@ const VehicleDetails = () => {
                         <div className="form-group">
                           <label htmlFor="Fromdate" className="font-weight-bolder mr-3">From Date </label>
                           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                      className="form-control" />
+                                      className="form-control" disabled/>
                         </div>
 
                       </div>
@@ -225,7 +233,7 @@ const VehicleDetails = () => {
                         <div className="form-group">
                           <label htmlFor="Todate" className="font-weight-bolder mr-3">To Date </label>
                           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                      className="form-control" />
+                                      className="form-control"  disabled/>
                         </div>
                       </div>
                     </div>
