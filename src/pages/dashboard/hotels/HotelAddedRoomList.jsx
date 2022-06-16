@@ -1,35 +1,30 @@
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
-import { fetchHotels } from "../../../redux/store/hotelslice";
-import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
+
 const PER_PAGE = 6;
 
-
 const HotelAddedRoomList = () => {
-  const { loading, hotels } = useSelector((state) => state.hotels);
+  const { hotels } = useSelector((state) => state.hotels);
   const [currentPage, setCurrentPage] = useState(0);
-  const dispatch = useDispatch();
-
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(hotels.length / PER_PAGE);
+  const [hotelRooms, setHotelRooms] = useState([]);
+  const { id } = useParams();
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
     setCurrentPage(selectedPage);
   };
 
-  useEffect(() => {
-    dispatch(fetchHotels());
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil((hotelRooms ? hotels.length : 0) / PER_PAGE);
 
-  }, [dispatch])
-
-  const currentPageData = hotels
+  const currentPageData = hotelRooms
     .slice(offset, offset + PER_PAGE)
-    .map((hotel) => (
+    .map((hotelRoom, index) => (
       <tr
         className="h-16 rounded border border-gray-100 focus:outline-none"
-        key=""
+        key={index}
       >
         <td>
           <div className="ml-5">
@@ -58,7 +53,7 @@ const HotelAddedRoomList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-
+              {hotelRoom.roomCondition}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +161,7 @@ const HotelAddedRoomList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-
+              {hotelRoom.roomCondition}
             </p>
           </div>
         </td>
@@ -238,7 +233,7 @@ const HotelAddedRoomList = () => {
         </td>
         <td className="pl-5">
           <button className="rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none">
-           Status
+            Status
           </button>
         </td>
         <td className="pl-4">
@@ -263,145 +258,115 @@ const HotelAddedRoomList = () => {
                     <i className="bi bi-pencil"></i> Edit
                   </button>
                 </li>
-                { <li
+                {<li
                   className="list-item"
 
                 >
                   <button className="dropdown-item icon-red" type="button">
                     <i className="bi bi-trash"></i> Delete
                   </button>
-                </li> }
+                </li>}
               </ul>
             </div>
           </div>
-          {/*<div className="relative px-5 pt-2">*/}
-          {/*  <button*/}
-          {/*    className="rounded-md focus:outline-none focus:ring-2"*/}
-          {/*    role="button"*/}
-          {/*    aria-label="option"*/}
-          {/*  >*/}
-          {/*    <svg*/}
-          {/*      className="dropbtn"*/}
-          {/*      xmlns="http://www.w3.org/2000/svg"*/}
-          {/*      width={20}*/}
-          {/*      height={20}*/}
-          {/*      viewBox="0 0 20 20"*/}
-          {/*      fill="none"*/}
-          {/*    >*/}
-          {/*      <path*/}
-          {/*        d="M4.16667 10.8332C4.62691 10.8332 5 10.4601 5 9.99984C5 9.5396 4.62691 9.1665 4.16667 9.1665C3.70643 9.1665 3.33334 9.5396 3.33334 9.99984C3.33334 10.4601 3.70643 10.8332 4.16667 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*      <path*/}
-          {/*        d="M10 10.8332C10.4602 10.8332 10.8333 10.4601 10.8333 9.99984C10.8333 9.5396 10.4602 9.1665 10 9.1665C9.53976 9.1665 9.16666 9.5396 9.16666 9.99984C9.16666 10.4601 9.53976 10.8332 10 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*      <path*/}
-          {/*        d="M15.8333 10.8332C16.2936 10.8332 16.6667 10.4601 16.6667 9.99984C16.6667 9.5396 16.2936 9.1665 15.8333 9.1665C15.3731 9.1665 15 9.5396 15 9.99984C15 10.4601 15.3731 10.8332 15.8333 10.8332Z"*/}
-          {/*        stroke="#9CA3AF"*/}
-          {/*        strokeWidth="1.25"*/}
-          {/*        strokeLinecap="round"*/}
-          {/*        strokeLinejoin="round"*/}
-          {/*      />*/}
-          {/*    </svg>*/}
-          {/*  </button>*/}
-          {/*  <div className="dropdown-content absolute right-0 z-30 mr-6 hidden w-24 bg-white shadow">*/}
-          {/*    <div className="w-full cursor-pointer py-4 px-4 text-xs hover:bg-indigo-700 hover:text-white focus:text-indigo-600 focus:outline-none">*/}
-          {/*      <p>Edit</p>*/}
-          {/*    </div>*/}
-          {/*    <div className="w-full cursor-pointer py-4 px-4 text-xs hover:bg-indigo-700 hover:text-white focus:text-indigo-600 focus:outline-none">*/}
-          {/*      <p>Delete</p>*/}
-          {/*    </div>*/}
-          {/*  </div>*/}
-          {/*</div>*/}
         </td>
       </tr>
     ));
 
+  useEffect(() => {
+    const hotel = hotels.filter(({ hotelId }) => {
+      return hotelId.toString() === id;
+    });
+    setHotelRooms(hotel[0].hotelRooms);
+  }, []);
+
+
   return (
     <div>
-      <div className="w-full">
-        <div className="px-4 py-4 md:px-10 md:py-7">
-          <div className="flex items-center justify-between">
-            <p className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
-              Rooms
-            </p>
-            <div className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
-              <p>Sort By:</p>
-              <select className="ml-1 bg-transparent focus:text-indigo-600 focus:outline-none">
-                <option className="text-sm text-indigo-800">Latest</option>
-                <option className="text-sm text-indigo-800">Oldest</option>
-                <option className="text-sm text-indigo-800">Latest</option>
-              </select>
-            </div>
-          </div>
-        </div>
-        <div className="bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10">
-          <div className="items-center justify-between sm:flex">
-            <div className="flex items-center">
-              <div className="rounded-full focus:bg-indigo-50 focus:outline-none  focus:ring-2 focus:ring-indigo-800">
-                {/*<div className="rounded-full bg-indigo-100 py-2 px-8 text-indigo-700">*/}
-                {/*  <p>All</p>*/}
-                {/*</div>*/}
-              </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
-                {/*<div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
-                {/*  <Link to="./roomdetails">*/}
-                {/*    <p>Add Rooms</p>*/}
-                {/*  </Link>*/}
-                {/*</div>*/}
-              </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
-                {/*<div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
-                {/*  <p>Room Status</p>*/}
-                {/*</div>*/}
+      {
+        hotelRooms.length !== 0 && (
+          <div className="w-full">
+            <div className="px-4 py-4 md:px-10 md:py-7">
+              <div className="flex items-center justify-between">
+                <p
+                  className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
+                  Rooms
+                </p>
+                <div
+                  className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
+                  <p>Sort By:</p>
+                  <select className="ml-1 bg-transparent focus:text-indigo-600 focus:outline-none">
+                    <option className="text-sm text-indigo-800">Latest</option>
+                    <option className="text-sm text-indigo-800">Oldest</option>
+                    <option className="text-sm text-indigo-800">Latest</option>
+                  </select>
+                </div>
               </div>
             </div>
-            {/*<Link*/}
-            {/*  to="/dashboard/hotels/hotels/add"*/}
-            {/*  className="hover:bg-black-600 mt-4 inline-flex items-start justify-start rounded bg-black px-6 py-3 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:mt-0"*/}
-            {/*>*/}
-            {/*  <p className="text-sm font-medium leading-none text-white">*/}
-            {/*    Add Hotel*/}
-            {/*  </p>*/}
-            {/*</Link>*/}
+            <div className="bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10">
+              <div className="items-center justify-between sm:flex">
+                <div className="flex items-center">
+                  <div className="rounded-full focus:bg-indigo-50 focus:outline-none  focus:ring-2 focus:ring-indigo-800">
+                    {/*<div className="rounded-full bg-indigo-100 py-2 px-8 text-indigo-700">*/}
+                    {/*  <p>All</p>*/}
+                    {/*</div>*/}
+                  </div>
+                  <div
+                    className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
+                    {/*<div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
+                    {/*  <Link to="./roomdetails">*/}
+                    {/*    <p>Add Rooms</p>*/}
+                    {/*  </Link>*/}
+                    {/*</div>*/}
+                  </div>
+                  <div
+                    className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
+                    {/*<div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
+                    {/*  <p>Room Status</p>*/}
+                    {/*</div>*/}
+                  </div>
+                </div>
+                {/*<Link*/}
+                {/*  to="/dashboard/hotels/hotels/add"*/}
+                {/*  className="hover:bg-black-600 mt-4 inline-flex items-start justify-start rounded bg-black px-6 py-3 focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 sm:mt-0"*/}
+                {/*>*/}
+                {/*  <p className="text-sm font-medium leading-none text-white">*/}
+                {/*    Add Hotel*/}
+                {/*  </p>*/}
+                {/*</Link>*/}
+              </div>
+              <div className="mt-7 overflow-x-auto">
+                <table className="w-full whitespace-nowrap">
+                  <tbody>{hotels.length !== 0 && hotelRooms.length !== 0 && currentPageData}</tbody>
+                </table>
+              </div>
+            </div>
+            <div className="">
+              <ReactPaginate
+                previousLabel={"← Previous"}
+                nextLabel={"Next →"}
+                pageCount={pageCount}
+                onPageChange={handlePageClick}
+                containerClassName="my-4 flex flex-start content-center justify-center"
+                pageClassName={""}
+                pageLinkClassName="px-2 py-1 mx-2 border rounded-md border-black"
+                previousLinkClassName={
+                  "px-2 py-1 mx-2 border rounded-md border-gray-300"
+                }
+                nextLinkClassName={
+                  "px-2 py-1 mx-2 border rounded-md border-gray-300"
+                }
+                disabledClassName={""}
+                disabledLinkClassName={
+                  "px-2 py 1 mx-2 border rounded-md border-gray-300 bg-gray-300 text-gray-600"
+                }
+                activeLinkClassName={"text-white bg-black"}
+              />
+            </div>
           </div>
-          <div className="mt-7 overflow-x-auto">
-            <table className="w-full whitespace-nowrap">
-              <tbody>{currentPageData}</tbody>
-            </table>
-          </div>
-        </div>
-        <div className="">
-          <ReactPaginate
-            previousLabel={"← Previous"}
-            nextLabel={"Next →"}
-            pageCount={pageCount}
-            onPageChange={handlePageClick}
-            containerClassName="my-4 flex flex-start content-center justify-center"
-            pageClassName={""}
-            pageLinkClassName="px-2 py-1 mx-2 border rounded-md border-black"
-            previousLinkClassName={
-              "px-2 py-1 mx-2 border rounded-md border-gray-300"
-            }
-            nextLinkClassName={
-              "px-2 py-1 mx-2 border rounded-md border-gray-300"
-            }
-            disabledClassName={""}
-            disabledLinkClassName={
-              "px-2 py 1 mx-2 border rounded-md border-gray-300 bg-gray-300 text-gray-600"
-            }
-            activeLinkClassName={"text-white bg-black"}
-          />
-        </div>
-      </div>
+        )
+      }
     </div>
   );
-}
+};
 export default HotelAddedRoomList;

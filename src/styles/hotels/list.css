@@ -12,7 +12,7 @@
     max-width: 1024px;
     display: flex;
     gap: 20px;
-    margin-top: 60px;
+    margin-top: 40px;
 
    
   
@@ -93,4 +93,8 @@
 }
 .isOptionInput{
     width: 50px;
+}
+.navlist{
+    height: 80px;
+    background-color: #0071c2;
 }
