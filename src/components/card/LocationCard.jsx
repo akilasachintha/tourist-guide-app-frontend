@@ -65,36 +65,24 @@ const LocationCard = ({ locations }) => {
           {locations.length !== 0 &&
             sliceArr.map(
               ({ locationId, urls, locationName, category, district }) => (
-                <div className=" relative " key={locationId}>
-                  <div className="group relative">
-                    <div className="to-opacity-30 absolute top-0 left-0 flex h-full w-full items-center justify-center bg-gradient-to-t from-gray-800 via-gray-800 opacity-0 group-hover:opacity-50"></div>
-                    <img
-                      className="h-56 w-full object-cover"
-                      src={urls[0]}
-                      alt="A girl Posing Img"
-                    />
-                    <div className=" absolute bottom-0 w-full p-2 opacity-0 group-hover:opacity-100">
-                      <Link to={`/locations/${locationId}`}>
-                        <button className=" mt-2 w-full border-2 border-white bg-transparent py-3 text-base font-medium leading-4 text-white">
-                          Explore Location
-                        </button>
-                      </Link>
+                <Link to={`/locations/${locationId}`}>
+                  <div className="max-w-sm rounded overflow-hidden shadow-lg" key={locationId}>
+                    <img className="w-full object-cover h-[270px]" src={urls[0]}
+                         alt="Sunset in the mountains" />
+                    <div className="px-6 py-4">
+                      <div className="font-bold text-xl mb-2 text-center">{locationName}</div>
+                    </div>
+                    <div className="px-6 pt-1 pb-2 text-center">
+                    <span
+                      className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{category}</span>
+                      <span
+                        className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{district}</span>
                     </div>
                   </div>
-                  <p className=" mt-4 text-xl font-normal leading-5 text-gray-800 md:mt-6">
-                    {locationName}
-                  </p>
-                  <p className=" mt-4 font-oxygen text-xl leading-5 text-gray-800">
-                    {category}
-                  </p>
-                  <p className=" mt-4 text-base font-normal leading-4 text-gray-600">
-                    {district}
-                  </p>
-                </div>
+                </Link>
               )
             )}
         </div>
-
         {noOfElements >= locations.length ? (
           ""
         ) : (

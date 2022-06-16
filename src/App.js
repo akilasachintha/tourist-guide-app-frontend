@@ -30,11 +30,13 @@ import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
 import Userprofile from "./pages/dashboard/tourist/Userprofile";
 import DriverHome from "./pages/dashboard/driver/DriverHome";
 import VehicleDetailPage from "./pages/vehicles/VehicleDetailPage";
-import HotelDetails from "./pages/hotels/HotelDetails";
+import Hoteldetails from "./pages/hotels/Hoteldetails";
 import HotelRoomDetails from "./pages/dashboard/hotels/HotelRoomDetails";
 import GuideProfile from "./pages/dashboard/guide/GuideProfile";
 import GuidesHome from "./pages/guides/GuidesHome";
 import UserViewRoutesTwo from "./routes/userViewRoutes/UserViewRoutesTwo";
+import Checking from "./pages/checking/Checking";
+import Testing from "./Testing";
 import HotelBookingForm from "./pages/hotels/HotelBookingForm";
 import HotelAddedRoomList from "./pages/dashboard/hotels/HotelAddedRoomList";
 
@@ -60,6 +62,7 @@ const App = () => {
             <Route path="" element={<Home />} />
             <Route path="locations" element={<Location />} />
             <Route path="locations/:id" element={<LocationDetailPage />} />
+            <Route path="checking" element={<Checking />} />
             <Route path="vehicles" element={<VehicleList />} />
             <Route path="vehicles/:id" element={<VehicleDetailPage />} />
             <Route path="/hotels/" element={<HomeH />} />
@@ -106,6 +109,7 @@ const App = () => {
           </Route>
           <Route path="auth/login" element={<Login />} />
           <Route path="auth/register" element={<Register />} />
+          <Route path="testing" element={< Testing />} />
           <Route path="*" element={<PageNotFoundError />} />
         </Routes>
       </Router>

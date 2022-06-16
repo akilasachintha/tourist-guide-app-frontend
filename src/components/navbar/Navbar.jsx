@@ -97,7 +97,7 @@ const Navbar = () => {
             onClick={() => setProfile(!profile)}
           >
             <div className="rounded-full">
-              {profile ? (
+              {profile && (
                 <ul className="absolute left-0 mt-12 w-full rounded border-r bg-white p-2 shadow sm:mt-16 ">
                   <li
                     className="flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700">
@@ -145,8 +145,6 @@ const Navbar = () => {
                     </div>
                   </li>
                 </ul>
-              ) : (
-                ""
               )}
               <div className="relative">
                 <img
