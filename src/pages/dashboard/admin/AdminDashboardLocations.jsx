@@ -10,7 +10,7 @@ import { fetchLocations } from "../../../redux/store/locationsSlice";
 const PER_PAGE = 4;
 
 const AdminDashboardLocations = () => {
-  const { loading, locations } = useSelector((state) => state.locations);
+  const { locations } = useSelector((state) => state.locations);
   const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
 
@@ -304,7 +304,7 @@ const AdminDashboardLocations = () => {
   return (
     <div>
       <div className="w-full">
-        <div className="px-4 py-4 md:px-10 md:py-7">
+        <div className="py-4 md:py-7">
           <div className="flex items-center justify-between">
             <p className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
               Locations

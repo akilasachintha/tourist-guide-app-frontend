@@ -1,11 +1,8 @@
 import React from 'react'
 import "../../styles/hotels/room.css"
 
-
-
 const HotelBookingForm = () => {
   return(
-
       <div >
         <div className="roomFormContainer">
           <div className="overflow-hidden shadow sm:rounded-md" id="roomFormContent">

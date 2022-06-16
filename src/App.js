@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/home/Home";
 import Location from "./pages/locations/Location";
 import PageNotFoundError from "./components/errors/PageNotFoundError";
@@ -39,6 +39,7 @@ import Checking from "./pages/checking/Checking";
 import Testing from "./Testing";
 import HotelBookingForm from "./pages/hotels/HotelBookingForm";
 import HotelAddedRoomList from "./pages/dashboard/hotels/HotelAddedRoomList";
+import AdminAcceptNotifications from "./pages/dashboard/admin/AdminAcceptNotifications";
 
 
 const App = () => {
@@ -77,6 +78,7 @@ const App = () => {
             </Route>
 
           <Route path="dashboard/admin" element={<AdminDashboardHome />}>
+            <Route path="" element={<AdminAcceptNotifications />} />
             <Route path="locations" element={<AdminDashboardLocations />} />
             <Route path="profile" element={<AdminDashboardLocations />} />
             <Route path="locations/add" element={<AddNewLocation />} />

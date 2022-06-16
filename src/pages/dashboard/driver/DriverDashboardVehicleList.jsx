@@ -268,10 +268,22 @@ const DriverDashboardVehicleList = () => {
             <p className="ml-2 text-sm leading-none text-gray-600"></p>
           </div>
         </td>
-        <td className="pl-5">
-          <button className="rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none">
-            Rating 4.2/5
-          </button>
+        <td>
+          {
+            vehicle.vehicleStatus === "pending" && (
+              <div className="rounded bg-red-100 py-3 px-2 text-sm leading-none text-red-700 focus:outline-none text-center">
+                {vehicle.vehicleStatus}
+              </div>
+            )
+          }
+          {
+            vehicle.vehicleStatus === "accept" && (
+              <div className="rounded bg-green-100 py-3 px-2 text-sm leading-none text-green-700 focus:outline-none text-center">
+                {vehicle.vehicleStatus}
+              </div>
+            )
+          }
+
         </td>
         <td className="pl-4">
           <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
@@ -311,7 +323,7 @@ const DriverDashboardVehicleList = () => {
   return (
     <div>
       <div className="w-full">
-        <div className="px-4 py-4 md:px-10 md:py-7">
+        <div className="py-4 md:py-7">
           <div className="flex items-center justify-between">
             <p className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
               Vehicles

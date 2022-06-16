@@ -1,22 +1,43 @@
-import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
 
 export default function AdminDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [notificationShow, setNotificationShow] = useState(false);
+
+  const { vehicles } = useSelector((state) => state.vehicles);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const vehiclesFilterByPending = vehicles.filter(({ vehicleStatus }) => {
+    return vehicleStatus === "pending";
+  });
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchVehicles());
+    };
+  }, [dispatch]);
+
+  const handleManageBtn = () => {
+    navigate("/dashboard/admin");
+    setNotificationShow(!notificationShow);
+  };
+
 
   return (
     <div>
       <div className="h-screen w-full bg-gray-200">
         <div className="flex-no-wrap flex">
-          {/* Sidebar starts */}
           <div className="absolute hidden h-screen w-64 bg-gray-100 shadow lg:relative lg:block">
             <div className="flex h-20 w-full items-center px-8">
               <Link to="/" className="text-xl font-bold">
                 TravelMate<i className="fas fa-map-marked"></i>
               </Link>
             </div>
-            {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
             <ul aria-orientation="vertical" className=" py-6">
               <NavLink to="/dashboard/admin" className="side-item-active">
                 <li className="cursor-pointer pl-6 text-base text-sm leading-3">
@@ -121,7 +142,6 @@ export default function AdminDashboardHome() {
             </ul>
           </div>
 
-          {/*Mobile responsive sidebar*/}
           <div
             className={
               show
@@ -139,7 +159,6 @@ export default function AdminDashboardHome() {
                 <div>
                   <div className="flex items-center justify-between px-8">
                     <div className="flex h-16 w-full items-center">
-                      {/*Icon Travel Mate*/}
                       <NavLink to="/" className="text-3xl font-bold">
                         TravelMate<i className="fas fa-map-marked"></i>
                       </NavLink>
@@ -168,7 +187,6 @@ export default function AdminDashboardHome() {
                     </div>
                   </div>
 
-                  {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
                   <ul aria-orientation="vertical" className=" py-6">
                     <li className="cursor-pointer pl-6 text-base text-sm leading-3 tracking-normal text-indigo-700 focus:text-indigo-700 focus:outline-none">
                       <div className="flex items-center">
@@ -354,8 +372,57 @@ export default function AdminDashboardHome() {
           {/* Sidebar ends */}
 
           <div className="w-full">
+            {/*notifications*/}
+
+
+            {notificationShow && (<div
+              className="w-full absolute z-10 right-0 mt-5 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
+              id="notification">
+              <div className="2xl:w-3/12 bg-gray-50 h-screen overflow-y-auto p-8 absolute right-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-2xl font-semibold leading-6 text-gray-800">Notifications</p>
+                  <div className="cursor-pointer" onClick={() => setNotificationShow(!notificationShow)}>
+                    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round"
+                            strokeLinejoin="round" />
+                      <path d="M6 6L18 18" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round"
+                            strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+
+                {
+                  vehiclesFilterByPending.length !== 0 && vehiclesFilterByPending.map((vehicle) => (
+                    <div className="w-full p-3 mt-4 bg-green-100 rounded flex items-center">
+                      <div
+                        className="w-8 h-8 border rounded-full border-red-200 flex items-center flex-shrink-0 justify-center">
+                        <img src="https://img.icons8.com/ios-filled/50/undefined/appointment-reminders--v1.png"
+                             alt="img" />
+                      </div>
+                      <div className="pl-3 w-full flex items-center justify-between">
+                        <p className="text-sm leading-none text-green-700">{vehicle.vehicleName}</p>
+                        <p className="text-xs leading-3 cursor-pointer underline text-right text-green-700"
+                           onClick={handleManageBtn}>Manage</p>
+                      </div>
+                    </div>
+                  ))
+                }
+
+                <div className="flex items-center justiyf-between">
+                  <hr className="w-full" />
+                  <p className="text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500">Thats it for now
+                    :)</p>
+                  <hr className="w-full" />
+                </div>
+              </div>
+            </div>)}
+
+            {/*Notifications End*/}
+
+
             {/* Navigation starts */}
-            <nav className="relative z-10 flex h-16 items-center justify-end bg-white shadow lg:items-stretch lg:justify-between">
+            <nav
+              className="relative z-10 flex h-16 items-center justify-end bg-white shadow lg:items-stretch lg:justify-between">
               <div className="hidden w-full pr-6 lg:flex">
                 <div className="hidden h-full w-1/2 items-center pl-6 pr-24 lg:flex">
                   <div className="relative w-full">
@@ -370,27 +437,33 @@ export default function AdminDashboardHome() {
                 <div className="hidden w-1/2 lg:flex">
                   <div className="flex w-full items-center justify-end pl-8">
                     <div className="flex h-full w-20 items-center justify-center border-r border-l">
-                      <div className="relative cursor-pointer text-gray-600">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="icon icon-tabler icon-tabler-bell"
-                          width={28}
-                          height={28}
-                          viewBox="0 0 24 24"
-                          strokeWidth="1.5"
-                          stroke="currentColor"
-                          fill="none"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
-                          <path stroke="none" d="M0 0h24v24H0z" />
-                          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
-                          <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
-                        </svg>
-                        <div className="absolute inset-0 m-auto mt-1 mr-1 h-2 w-2 rounded-full border border-white bg-red-400" />
+                      <div className="relative cursor-pointer text-gray-600"
+                           onClick={() => setNotificationShow(!notificationShow)}>
+                        <div>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="icon icon-tabler icon-tabler-bell"
+                            width={28}
+                            height={28}
+                            viewBox="0 0 24 24"
+                            strokeWidth="1.5"
+                            stroke="currentColor"
+                            fill="none"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                            <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
+                          </svg>
+                        </div>
+                        <div
+                          className="absolute inset-0 m-auto mt-1 mr-1 h-2 w-2 rounded-full border border-white bg-red-400" />
                       </div>
                     </div>
-                    <div className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
+                    <div
+                      className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="icon icon-tabler icon-tabler-messages"
