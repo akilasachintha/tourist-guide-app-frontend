@@ -245,9 +245,11 @@ const HotelDashboardList = () => {
           </button>
         </td>
         <td className="pl-4">
+          <Link to="./:id">
           <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
             View
           </button>
+          </Link>
         </td>
         <td>
           <div className="col col-5" data-label="">

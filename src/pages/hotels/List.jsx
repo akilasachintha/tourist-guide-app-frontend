@@ -7,11 +7,11 @@ import SearchItemH from '../../components/hotel/SearchItemH';
 
 
 const List = () => {
-  const location = useLocation()
-  const [destination,setDestination] = useState(location.state.destination)
-  const [date,setDate] = useState(location.state.date)
-  const [options,setOpenOptions] = useState(location.state.options)
-  const [openDate,setOpenDate] = useState(false)
+  // const location = useLocation()
+  // const [destination,setDestination] = useState(location.state.destination)
+  // const [date,setDate] = useState(location.state.date)
+  // const [options,setOpenOptions] = useState(location.state.options)
+  // const [openDate,setOpenDate] = useState(false)
 
   
 
@@ -23,15 +23,12 @@ const List = () => {
             <h1 className="lsTitle">Search</h1>
             <div className="isItem">
               <label>Destination</label>
-              <input placeholder={destination} type="text" />
+              <input placeholder="" type="text" />
             </div>
             <div className="isItem">
               <label>Check-IN  Date</label>
-              <span onClick={()=>setOpenDate(!openDate)}>{`${format(date[0].startDate,"MM/dd/yyyy")} to ${format(date[0].endDate,"MM/dd/yyyy")}`}</span>
-              {openDate &&( <DateRange>
-                onChange={(item)=>setDate([item.selection])} minDate={new Date()} ranges={date}
-              </DateRange>)
-              }
+              <span></span>
+
 
 
             </div>
@@ -48,15 +45,15 @@ const List = () => {
                 </div>
                 <div className="isOptionitem">
                   <span className="listoptionText">Adult</span>
-                  <input type="number" min={1} className="isOptionInput" placeholder={options.adult} />
+                  <input type="number" min={1} className="isOptionInput" placeholder="" />
                 </div>
                 <div className="isOptionitem">
                   <span className="listoptionText">Children</span>
-                  <input type="number" min={0} className="isOptionInput" placeholder={options.children} />
+                  <input type="number" min={0} className="isOptionInput" placeholder="" />
                 </div>
                 <div className="isOptionitem">
                   <span className="listoptionText">Room</span>
-                  <input type="number" min={1} className="isOptionInput" placeholder={options.room} />
+                  <input type="number" min={1} className="isOptionInput" placeholder="" />
                 </div>
 
               </div>

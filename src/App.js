@@ -36,6 +36,7 @@ import GuideProfile from "./pages/dashboard/guide/GuideProfile";
 import GuidesHome from "./pages/guides/GuidesHome";
 import UserViewRoutesTwo from "./routes/userViewRoutes/UserViewRoutesTwo";
 import HotelBookingForm from "./pages/hotels/HotelBookingForm";
+import HotelAddedRoomList from "./pages/dashboard/hotels/HotelAddedRoomList";
 
 
 const App = () => {
@@ -101,6 +102,7 @@ const App = () => {
               path="hotels/add/hotelfeatures"
               element={<AddHotelFeatures />}
             />
+            <Route path="hotellist/:id" element={<HotelAddedRoomList/>} />
           </Route>
           <Route path="auth/login" element={<Login />} />
           <Route path="auth/register" element={<Register />} />
