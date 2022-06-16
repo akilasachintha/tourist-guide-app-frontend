@@ -30,7 +30,7 @@ import GuideDashboardHome from "./pages/dashboard/guide/GuideDashboardHome";
 import Userprofile from "./pages/dashboard/tourist/Userprofile";
 import DriverHome from "./pages/dashboard/driver/DriverHome";
 import VehicleDetailPage from "./pages/vehicles/VehicleDetailPage";
-import Hoteldetails from "./pages/hotels/Hoteldetails";
+import HotelDetails from "./pages/hotels/HotelDetails";
 import HotelRoomDetails from "./pages/dashboard/hotels/HotelRoomDetails";
 import GuideProfile from "./pages/dashboard/guide/GuideProfile";
 import GuidesHome from "./pages/guides/GuidesHome";

@@ -1,0 +1,23 @@
+
+.roomFormContainer{
+    padding-top: 150px;
+    background-color: #0071c2;
+
+
+
+
+}
+#roomFormContent{
+    width: max-content;
+    margin: auto;
+}
+#topic{
+    color: blue;
+    text-align: center;
+    font-size: larger;
+   margin-bottom: 40px;
+    }
+#bookButton{
+   color: black;
+    text-align: center;
+}
