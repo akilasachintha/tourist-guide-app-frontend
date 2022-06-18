@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ReactPaginate from "react-paginate";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import Swal from "sweetalert2";
-import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { toast } from "react-toastify";
+import img1 from "../../../assets/images/cards/img-1.jpg";
 import { fetchHotels } from "../../../redux/store/hotelslice";
 
-const PER_PAGE = 6;
+const PER_PAGE = 4;
 
 const HotelDashboardList = () => {
   const { loading, hotels } = useSelector((state) => state.hotels);
@@ -16,6 +14,8 @@ const HotelDashboardList = () => {
 
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(hotels.length / PER_PAGE);
+  const [hotelImages, setHotelImages] = useState([]);
+
 
   const handlePageClick = ({ selected: selectedPage }) => {
     console.log("Selected Page", selectedPage);
@@ -24,8 +24,9 @@ const HotelDashboardList = () => {
 
   useEffect(() => {
     dispatch(fetchHotels());
-   
-  }, [dispatch])
+
+  }, [dispatch]);
+
 
   const currentPageData = hotels
     .slice(offset, offset + PER_PAGE)
@@ -37,7 +38,13 @@ const HotelDashboardList = () => {
         <td>
           <div className="ml-5">
             <div className="relative flex flex-shrink-0 items-center justify-center rounded-sm bg-gray-200">
-              
+
+              <img
+                className="h-10 w-10 rounded"
+                src={hotel.hotelImages[0]?.url ? hotel.hotelImages[0]?.url : img1}
+                alt="Default avatar"
+              />
+
               <div className="check-icon hidden rounded-sm bg-indigo-700 text-white">
                 <svg
                   className="icon icon-tabler icon-tabler-check"
@@ -245,10 +252,11 @@ const HotelDashboardList = () => {
           </button>
         </td>
         <td className="pl-4">
-          <Link to="./:id">
-          <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
-            View
-          </button>
+          <Link to={`/dashboard/hotels/hotellist/${hotel.hotelId}`}>
+            <button
+              className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
+              View
+            </button>
           </Link>
         </td>
         <td>
@@ -266,14 +274,14 @@ const HotelDashboardList = () => {
                     <i className="bi bi-pencil"></i> Edit
                   </button>
                 </li>
-                { <li
+                {<li
                   className="list-item"
 
                 >
                   <button className="dropdown-item icon-red" type="button">
                     <i className="bi bi-trash"></i> Delete
                   </button>
-                </li> }
+                </li>}
               </ul>
             </div>
           </div>
@@ -332,10 +340,12 @@ const HotelDashboardList = () => {
       <div className="w-full">
         <div className="px-4 py-4 md:px-10 md:py-7">
           <div className="flex items-center justify-between">
-            <p className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
+            <p
+              className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
               Hotels
             </p>
-            <div className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
+            <div
+              className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
               <p>Sort By:</p>
               <select className="ml-1 bg-transparent focus:text-indigo-600 focus:outline-none">
                 <option className="text-sm text-indigo-800">Latest</option>
@@ -353,14 +363,16 @@ const HotelDashboardList = () => {
                   <p>All</p>
                 </div>
               </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
+              <div
+                className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
                   <Link to="./roomdetails">
-                   <p>Add Rooms</p>
+                    <p>Add Rooms</p>
                   </Link>
                 </div>
               </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
+              <div
+                className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
                 <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
                   <p>Room Status</p>
                 </div>

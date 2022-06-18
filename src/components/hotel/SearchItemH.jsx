@@ -9,10 +9,10 @@ const SearchItemH = () => {
 
   return (
     <div>
-      {hotels.length != 0 && hotels.map((hotel) => (
+      {hotels.length !== 0 && hotels.map((hotel) => (
         <div className="searchItem" key={hotel.hotelId}>
 
-          <img src={img1} alt="" className="searchItemImg" />
+          <img src={hotel.hotelImages[0]?.url ? hotel.hotelImages[0]?.url : img1} alt="" className="searchItemImg" />
           <div className="siDescrption">
             <h1 className="siTitle">{hotel.name}</h1>
             <span className="siDistence">{hotel.town}</span>
