@@ -1,8 +1,18 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
+import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
+import { Link } from "react-router-dom";
 
 const DriverHome = () => {
   const { appUser } = useSelector((state) => state.appUser);
+  const { vehicles } = useSelector((state) => state.vehicles);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAppUser());
+    dispatch(fetchVehicles());
+  }, []);
 
   return (
     <div>
@@ -10,7 +20,9 @@ const DriverHome = () => {
         <div className="flex flex-row rounded-lg border border-gray-200/80 bg-white p-6">
           <div className="relative">
             <img className="rounded-md object-cover" src={appUser.userPhotoUrl} alt="User" />
-            <div className="absolute -right-3 bottom-5 h-5 w-5 sm:top-2 rounded-full border-4 border-white bg-green-400 sm:invisible md:visible" title="User is online" />
+            <div
+              className="absolute -right-3 bottom-5 h-5 w-5 sm:top-2 rounded-full border-4 border-white bg-green-400 sm:invisible md:visible"
+              title="User is online" />
           </div>
           <div className="flex flex-col px-6">
             <div className="flex h-8 flex-row">
@@ -46,20 +58,30 @@ const DriverHome = () => {
 
             <div className="mt-2 flex flex-row items-center space-x-5">
               {/* Comments */}
-              <div className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
-                <div className="flex flex-row items-center justify-center">
-                  <svg className="mr-3 fill-gray-500/95" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width={24} height={24} viewBox="0 0 24 24">
-                    <path d="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7A2,2 0 0,1 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.89 12.76,23 12.5,23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15M9,9H19V11H9V9M9,13H17V15H9V13Z" />
-                  </svg>
-                  <span className="font-bold text-gray-600"> 4 </span>
+              <Link to="/dashboard/drivers/vehicles">
+                <div
+                  className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
+                  <div className="flex flex-row items-center justify-center">
+                    <svg className="mr-3 fill-gray-500/95" xmlns="http://www.w3.org/2000/svg"
+                         xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width={24} height={24}
+                         viewBox="0 0 24 24">
+                      <path
+                        d="M12,23A1,1 0 0,1 11,22V19H7A2,2 0 0,1 5,17V7A2,2 0 0,1 7,5H21A2,2 0 0,1 23,7V17A2,2 0 0,1 21,19H16.9L13.2,22.71C13,22.89 12.76,23 12.5,23H12M13,17V20.08L16.08,17H21V7H7V17H13M3,15H1V3A2,2 0 0,1 3,1H19V3H3V15M9,9H19V11H9V9M9,13H17V15H9V13Z" />
+                    </svg>
+                    <span className="font-bold text-gray-600"> {vehicles.length} </span>
+                  </div>
+                  <div className="mt-2 text-sm text-gray-400">Vehicles</div>
                 </div>
-                <div className="mt-2 text-sm text-gray-400">Vehicles</div>
-              </div>
+              </Link>
 
-              <div className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
+              <div
+                className="flex h-20 w-40 flex-col items-center justify-center rounded-md border border-dashed border-gray-200 transition-colors duration-100 ease-in-out hover:border-gray-400/80">
                 <div className="flex flex-row items-center justify-center">
-                  <svg className="mr-3 fill-gray-500/95" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width={24} height={24} viewBox="0 0 24 24">
-                    <path d="M2.5 19.6L3.8 20.2V11.2L1.4 17C1 18.1 1.5 19.2 2.5 19.6M15.2 4.8L20.2 16.8L12.9 19.8L7.9 7.9V7.8L15.2 4.8M15.3 2.8C15 2.8 14.8 2.8 14.5 2.9L7.1 6C6.4 6.3 5.9 7 5.9 7.8C5.9 8 5.9 8.3 6 8.6L11 20.5C11.3 21.3 12 21.7 12.8 21.7C13.1 21.7 13.3 21.7 13.6 21.6L21 18.5C22 18.1 22.5 16.9 22.1 15.9L17.1 4C16.8 3.2 16 2.8 15.3 2.8M10.5 9.9C9.9 9.9 9.5 9.5 9.5 8.9S9.9 7.9 10.5 7.9C11.1 7.9 11.5 8.4 11.5 8.9S11.1 9.9 10.5 9.9M5.9 19.8C5.9 20.9 6.8 21.8 7.9 21.8H9.3L5.9 13.5V19.8Z" />
+                  <svg className="mr-3 fill-gray-500/95" xmlns="http://www.w3.org/2000/svg"
+                       xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width={24} height={24}
+                       viewBox="0 0 24 24">
+                    <path
+                      d="M2.5 19.6L3.8 20.2V11.2L1.4 17C1 18.1 1.5 19.2 2.5 19.6M15.2 4.8L20.2 16.8L12.9 19.8L7.9 7.9V7.8L15.2 4.8M15.3 2.8C15 2.8 14.8 2.8 14.5 2.9L7.1 6C6.4 6.3 5.9 7 5.9 7.8C5.9 8 5.9 8.3 6 8.6L11 20.5C11.3 21.3 12 21.7 12.8 21.7C13.1 21.7 13.3 21.7 13.6 21.6L21 18.5C22 18.1 22.5 16.9 22.1 15.9L17.1 4C16.8 3.2 16 2.8 15.3 2.8M10.5 9.9C9.9 9.9 9.5 9.5 9.5 8.9S9.9 7.9 10.5 7.9C11.1 7.9 11.5 8.4 11.5 8.9S11.1 9.9 10.5 9.9M5.9 19.8C5.9 20.9 6.8 21.8 7.9 21.8H9.3L5.9 13.5V19.8Z" />
                   </svg>
                   <span className="font-bold text-gray-600"> 2 </span>
                 </div>
@@ -81,16 +103,13 @@ const DriverHome = () => {
           <div className="w-100 flex flex-grow flex-col items-end justify-start">
             <div className="flex flex-row space-x-3">
 
-              <button className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600">
-                Edit
-              </button>
+              <Link to="/dashboard/drivers/profile">
+                <button
+                  className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600">
+                  Edit
+                </button>
+              </Link>
 
-              <button className="flex rounded-md bg-gray-100 py-2 px-1 text-white
-        transition-all duration-150 ease-in-out hover:bg-gray-200">
-                <svg className="fill-gray-500" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" width={24} height={24} viewBox="0 0 24 24">
-                  <path d="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
-                </svg>
-              </button>
             </div>
           </div>
         </div>

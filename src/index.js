@@ -14,6 +14,7 @@ import { fetchHotels } from "./redux/store/hotelslice";
 import { fetchAppUser } from "./redux/store/appUserSlice";
 import { fetchGuides } from "./redux/store/guidesSlice";
 import { fetchCategory } from "./redux/store/roomCategorySlice";
+import { fetchAdminApprovalDrivers, fetchAdminApprovalVehicles } from "./redux/store/adminApprovalSlice";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let user = JSON.parse(localStorage.getItem('user'));
@@ -27,10 +28,12 @@ root.render(
 
 store.dispatch(fetchLocations());
 store.dispatch(fetchVehicles());
-store.dispatch(fetchBookings());
+// store.dispatch(fetchBookings());
 store.dispatch(fetchHotels());
 store.dispatch(fetchAppUser());
 store.dispatch(fetchGuides());
 store.dispatch(fetchCategory());
+store.dispatch(fetchAdminApprovalDrivers())
+store.dispatch(fetchAdminApprovalVehicles())
 
 

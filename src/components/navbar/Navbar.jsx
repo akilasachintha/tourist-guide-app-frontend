@@ -42,7 +42,7 @@ const Navbar = () => {
     },
     {
       name: "Hotels",
-      path: "/hotels",
+      path: "/hotels/list"
     },
     {
       name: "Vehicles",
@@ -55,18 +55,15 @@ const Navbar = () => {
   ];
 
   function navigateToProfile() {
-    if(user.userType === "tourist"){
+    if (user.userType === "tourist") {
       navigate("/dashboard/tourists");
-    }
-    else if(user.userType === "driver"){
+    } else if (user.userType === "driver" && appUser.adminStatus === "confirm") {
       navigate("/dashboard/drivers");
-    }
-    else if(user.userType === "hotelOwner"){
+    } else if (user.userType === "hotelOwner" && appUser.adminStatus === "confirm") {
       navigate("/dashboard/hotels");
-    }
-    else if(user.userType === "guide"){
+    } else if (user.userType === "guide" && appUser.adminStatus === "confirm") {
       navigate("/dashboard/guides");
-    }else{
+    } else {
       navigate("/auth/login");
     }
   }
@@ -91,7 +88,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className={nav ? "hidden" : "hidden md:flex"}>
-        {user?.status ? (<div>
+        {user?.status && appUser?.adminStatus === "confirm" ? (<div>
           <div
             className="relative flex cursor-pointer items-center"
             onClick={() => setProfile(!profile)}
@@ -149,7 +146,7 @@ const Navbar = () => {
               <div className="relative">
                 <img
                   className="h-10 w-10 rounded-full object-cover"
-                  src={appUser.userPhotoUrl || avatar}
+                  src={appUser?.userPhotoUrl || avatar}
                   alt="avatar"
                 />
                 <div

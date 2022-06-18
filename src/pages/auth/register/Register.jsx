@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
@@ -10,6 +10,7 @@ import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 import { v4 } from "uuid";
 import { toast } from "react-toastify";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 const Register = () => {
   const [image, setImage] = useState(null);
@@ -19,11 +20,19 @@ const Register = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { locations } = useSelector((state) => state.locations);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     const newImage = e.target.files[0];
     setImage(newImage);
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchAppUser());
+    };
+  }, [dispatch]);
+
 
   const handleUpload = (e) => {
     e.preventDefault();

@@ -75,8 +75,8 @@ function VehicleList() {
   const [viewType, setViewType] = useState({ grid: true });
   const { vehicles } = useSelector((state) => state.vehicles);
 
-  const filteredVehicles = vehicles.filter(({ vehicleStatus }) => {
-    return vehicleStatus !== "pending";
+  const filteredVehicles = vehicles.filter(({ adminStatus }) => {
+    return adminStatus !== "pending";
   });
 
 

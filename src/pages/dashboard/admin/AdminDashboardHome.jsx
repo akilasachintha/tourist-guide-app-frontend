@@ -7,7 +7,7 @@ export default function AdminDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
   const [notificationShow, setNotificationShow] = useState(false);
-
+  let user = JSON.parse(localStorage.getItem("user"));
   const { vehicles } = useSelector((state) => state.vehicles);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,6 +27,10 @@ export default function AdminDashboardHome() {
     setNotificationShow(!notificationShow);
   };
 
+  function logOut() {
+    localStorage.removeItem("user");
+    navigate("/auth/login");
+  }
 
   return (
     <div>
@@ -117,28 +121,6 @@ export default function AdminDashboardHome() {
                 </li>
               </NavLink>
 
-              <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-code"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="7 8 3 12 7 16" />
-                    <polyline points="17 8 21 12 17 16" />
-                    <line x1={14} y1={4} x2={10} y2={20} />
-                  </svg>
-                  <span className="ml-2">Deliverables</span>
-                </div>
-              </li>
             </ul>
           </div>
 
@@ -321,7 +303,7 @@ export default function AdminDashboardHome() {
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
-                          Jane Doe
+                          {user.name}
                         </p>
                       </div>
                       <ul className="flex">
@@ -510,7 +492,7 @@ export default function AdminDashboardHome() {
                               </div>
                             </li>
                             <li className="mt-2 flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700">
-                              <div className="flex items-center">
+                              <div className="flex items-center" onClick={logOut}>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   className="icon icon-tabler icon-tabler-logout"
@@ -540,10 +522,11 @@ export default function AdminDashboardHome() {
                             src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
                             alt="avatar"
                           />
-                          <div className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
+                          <div
+                            className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
                         </div>
                       </div>
-                      <p className="mx-3 text-sm text-gray-800">Jane Doe</p>
+                      <p className="mx-3 text-sm text-gray-800">{user.name}</p>
                       <div className="cursor-pointer text-gray-600">
                         <svg
                           aria-haspopup="true"

@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
-
+  const { appUser } = useSelector((state) => state.appUser);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchAppUser());
+  }, [dispatch]);
 
   const formik = useFormik({
     initialValues: {
@@ -26,24 +31,25 @@ export default function Login() {
           console.log(res.data);
           localStorage.setItem("user", JSON.stringify(res.data));
 
-          if(!res.data.status){
+          if (!res.data.status) {
             toast.error("Email or Password Incorrect");
-          }
-          else if (res.data.status && res.data.userType === "driver") {
+          } else if (res.data.status && res.data.userType === "driver" && appUser?.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/drivers/");
-          }
-          else if (res.data.status && res.data.userType === "tourist") {
+          } else if (res.data.status && res.data.userType === "admin") {
+            toast.success("Successfully Logged In");
+            navigate("/dashboard/admin/");
+          } else if (res.data.status && res.data.userType === "tourist") {
             toast.success("Successfully Logged In");
             navigate("/");
-          }
-          else if (res.data.status && res.data.userType === "hotelOwner") {
+          } else if (res.data.status && res.data.userType === "hotelOwner" && appUser?.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/hotels/");
-          }
-          else if (res.data.status && res.data.userType === "guide") {
+          } else if (res.data.status && res.data.userType === "guide" && appUser.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/guides/");
+          } else {
+            navigate("/pending");
           }
         })
         .catch((err) => {
