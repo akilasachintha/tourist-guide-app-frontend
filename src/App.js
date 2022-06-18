@@ -16,7 +16,6 @@ import TouristDashboardBookingList from "./pages/dashboard/tourist/TouristDashbo
 import BookingDetails from "./pages/dashboard/tourist/BookingDetails";
 
 import List from "./pages/hotels/List";
-import HomeH from "./pages/hotels/HomeH";
 import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
 import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";

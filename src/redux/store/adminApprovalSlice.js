@@ -40,12 +40,39 @@ export const fetchAdminApprovalGuides = createAsyncThunk(
   }
 );
 
+export const fetchAdminApprovalHotelOwners = createAsyncThunk(
+  "approveAdmin/fetchAdminApprovalHotelOwners",
+  async () => {
+    try {
+      const response = await touristGuideAppAPI.get(`approve/get/pending/hotelowner`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.body);
+    }
+  }
+);
+
+export const fetchAdminApprovalHotels = createAsyncThunk(
+  "approveAdmin/fetchAdminApprovalHotels",
+  async () => {
+    try {
+      const response = await touristGuideAppAPI.get(`approve/get/pending/hotel`);
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error.response.body);
+    }
+  }
+);
+
 
 const initialState = {
   drivers: [],
   vehicles: [],
   guides: [],
-  hotelOwners: []
+  hotelOwners: [],
+  hotels: []
 };
 
 // Then, handle actions in your reducers:
@@ -65,6 +92,12 @@ const adminApprovalSlice = createSlice({
     });
     builder.addCase(fetchAdminApprovalGuides.fulfilled, (state, action) => {
       state.guides = action.payload;
+    });
+    builder.addCase(fetchAdminApprovalHotelOwners.fulfilled, (state, action) => {
+      state.hotelOwners = action.payload;
+    });
+    builder.addCase(fetchAdminApprovalHotels.fulfilled, (state, action) => {
+      state.hotels = action.payload;
     });
     builder.addCase(fetchAdminApprovalDrivers.rejected, (state) => {
       state.loading = "failed";

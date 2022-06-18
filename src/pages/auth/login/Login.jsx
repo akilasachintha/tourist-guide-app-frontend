@@ -45,7 +45,7 @@ export default function Login() {
           } else if (res.data.status && res.data.userType === "hotelOwner" && appUser?.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/hotels/");
-          } else if (res.data.status && res.data.userType === "guide" && appUser.adminStatus === "confirm") {
+          } else if (res.data.status && res.data.userType === "guide" && appUser?.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/guides/");
           } else {

@@ -12,7 +12,7 @@ import { v4 } from "uuid";
 
 
 const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState(vehicle.userPhotoUrl);
   const [url, setUrl] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();

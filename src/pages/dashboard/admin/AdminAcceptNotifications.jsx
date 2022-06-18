@@ -6,12 +6,14 @@ import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import {
   fetchAdminApprovalDrivers,
   fetchAdminApprovalGuides,
+  fetchAdminApprovalHotelOwners,
+  fetchAdminApprovalHotels,
   fetchAdminApprovalVehicles
 } from "../../../redux/store/adminApprovalSlice";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 const AdminAcceptNotifications = () => {
-  const { drivers, vehicles, guides } = useSelector((state) => state.adminApproval);
+  const { drivers, vehicles, guides, hotelOwners, hotels } = useSelector((state) => state.adminApproval);
   const dispatch = useDispatch();
 
 
@@ -19,6 +21,8 @@ const AdminAcceptNotifications = () => {
     dispatch(fetchAdminApprovalDrivers());
     dispatch(fetchAdminApprovalVehicles());
     dispatch(fetchAdminApprovalGuides());
+    dispatch(fetchAdminApprovalHotelOwners());
+    dispatch(fetchAdminApprovalHotels());
     dispatch(fetchAppUser());
   }, [dispatch]);
 
@@ -58,6 +62,28 @@ const AdminAcceptNotifications = () => {
             .then((res) => {
               console.log(res.data);
               dispatch(fetchAdminApprovalGuides());
+              dispatch(fetchAppUser());
+              Swal.fire("Saved!", "", "success");
+            }).catch((err) => {
+            console.log(err);
+            Swal.fire("Error!", "", "error");
+          });
+        } else if (e.target.title === "hotelOwner") {
+          touristGuideAppAPI.put(`approve/hotelowner/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotelOwners());
+              dispatch(fetchAppUser());
+              Swal.fire("Saved!", "", "success");
+            }).catch((err) => {
+            console.log(err);
+            Swal.fire("Error!", "", "error");
+          });
+        } else if (e.target.title === "hotel") {
+          touristGuideAppAPI.put(`approve/hotel/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotels());
               dispatch(fetchAppUser());
               Swal.fire("Saved!", "", "success");
             }).catch((err) => {
@@ -117,6 +143,38 @@ const AdminAcceptNotifications = () => {
             .then((res) => {
               console.log(res.data);
               dispatch(fetchAdminApprovalGuides());
+              Swal.fire(
+                "Rejected!",
+                "Request has been rejected.",
+                "success"
+              );
+            })
+            .catch((err) => {
+              console.log("Err", err);
+              Swal.fire("Error!", "", "error");
+            });
+        } else if (e.target.title === "hotelOwner") {
+          touristGuideAppApi
+            .delete(`reject/hotelowner/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotelOwners());
+              Swal.fire(
+                "Rejected!",
+                "Request has been rejected.",
+                "success"
+              );
+            })
+            .catch((err) => {
+              console.log("Err", err);
+              Swal.fire("Error!", "", "error");
+            });
+        }else if (e.target.title === "hotel") {
+          touristGuideAppApi
+            .delete(`reject/hotel/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotelOwners());
               Swal.fire(
                 "Rejected!",
                 "Request has been rejected.",
@@ -297,29 +355,30 @@ const AdminAcceptNotifications = () => {
           }
 
           {
-            guides.length !== 0 && (
-              guides.map((guide) => (
-                <div id="alert-3" className="p-4 mb-4 bg-red-100 rounded-lg dark:bg-red-200"
-                     key={guide.userId}
+            hotelOwners.length !== 0 && (
+              hotelOwners.map((hotelOwner) => (
+                <div id="alert-3" className="p-4 mb-4 bg-blue-100 rounded-lg dark:bg-blue-200"
+                     key={hotelOwner.userId}
                      role="alert">
                   <div className="flex items-center">
-                    <svg className="mr-2 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor"
+                    <svg className="mr-2 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor"
                          viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                       <path
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       ></path>
                     </svg>
-                    <h3 className="text-lg font-medium text-red-700 dark:text-red-800">{guide.name} - Guide</h3>
+                    <h3 className="text-lg font-medium text-blue-700 dark:text-blue-800">{hotelOwner.name} - Hotel
+                      Owner</h3>
                   </div>
-                  <div className="mt-2 mb-4 text-sm text-red-700 dark:text-red-800">
+                  <div className="mt-2 mb-4 text-sm text-blue-700 dark:text-blue-800">
 
                   </div>
                   <div className="flex">
                     <button type="button"
                             onClick={handleAccept}
-                            title="guide"
-                            value={guide.userId}
-                            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-red-800 dark:hover:bg-red-900">
+                            title="hotelOwner"
+                            value={hotelOwner.userId}
+                            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-blue-800 dark:hover:bg-blue-900">
                       <svg className="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
                            xmlns="http://www.w3.org/2000/svg">
                         <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
@@ -330,10 +389,10 @@ const AdminAcceptNotifications = () => {
                       Accept
                     </button>
                     <button type="button"
-                            title="guide"
+                            title="hotelOwner"
                             onClick={handleReject}
-                            value={guide.userId}
-                            className="text-red-700 bg-transparent border border-red-700 hover:bg-red-800 hover:text-black focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-red-800 dark:text-red-800 dark:hover:text-white"
+                            value={hotelOwner.userId}
+                            className="text-blue-700 bg-transparent border border-blue-700 hover:bg-blue-800 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
                             data-dismiss-target="#alert-3" aria-label="Close">
                       Reject
                     </button>
