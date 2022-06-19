@@ -20,6 +20,8 @@ import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
 import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
 import Register from "./pages/auth/register/Register";
+import Forgotpassword from "./pages/auth/forgotpassword/Forgotpassword";
+import Newpassword from "./pages/auth/newpassword/Newpassword";
 import { ToastContainer } from "react-toastify";
 import Userprofile from "./pages/dashboard/tourist/Userprofile";
 import DriverHome from "./pages/dashboard/driver/DriverHome";
@@ -114,6 +116,9 @@ const App = () => {
             <Route path="hotellist/:id" element={<HotelAddedRoomList />} />
           </Route>
           <Route path="auth/register" element={<Register />} />
+          <Route path="auth/forgotpassword" element={<Forgotpassword />} />
+          <Route path="auth/newpassword" element={<Newpassword />} />
+
           <Route path="pending" element={<PendingRequests />} />
           <Route path="auth/login" element={<Login />} />
           <Route path="testing" element={< Testing />} />
