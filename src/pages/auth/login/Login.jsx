@@ -30,6 +30,7 @@ export default function Login() {
         .then((res) => {
           console.log(res.data);
           localStorage.setItem("user", JSON.stringify(res.data));
+          dispatch(fetchAppUser());
 
           if (!res.data.status) {
             toast.error("Email or Password Incorrect");
