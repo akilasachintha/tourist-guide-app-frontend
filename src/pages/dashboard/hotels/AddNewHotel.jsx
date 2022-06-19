@@ -85,7 +85,7 @@ export default function AddNewHotel() {
         .then((res) => {
           alert("work");
           console.log(res.data);
-          Swal.fire("Successfully Added!", "Your file has been deleted.", "success");
+          Swal.fire("Successfully Added!", "Your Hotel Is Uploaded.", "success");
           navigate("/dashboard/hotels");
           dispatch(fetchLocations());
         })

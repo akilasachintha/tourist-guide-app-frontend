@@ -2,9 +2,11 @@ import React from 'react'
 import "../../styles/hotels/room.css";
 import { useFormik } from "formik";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 
 const HotelBookingForm = () => {
+  const { category } = useSelector((state) => state.category);
 
   const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
@@ -74,8 +76,11 @@ const HotelBookingForm = () => {
                       onChange={formik.handleChange}
                       className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     >
-                      <option >yes</option>
-                      <option>No</option>
+                      <option>Chose...</option>
+                      {category.map((category) => (
+                        <option value={category.categoryType}
+                        >{category.categoryType}</option>
+                      ))}
                     </select>
                   </div>
                   <div className="col-span-6 sm:col-span-3">

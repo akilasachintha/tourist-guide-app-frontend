@@ -39,7 +39,7 @@ const HotelRoomDetails = () => {
           console.log(res.data);
           Swal.fire(
             "Successfully Added!",
-            "Your file has been deleted.",
+            "Your room has been Added.",
             "success"
           );
           navigate("/dashboard/hotels");
