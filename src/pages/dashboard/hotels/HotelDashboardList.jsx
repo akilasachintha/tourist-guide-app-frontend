@@ -4,17 +4,19 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import img1 from "../../../assets/images/cards/img-1.jpg";
 import { fetchHotels } from "../../../redux/store/hotelslice";
+import { fetchHotelsById } from "../../../redux/store/hotelsByIdSlice";
 
 const PER_PAGE = 4;
 
 const HotelDashboardList = () => {
-  const { loading, hotels } = useSelector((state) => state.hotels);
+  const { loading, hotelsById } = useSelector((state) => state.hotelsById);
   const [currentPage, setCurrentPage] = useState(0);
   const dispatch = useDispatch();
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(hotels.length / PER_PAGE);
+  const pageCount = Math.ceil(hotelsById?.length ? hotelsById.length : 1 / PER_PAGE);
   const [hotelImages, setHotelImages] = useState([]);
+  let user = JSON.parse(localStorage.getItem("user"));
 
 
   const handlePageClick = ({ selected: selectedPage }) => {
@@ -23,17 +25,21 @@ const HotelDashboardList = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchHotels());
+    dispatch(fetchHotelsById());
 
   }, [dispatch]);
 
+  // const hotelsFilterById = hotels.filter(({ userId }) => {
+  //   return userId.toString() === user.userId;
+  // });
 
-  const currentPageData = hotels
-    .slice(offset, offset + PER_PAGE)
-    .map((hotel) => (
+
+  const currentPageData = hotelsById
+    ?.slice(offset, offset + PER_PAGE)
+    .map((hotelsById) => (
       <tr
         className="h-16 rounded border border-gray-100 focus:outline-none"
-        key={hotel.hotelId}
+        key={hotelsById.hotelId}
       >
         <td>
           <div className="ml-5">
@@ -41,7 +47,7 @@ const HotelDashboardList = () => {
 
               <img
                 className="h-10 w-10 rounded"
-                src={hotel.hotelImages[0]?.url ? hotel.hotelImages[0]?.url : img1}
+                src={hotelsById.hotelImages[0]?.url ? hotelsById.hotelImages[0]?.url : img1}
                 alt="Default avatar"
               />
 
@@ -68,7 +74,7 @@ const HotelDashboardList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-              {hotel.name}
+              {hotelsById.name}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -119,7 +125,7 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotel.category}
+              {hotelsById.category}
             </p>
           </div>
         </td>
@@ -176,7 +182,7 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotel.district}
+              {hotelsById.district}
             </p>
           </div>
         </td>
@@ -219,10 +225,10 @@ const HotelDashboardList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotel.town}
+              {hotelsById.town}
             </p>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotel.district}
+              {hotelsById.district}
             </p>
           </div>
         </td>
@@ -252,7 +258,7 @@ const HotelDashboardList = () => {
           </button>
         </td>
         <td className="pl-4">
-          <Link to={`/dashboard/hotels/hotellist/${hotel.hotelId}`}>
+          <Link to={`/dashboard/hotels/hotellist/${hotelsById.hotelId}`}>
             <button
               className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
               View
@@ -270,9 +276,11 @@ const HotelDashboardList = () => {
               ></button>
               <ul className="dropdown-menu">
                 <li className="list-item">
+                  <Link to={`./updatehotel/${hotelsById.hotelId}`}>
                   <button className="dropdown-item" type="button">
                     <i className="bi bi-pencil"></i> Edit
                   </button>
+                </Link>
                 </li>
                 {<li
                   className="list-item"

@@ -58,7 +58,7 @@ const HeroChecking = () => {
     });
   };
   const handleSearch = () => {
-    navigate("/hotels/list", { state: { destination, date, options } });
+    navigate("/hotels", { state: { destination, date, options } });
 
   };
 

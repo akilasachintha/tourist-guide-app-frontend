@@ -34,7 +34,7 @@ export default function Login() {
 
           if (!res.data.status) {
             toast.error("Email or Password Incorrect");
-          } else if (res.data.status && res.data.userType === "driver" && appUser?.adminStatus === "confirm") {
+          } else if (res.data.status && res.data.userType === "driver" && appUser.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/drivers/");
           } else if (res.data.status && res.data.userType === "admin") {
@@ -43,10 +43,10 @@ export default function Login() {
           } else if (res.data.status && res.data.userType === "tourist") {
             toast.success("Successfully Logged In");
             navigate("/");
-          } else if (res.data.status && res.data.userType === "hotelOwner" && appUser?.adminStatus === "confirm") {
+          } else if (res.data.status && res.data.userType === "hotelOwner" && appUser.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/hotels/");
-          } else if (res.data.status && res.data.userType === "guide" && appUser?.adminStatus === "confirm") {
+          } else if (res.data.status && res.data.userType === "guide" && appUser.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/guides/");
           } else {
@@ -81,7 +81,8 @@ export default function Login() {
               />
             </svg>
           </div>
-          <div className="w-full rounded bg-white px-6 py-6 shadow-lg sm:px-6 sm:py-10 md:w-1/2 lg:w-5/12 lg:px-10 xl:w-1/3">
+          <div
+            className="w-full rounded bg-white px-6 py-6 shadow-lg sm:px-6 sm:py-10 md:w-1/2 lg:w-5/12 lg:px-10 xl:w-1/3">
             <p
               tabIndex={0}
               className="text-2xl font-extrabold leading-6 text-gray-800 focus:outline-none"
@@ -253,7 +254,8 @@ export default function Login() {
                       <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                       <line x1={3} y1={3} x2={21} y2={21} />
                       <path d="M10.584 10.587a2 2 0 0 0 2.828 2.83" />
-                      <path d="M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341" />
+                      <path
+                        d="M9.363 5.365a9.466 9.466 0 0 1 2.637 -.365c4 0 7.333 2.333 10 7c-.778 1.361 -1.612 2.524 -2.503 3.488m-2.14 1.861c-1.631 1.1 -3.415 1.651 -5.357 1.651c-4 0 -7.333 -2.333 -10 -7c1.369 -2.395 2.913 -4.175 4.632 -5.341" />
                     </svg>
                   </div>
                 </div>

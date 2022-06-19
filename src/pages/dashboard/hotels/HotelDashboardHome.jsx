@@ -1,9 +1,24 @@
 import React, { useState } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 export default function HotelDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const { appUser } = useSelector((state) => state.appUser);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  function logOut() {
+    localStorage.removeItem("user");
+    navigate("/auth/login");
+  }
+
+  useEffect(() => {
+    dispatch(fetchAppUser());
+  }, [dispatch]);
 
   return (
     <div>
@@ -65,7 +80,8 @@ export default function HotelDashboardHome() {
                       strokeLinejoin="round"
                     >
                       <path stroke="none" d="M0 0h24v24H0z" />
-                      <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
+                      <path
+                        d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
                     </svg>
                     <span className="ml-2">Hotels</span>
                   </div>
@@ -134,7 +150,8 @@ export default function HotelDashboardHome() {
               className="absolute h-full w-full bg-gray-800 opacity-50 lg:hidden"
               onClick={() => setShow(!show)}
             />
-            <div className="absolute z-40 h-full w-64 bg-gray-100 pb-4 shadow transition duration-150 ease-in-out sm:relative md:w-96 lg:hidden">
+            <div
+              className="absolute z-40 h-full w-64 bg-gray-100 pb-4 shadow transition duration-150 ease-in-out sm:relative md:w-96 lg:hidden">
               <div className="flex h-full w-full flex-col justify-between">
                 <div>
                   <div className="flex items-center justify-between px-8">
@@ -170,7 +187,8 @@ export default function HotelDashboardHome() {
 
                   {/* eslint-disable-next-line jsx-a11y/role-supports-aria-props */}
                   <ul aria-orientation="vertical" className=" py-6">
-                    <li className="cursor-pointer pl-6 text-base text-sm leading-3 tracking-normal text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <li
+                      className="cursor-pointer pl-6 text-base text-sm leading-3 tracking-normal text-indigo-700 focus:text-indigo-700 focus:outline-none">
                       <div className="flex items-center">
                         <div className="h-6 w-6 md:h-8 md:w-8">
                           <svg
@@ -195,7 +213,8 @@ export default function HotelDashboardHome() {
                         </span>
                       </div>
                     </li>
-                    <li className="mt-4 mb-4 cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <li
+                      className="mt-4 mb-4 cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                       <div className="flex items-center">
                         <div className="h-6 w-6 md:h-8 md:w-8">
                           <svg
@@ -209,7 +228,8 @@ export default function HotelDashboardHome() {
                             strokeLinejoin="round"
                           >
                             <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
+                            <path
+                              d="M4 7h3a1 1 0 0 0 1 -1v-1a2 2 0 0 1 4 0v1a1 1 0 0 0 1 1h3a1 1 0 0 1 1 1v3a1 1 0 0 0 1 1h1a2 2 0 0 1 0 4h-1a1 1 0 0 0 -1 1v3a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-1a2 2 0 0 0 -4 0v1a1 1 0 0 1 -1 1h-3a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h1a2 2 0 0 0 0 -4h-1a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1" />
                           </svg>
                         </div>
                         <span className="ml-2 text-base md:text-2xl xl:text-base">
@@ -217,7 +237,8 @@ export default function HotelDashboardHome() {
                         </span>
                       </div>
                     </li>
-                    <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <li
+                      className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                       <div className="flex items-center">
                         <div className="h-6 w-6 md:h-8 md:w-8">
                           <svg
@@ -240,7 +261,8 @@ export default function HotelDashboardHome() {
                         </span>
                       </div>
                     </li>
-                    <li className="cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
+                    <li
+                      className="cursor-pointer py-2 pl-6 text-sm leading-3 tracking-normal text-gray-600 hover:text-indigo-700 focus:text-indigo-700 focus:outline-none">
                       <div className="flex items-center">
                         <div className="h-6 w-6 md:h-8 md:w-8">
                           <svg
@@ -339,7 +361,8 @@ export default function HotelDashboardHome() {
                             strokeLinejoin="round"
                           >
                             <path stroke="none" d="M0 0h24v24H0z" />
-                            <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                            <path
+                              d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                             <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                           </svg>
                         </li>
@@ -355,7 +378,8 @@ export default function HotelDashboardHome() {
 
           <div className="w-full">
             {/* Navigation starts */}
-            <nav className="relative z-10 flex h-16 items-center justify-end bg-white shadow lg:items-stretch lg:justify-between">
+            <nav
+              className="relative z-10 flex h-16 items-center justify-end bg-white shadow lg:items-stretch lg:justify-between">
               <div className="hidden w-full pr-6 lg:flex">
                 <div className="hidden h-full w-1/2 items-center pl-6 pr-24 lg:flex">
                   <div className="relative w-full">
@@ -384,13 +408,16 @@ export default function HotelDashboardHome() {
                           strokeLinejoin="round"
                         >
                           <path stroke="none" d="M0 0h24v24H0z" />
-                          <path d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+                          <path
+                            d="M10 5a2 2 0 0 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
                           <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
                         </svg>
-                        <div className="absolute inset-0 m-auto mt-1 mr-1 h-2 w-2 rounded-full border border-white bg-red-400" />
+                        <div
+                          className="absolute inset-0 m-auto mt-1 mr-1 h-2 w-2 rounded-full border border-white bg-red-400" />
                       </div>
                     </div>
-                    <div className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
+                    <div
+                      className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="icon icon-tabler icon-tabler-messages"
@@ -415,7 +442,8 @@ export default function HotelDashboardHome() {
                       <div className="rounded-full">
                         {profile ? (
                           <ul className="absolute left-0 mt-12 w-full rounded border-r bg-white p-2 shadow sm:mt-16 ">
-                            <li className="flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700">
+                            <li
+                              className="flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700">
                               <div className="flex items-center">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -436,7 +464,9 @@ export default function HotelDashboardHome() {
                                 <span className="ml-2 text-sm">My Profile</span>
                               </div>
                             </li>
-                            <li className="mt-2 flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700">
+                            <li
+                              className="mt-2 flex w-full cursor-pointer items-center justify-between text-gray-600 hover:text-indigo-700"
+                              onClick={() => logOut()}>
                               <div className="flex items-center">
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
@@ -451,7 +481,8 @@ export default function HotelDashboardHome() {
                                   strokeLinejoin="round"
                                 >
                                   <path stroke="none" d="M0 0h24v24H0z" />
-                                  <path d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
+                                  <path
+                                    d="M14 8v-2a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-2" />
                                   <path d="M7 12h14l-3 -3m0 6l3 -3" />
                                 </svg>
                                 <span className="ml-2 text-sm">Sign out</span>
@@ -467,10 +498,11 @@ export default function HotelDashboardHome() {
                             src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
                             alt="avatar"
                           />
-                          <div className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
+                          <div
+                            className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
                         </div>
                       </div>
-                      <p className="mx-3 text-sm text-gray-800">Jane Doe</p>
+                      <p className="mx-3 text-sm text-gray-800">{appUser.name}</p>
                       <div className="cursor-pointer text-gray-600">
                         <svg
                           aria-haspopup="true"

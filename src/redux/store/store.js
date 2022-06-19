@@ -8,6 +8,8 @@ import bookingsSlice from "./bookingsSlice";
 import hotelslice from "./hotelslice";
 import guidesSlice from "./guidesSlice";
 import roomCategorySlice from "./roomCategorySlice";
+import avilableHotelSlice from "./avilableHotelSlice";
+import hotelsByIdSlice from "./hotelsByIdSlice";
 
 export default configureStore({
   reducer: {
@@ -19,6 +21,8 @@ export default configureStore({
     bookings: bookingsSlice,
     guides: guidesSlice,
     category: roomCategorySlice,
-    adminApproval: adminApprovalSlice
+    adminApproval: adminApprovalSlice,
+    availableHotels:avilableHotelSlice,
+    hotelsById:hotelsByIdSlice
   }
 });

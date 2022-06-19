@@ -41,6 +41,10 @@ import { ProtectedRoute } from "./routes/ProtectedRoute";
 import DriverProfileUpdate from "./pages/dashboard/driver/DriverProfileUpdate";
 import PendingRequests from "./components/errors/PendingRequests";
 import EmailVerification from "./components/errors/EmailVerification";
+import HotelDashboardHome from "./pages/dashboard/hotels/HotelDashboardHome";
+import HotelHome from "./pages/dashboard/hotels/HotelHome";
+import HotelOwnerProfileUpdate from "./pages/dashboard/hotels/HotelOwnerProfileUpdate";
+import HotelUpdate from "./pages/dashboard/hotels/HotelUpdate";
 
 
 const App = () => {
@@ -104,9 +108,13 @@ const App = () => {
             <Route path="" element={<GuideProfile />} />
           </Route>
           <Route path="dashboard/hotels" element={<Auth />}>
+            <Route index element={<HotelHome/>} />
+
             <Route path="hotellist" element={<HotelDashboardList />} />
-            <Route path="profile" element={<AdminDashboardLocations />} />
+
             <Route path="hotels/add" element={<AddNewHotel />} />
+            <Route path="profile" element={<HotelOwnerProfileUpdate />} />
+            <Route path="hotellist/updatehotel/:id" element={<HotelUpdate />} />
             <Route path="hotels/add/hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route path="hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route

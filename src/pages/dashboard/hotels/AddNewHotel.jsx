@@ -163,8 +163,8 @@ export default function AddNewHotel() {
                         value={formik.values.district}
                         onChange={formik.handleChange}>
                         <option>Choose ...</option>
-                        {districts.map((i) => (<option value={i}
-                        >{i}</option>))}
+                        {locations.map((i) => (<option value={i.district}
+                        >{i.district}</option>))}
                       </select>
 
                     </div>

@@ -53,7 +53,7 @@ const HotelAddedRoomList = () => {
         <td>
           <div className="flex items-center pl-5">
             <p className="mr-2 text-base font-medium leading-none text-gray-700">
-              {hotelRoom.roomCondition}
+              Room No:{hotelRoom.roomNo}
             </p>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +104,7 @@ const HotelAddedRoomList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
+              {hotelRoom.categoryType}
 
             </p>
           </div>
@@ -161,7 +162,7 @@ const HotelAddedRoomList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotelRoom.roomCondition}
+              {hotelRoom.roomAvailability}
             </p>
           </div>
         </td>
@@ -205,8 +206,11 @@ const HotelAddedRoomList = () => {
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
 
+              Price:{hotelRoom.price}
+
             </p>
             <p className="ml-2 text-sm leading-none text-gray-600">
+
 
             </p>
           </div>
@@ -228,7 +232,9 @@ const HotelAddedRoomList = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="ml-2 text-sm leading-none text-gray-600"></p>
+            <p className="ml-2 text-sm leading-none text-gray-600">
+              {hotelRoom.categoryType}
+            </p>
           </div>
         </td>
         <td className="pl-5">
