@@ -7,13 +7,14 @@ import {
   fetchAdminApprovalDrivers,
   fetchAdminApprovalGuides,
   fetchAdminApprovalHotelOwners,
+  fetchAdminApprovalHotelRooms,
   fetchAdminApprovalHotels,
   fetchAdminApprovalVehicles
 } from "../../../redux/store/adminApprovalSlice";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 const AdminAcceptNotifications = () => {
-  const { drivers, vehicles, guides, hotelOwners, hotels } = useSelector((state) => state.adminApproval);
+  const { drivers, vehicles, guides, hotelOwners, hotels, hotelRooms } = useSelector((state) => state.adminApproval);
   const dispatch = useDispatch();
 
 
@@ -23,6 +24,7 @@ const AdminAcceptNotifications = () => {
     dispatch(fetchAdminApprovalGuides());
     dispatch(fetchAdminApprovalHotelOwners());
     dispatch(fetchAdminApprovalHotels());
+    dispatch(fetchAdminApprovalHotelRooms());
     dispatch(fetchAppUser());
   }, [dispatch]);
 
@@ -84,6 +86,17 @@ const AdminAcceptNotifications = () => {
             .then((res) => {
               console.log(res.data);
               dispatch(fetchAdminApprovalHotels());
+              dispatch(fetchAppUser());
+              Swal.fire("Saved!", "", "success");
+            }).catch((err) => {
+            console.log(err);
+            Swal.fire("Error!", "", "error");
+          });
+        } else if (e.target.title === "hotelroom") {
+          touristGuideAppAPI.put(`approve/room/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotelRooms());
               dispatch(fetchAppUser());
               Swal.fire("Saved!", "", "success");
             }).catch((err) => {
@@ -174,7 +187,23 @@ const AdminAcceptNotifications = () => {
             .delete(`reject/hotel/${e.target.value}`)
             .then((res) => {
               console.log(res.data);
-              dispatch(fetchAdminApprovalHotelOwners());
+              dispatch(fetchAdminApprovalHotels());
+              Swal.fire(
+                "Rejected!",
+                "Request has been rejected.",
+                "success"
+              );
+            })
+            .catch((err) => {
+              console.log("Err", err);
+              Swal.fire("Error!", "", "error");
+            });
+        } else if (e.target.title === "hotelRoom") {
+          touristGuideAppApi
+            .delete(`reject/room/${e.target.value}`)
+            .then((res) => {
+              console.log(res.data);
+              dispatch(fetchAdminApprovalHotelRooms());
               Swal.fire(
                 "Rejected!",
                 "Request has been rejected.",
@@ -393,6 +422,100 @@ const AdminAcceptNotifications = () => {
                             onClick={handleReject}
                             value={hotelOwner.userId}
                             className="text-blue-700 bg-transparent border border-blue-700 hover:bg-blue-800 hover:text-black focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-blue-800 dark:text-blue-800 dark:hover:text-white"
+                            data-dismiss-target="#alert-3" aria-label="Close">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))
+            )
+          }
+
+          {
+            hotels.length !== 0 && (
+              hotels.map((hotel) => (
+                <div id="alert-3" className="p-4 mb-4 bg-purple-100 rounded-lg dark:bg-purple-200"
+                     key={hotel.hotelId}
+                     role="alert">
+                  <div className="flex items-center">
+                    <svg className="mr-2 w-5 h-5 text-purple-700 dark:text-purple-800" fill="currentColor"
+                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      ></path>
+                    </svg>
+                    <h3 className="text-lg font-medium text-purple-700 dark:text-purple-800">{hotel.name} - Hotel</h3>
+                  </div>
+                  <div className="mt-2 mb-4 text-sm text-purple-700 dark:text-purple-800">
+
+                  </div>
+                  <div className="flex">
+                    <button type="button"
+                            onClick={handleAccept}
+                            title="hotel"
+                            value={hotel.hotelId}
+                            className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-purple-800 dark:hover:bg-purple-900">
+                      <svg className="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
+                           xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path
+                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        ></path>
+                      </svg>
+                      Accept
+                    </button>
+                    <button type="button"
+                            title="hotel"
+                            onClick={handleReject}
+                            value={hotel.hotelId}
+                            className="text-purple-700 bg-transparent border border-purple-700 hover:bg-purple-800 hover:text-black focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-purple-800 dark:text-purple-800 dark:hover:text-white"
+                            data-dismiss-target="#alert-3" aria-label="Close">
+                      Reject
+                    </button>
+                  </div>
+                </div>
+              ))
+            )
+          }
+
+          {
+            hotelRooms.length !== 0 && (
+              hotelRooms.map((room) => (
+                <div id="alert-3" className="p-4 mb-4 bg-purple-100 rounded-lg dark:bg-pink-200"
+                     key={room.roomId}
+                     role="alert">
+                  <div className="flex items-center">
+                    <svg className="mr-2 w-5 h-5 text-pink-700 dark:text-pink-800" fill="currentColor"
+                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                      ></path>
+                    </svg>
+                    <h3 className="text-lg font-medium text-pink-700 dark:text-pink-800">{room.roomNo} - Hotel</h3>
+                  </div>
+                  <div className="mt-2 mb-4 text-sm text-pink-700 dark:text-pink-800">
+
+                  </div>
+                  <div className="flex">
+                    <button type="button"
+                            onClick={handleAccept}
+                            title="hotelRoom"
+                            value={room.roomId}
+                            className="text-white bg-pink-700 hover:bg-pink-800 focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-pink-800 dark:hover:bg-pink-900">
+                      <svg className="-ml-0.5 mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 20 20"
+                           xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 12a2 2 0 100-4 2 2 0 000 4z"></path>
+                        <path
+                          d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z"
+                        ></path>
+                      </svg>
+                      Accept
+                    </button>
+                    <button type="button"
+                            title="hotelRoom"
+                            onClick={handleReject}
+                            value={room.roomId}
+                            className="text-pink-700 bg-transparent border border-pink-700 hover:bg-pink-800 hover:text-black focus:ring-4 focus:outline-none focus:ring-pink-300 font-medium rounded-lg text-xs px-3 py-1.5 text-center dark:border-pink-800 dark:text-pink-800 dark:hover:text-white"
                             data-dismiss-target="#alert-3" aria-label="Close">
                       Reject
                     </button>

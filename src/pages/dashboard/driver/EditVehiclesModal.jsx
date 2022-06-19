@@ -6,16 +6,18 @@ import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 import { v4 } from "uuid";
 
 
 const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
-  const [image, setImage] = useState(vehicle.userPhotoUrl);
-  const [url, setUrl] = useState("");
+  const [image, setImage] = useState();
+  const [url, setUrl] = useState(vehicle.userPhotoUrl);
   const navigate = useNavigate();
+  const [progressVal, setProgressVal] = useState(0.00);
   const dispatch = useDispatch();
+  const storageRef = ref(storage, `updatedVehicleImages/${"img" + v4()}`);
 
   const handleChange = (e) => {
     const newImage = e.target.files[0];
@@ -24,35 +26,66 @@ const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
 
   console.log(vehicle);
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
     if (image == null) {
       return;
     }
-    const uploadTask = ref(storage, `updatedVehicleImages/${"img" + v4()}`);
-    uploadBytes(uploadTask, image)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
-          setUrl(url);
-          toast.success("Upload Successfully");
-        }).catch((err) => {
-          console.log(err);
-          toast.error("Upload Error");
+    // const uploadTask = ref(storage, `updatedVehicleImages/${"img" + v4()}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        setProgressVal(progress);
+
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setUrl(downloadURL);
         });
-      });
+      }
+    );
+
+    // uploadBytes(uploadTask, image)
+    //   .then((snapshot) => {
+    //     console.log(progress);
+    //     getDownloadURL(snapshot.ref)
+    //       .then((url) => {
+    //
+    //         console.log(url);
+    //         setUrl(url);
+    //         toast.success("Upload Successfully");
+    //       }).catch((err) => {
+    //       console.log(err);
+    //       toast.error("Upload Error");
+    //     });
+    //   });
   };
 
   const formik = useFormik({
     initialValues: {
-      vehicleNo: vehicle.vehicleNo,
-      vehicleType: vehicle.vehicleType,
-      vehicleModal: vehicle.vehicleModal,
-      vehicleName: vehicle.vehicleName,
-      seats: vehicle.seats,
-      priceForKm: vehicle.priceForKm,
-      vehiclePhotoUrl: vehicle.vehiclePhotoUrl,
-      vehicleCondition: vehicle.vehicleCondition,
-      userId: vehicle.userId
+      vehicleNo: vehicle?.vehicleNo,
+      vehicleType: vehicle?.vehicleType,
+      vehicleModal: vehicle?.vehicleModal,
+      vehicleName: vehicle?.vehicleName,
+      seats: vehicle?.seats,
+      priceForKm: vehicle?.priceForKm,
+      vehiclePhotoUrl: vehicle?.vehiclePhotoUrl,
+      vehicleCondition: vehicle?.vehicleCondition,
+      userId: vehicle?.userId
     },
     enableReinitialize: true,
     onSubmit: (values, e) => {
@@ -169,21 +202,41 @@ const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
                         </div>
                       </div>
 
-                      <div>
-
-                        <label className="block">
-                          <span className="sr-only">Choose File</span>
-                          <input type="file"
-                                 id="inputGroupFile01"
-                                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                                 onChange={handleChange}
-                                 aria-describedby="inputGroupFileAddon01"
-                                 onClick={handleUpload}
-                                 aria-label="Upload"
-                          />
-                        </label>
+                      <div className="grid grid-cols-6">
+                        <div className="col-span-4 sm:col-span-3">
+                          <div className="relative">
+                            <img className="w-16 h-16 rounded"
+                                 src={url ? url : vehicle.vehiclePhotoUrl}
+                                 alt="" />
+                            <span
+                              className="absolute bottom-0 left-6 transform translate-y-1/4 w-3.5 h-3.5 bg-green-400 border-2 border-white dark:border-gray-800 rounded-full">{progressVal}</span>
+                          </div>
+                        </div>
+                        <div className="col-span-8 sm:col-span-3 my-auto">
+                          <label className="block col-span-8 sm:col-span-3">
+                            <span className="sr-only">Choose File</span>
+                            <input type="file"
+                                   id="inputGroupFile07"
+                                   className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                   onChange={handleChange}
+                                   aria-describedby="inputGroupFileAddon07"
+                                   aria-label="Upload"
+                            />
+                            <button
+                              onClick={handleUpload}
+                              type="button"
+                              className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Upload
+                            </button>
+                          </label>
+                        </div>
                       </div>
 
+                      {(progressVal !== 0 || progressVal !== 100.00) ? (
+                        <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
+                          <div className="bg-blue-600 h-2.5 rounded-full"
+                               style={{ width: progressVal?.toString() + "%" }} />
+                        </div>
+                      ) : null}
                       <div className="grid grid-cols-6 gap-6">
                         <div className="col-span-6 sm:col-span-3">
                           <label

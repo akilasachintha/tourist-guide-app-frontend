@@ -42,7 +42,7 @@ const Navbar = () => {
     },
     {
       name: "Hotels",
-      path: "/hotels/list"
+      path: "/hotels"
     },
     {
       name: "Vehicles",
