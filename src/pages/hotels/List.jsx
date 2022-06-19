@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
-import "../../styles/hotels/list.css"
-import SearchItemH from '../../components/hotel/SearchItemH';
+import React from "react";
+import "../../styles/hotels/list.css";
+import SearchItemH from "../../components/hotel/SearchItemH";
 
 
 const List = () => {
@@ -9,8 +9,6 @@ const List = () => {
   // const [date,setDate] = useState(location.state.date)
   // const [options,setOpenOptions] = useState(location.state.options)
   // const [openDate,setOpenDate] = useState(false)
-
-  
 
   return (
     <div>

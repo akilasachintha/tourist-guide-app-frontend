@@ -1,49 +1,91 @@
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import { v4 } from "uuid";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { storage } from "../../../config/firebase";
 import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
+function LinearProgressWithLabel(props) {
+  return (
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Box sx={{ width: "100%", mr: 1 }}>
+        <LinearProgress variant="determinate" {...props} />
+      </Box>
+      <Box sx={{ minWidth: 35 }}>
+        <Typography variant="body2" color="text.secondary">{`${Math.round(
+          props.value
+        )}%`}</Typography>
+      </Box>
+    </Box>
+  );
+}
+
+LinearProgressWithLabel.propTypes = {
+  /**
+   * The value of the progress indicator for the determinate and buffer variants.
+   * Value between 0 and 100.
+   */
+  value: PropTypes.number.isRequired
+};
+
 export default function DriverProfileUpdate() {
   const [image, setImage] = useState(null);
   const { appUser } = useSelector((state) => state.appUser);
   const [url, setUrl] = useState(appUser.userPhotoUrl);
+  const [progressVal, setProgressVal] = useState(0);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const storageRef = ref(storage, `updatedDriverProfile/${"img" + v4()}`);
 
   const handleChange = (e) => {
     const newImage = e.target.files[0];
     setImage(newImage);
   };
 
+
   const handleUpload = () => {
     if (image == null) {
       return;
     }
 
-    const uploadTask = ref(storage, `vehicleImages/${"img" + v4()}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
 
-    uploadBytes(uploadTask, image)
-      .then((snapshot) => {
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        setProgressVal(progress);
 
-        getDownloadURL(snapshot.ref).then((url) => {
-          console.log(url);
-          setUrl(url);
-          toast.success("Upload Successfully");
-        }).catch((err) => {
-          console.log(err);
-          toast.error("Upload Error");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log("File available at", downloadURL);
+          setUrl(downloadURL);
         });
-      });
+      }
+    );
   };
 
   useEffect(() => {
@@ -160,13 +202,22 @@ export default function DriverProfileUpdate() {
                                className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
                                onChange={handleChange}
                                aria-describedby="inputGroupFileAddon06"
-                               onClick={handleUpload}
                                aria-label="Upload"
                         />
+                        <button
+                          onClick={handleUpload}
+                          type="button"
+                          className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-1.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Upload
+                        </button>
                       </label>
                     </div>
                   </div>
 
+                  {
+                    progressVal > 0 && progressVal < 100 && (<Box sx={{ width: "100%" }}>
+                      <LinearProgressWithLabel value={progressVal} />
+                    </Box>)
+                  }
 
                   <div className="grid grid-cols-6 gap-6">
                     <div className="col-span-6 sm:col-span-3">

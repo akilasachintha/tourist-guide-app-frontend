@@ -88,7 +88,7 @@ const Navbar = () => {
         ))}
       </ul>
       <div className={nav ? "hidden" : "hidden md:flex"}>
-        {user?.status && appUser?.adminStatus === "confirm" ? (<div>
+        {user?.status ? (<div>
           <div
             className="relative flex cursor-pointer items-center"
             onClick={() => setProfile(!profile)}

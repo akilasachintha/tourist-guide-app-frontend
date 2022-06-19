@@ -43,7 +43,7 @@ const HotelDetails = () => {
 
   return (
     <div>
-      {hotels.length != 0 && (<div className="hotelContainer">
+      {hotels.length !== 0 && (<div className="hotelContainer">
         {open && (
           <div className="slider">
             <FontAwesomeIcon

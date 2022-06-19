@@ -32,7 +32,6 @@ import GuideProfile from "./pages/dashboard/guide/GuideProfile";
 import GuidesHome from "./pages/guides/GuidesHome";
 import UserViewRoutesTwo from "./routes/userViewRoutes/UserViewRoutesTwo";
 import Checking from "./pages/checking/Checking";
-import Testing from "./Testing";
 import HotelBookingForm from "./pages/hotels/HotelBookingForm";
 import HotelAddedRoomList from "./pages/dashboard/hotels/HotelAddedRoomList";
 import AdminAcceptNotifications from "./pages/dashboard/admin/AdminAcceptNotifications";
@@ -41,6 +40,7 @@ import Login from "./pages/auth/login/Login";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import DriverProfileUpdate from "./pages/dashboard/driver/DriverProfileUpdate";
 import PendingRequests from "./components/errors/PendingRequests";
+import EmailVerification from "./components/errors/EmailVerification";
 
 
 const App = () => {
@@ -121,7 +121,8 @@ const App = () => {
 
           <Route path="pending" element={<PendingRequests />} />
           <Route path="auth/login" element={<Login />} />
-          <Route path="testing" element={< Testing />} />
+          <Route path="auth/login/verify" element={<EmailVerification />} />
+          <Route path="testing" element={< EmailVerification />} />
           <Route path="*" element={<PageNotFoundError />} />
         </Routes>
       </Router>

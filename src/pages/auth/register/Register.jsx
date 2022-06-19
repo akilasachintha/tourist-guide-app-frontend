@@ -12,6 +12,14 @@ import { toast } from "react-toastify";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
 import DatePicker from "react-datepicker";
 import ReCAPTCHA from "react-google-recaptcha";
+import * as Yup from "yup";
+
+const SignupSchema = Yup.object().shape({
+  email: Yup.string().email("Invalid email").required("Required"),
+  name: Yup.string().min(2, "Too Short!").max(50, "Too Long!").required("Required"),
+  password: Yup.string().required("Password is required"),
+  confirmPassword: Yup.string().label("confirm password").required().oneOf([Yup.ref("password"), null], "Passwords must match")
+});
 
 const Register = () => {
   const [image, setImage] = useState(null);
@@ -45,7 +53,6 @@ const Register = () => {
       return;
     }
     const uploadTask = ref(storage, `profileImages/${"img" + v4()}`);
-
     uploadBytes(uploadTask, image)
       .then((snapshot) => {
         getDownloadURL(snapshot.ref).then((url) => {
@@ -78,103 +85,106 @@ const Register = () => {
         nic: "",
         country: "",
         passportNo: ""
-      }} onSubmit={(values) => {
-        if (title === "driver") {
-          touristGuideAppApi
-            .post("/user/drivers", {
-              email: values.email,
-              password: values.password,
-              name: values.name,
-              dob: startDate,
-              userPhotoUrl: url,
-              licenceNo: values.licenceNo,
-              phoneNo: values.phoneNo,
-              availability: values.availability,
-              locationId: selectedLocationId
-            })
-            .then((res) => {
-              console.log(res.data);
-              Swal.fire(
-                "Successfully Added!",
-                "Your file has been deleted.",
-                "success"
-              );
-              navigate("/auth/login");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else if (title === "tourist") {
-          touristGuideAppApi
-            .post("/user/tourist/add", {
-              email: values.email,
-              password: values.password,
-              name: values.name,
-              dob: startDate,
-              userPhotoUrl: url,
-              phoneNo: values.phoneNo,
-              passport: values.password,
-              country: values.country
-            })
-            .then((res) => {
-              console.log(res.data);
-              Swal.fire(
-                "Successfully Added!",
-                "Your file has been deleted.",
-                "success"
-              );
-
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else if (title === "hotelOwner") {
-          touristGuideAppApi
-            .post("/user/hotelOwner/add", {
-              email: values.email,
-              password: values.password,
-              name: values.name,
-              dob: startDate,
-              userPhotoUrl: url,
-              phoneNo: values.phoneNo
-            })
-            .then((res) => {
-              console.log(res.data);
-              Swal.fire(
-                "Successfully Added!",
-                "Your file has been deleted.",
-                "success"
-              );
-              navigate("/auth/login");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        } else if (title === "guide") {
-          touristGuideAppApi
-            .post("/user/guide/add", {
-              email: values.email,
-              password: values.password,
-              name: values.name,
-              dob: startDate,
-              userPhotoUrl: values.photoUrl,
-              phoneNo: values.phoneNo,
-              nic: values.nic
-            })
-            .then((res) => {
-              console.log(res.data);
-              Swal.fire(
-                "Successfully Added!",
-                "Your file has been deleted.",
-                "success"
-              );
-              navigate("/auth/login");
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        }
-      }}>
+      }} validationSchema={SignupSchema}
+              onSubmit={(values) => {
+                if (title === "driver") {
+                  touristGuideAppApi
+                    .post("/user/drivers", {
+                      email: values.email,
+                      password: values.password,
+                      name: values.name,
+                      dob: startDate,
+                      userPhotoUrl: url,
+                      licenceNo: values.licenceNo,
+                      phoneNo: values.phoneNo,
+                      availability: values.availability,
+                      locationId: selectedLocationId
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                      Swal.fire(
+                        "Successfully Added!",
+                        "Your file has been deleted.",
+                        "success"
+                      );
+                      navigate("/auth/login");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else if (title === "tourist") {
+                  touristGuideAppApi
+                    .post("/user/tourist/add", {
+                      email: values.email,
+                      password: values.password,
+                      name: values.name,
+                      dob: startDate,
+                      userPhotoUrl: url,
+                      phoneNo: values.phoneNo,
+                      passport: values.password,
+                      country: values.country
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                      touristGuideAppApi.post(`/sendMail`, {
+                        email: values.email
+                      }).then((res) => {
+                        console.log(res.data);
+                        navigate("/auth/login/verify");
+                      }).catch((err) => {
+                        console.log(err);
+                      });
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else if (title === "hotelOwner") {
+                  touristGuideAppApi
+                    .post("/user/hotelOwner/add", {
+                      email: values.email,
+                      password: values.password,
+                      name: values.name,
+                      dob: startDate,
+                      userPhotoUrl: url,
+                      phoneNo: values.phoneNo
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                      Swal.fire(
+                        "Successfully Added!",
+                        "Your file has been deleted.",
+                        "success"
+                      );
+                      navigate("/auth/login");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                } else if (title === "guide") {
+                  touristGuideAppApi
+                    .post("/user/guide/add", {
+                      email: values.email,
+                      password: values.password,
+                      name: values.name,
+                      dob: startDate,
+                      userPhotoUrl: values.photoUrl,
+                      phoneNo: values.phoneNo,
+                      nic: values.nic
+                    })
+                    .then((res) => {
+                      console.log(res.data);
+                      Swal.fire(
+                        "Successfully Added!",
+                        "Your file has been deleted.",
+                        "success"
+                      );
+                      navigate("/auth/login");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                }
+              }}>
         {
           ({
              values,
@@ -191,7 +201,7 @@ const Register = () => {
                 <div className="md:flex w-full">
                   <div className="hidden md:block w-1/2 bg-indigo-500 py-10 px-10">
                     <svg id="a87032b8-5b37-4b7e-a4d9-4dbfbe394641" data-name="Layer 1"
-                         xmlns="http://www.w3.org/2000/svg" width="100%" height="auto"
+                         xmlns="http://www.w3.org/2000/svg" width="100%"
                          viewBox="0 0 744.84799 747.07702">
                       <path id="fa3b9e12-7275-481e-bee9-64fd9595a50d" data-name="Path 1"
                             d="M299.205,705.80851l-6.56-25.872a335.96693,335.96693,0,0,0-35.643-12.788l-.828,12.024-3.358-13.247c-15.021-4.29394-25.24-6.183-25.24-6.183s13.8,52.489,42.754,92.617l33.734,5.926-26.207,3.779a135.92592,135.92592,0,0,0,11.719,12.422c42.115,39.092,89.024,57.028,104.773,40.06s-5.625-62.412-47.74-101.5c-13.056-12.119-29.457-21.844-45.875-29.5Z"
@@ -276,7 +286,10 @@ const Register = () => {
                     </div>
                     <div className="flex -mx-3">
                       <div className="w-full px-3 mb-1">
-                        <label htmlFor className="text-xs font-semibold px-1">Name</label>
+                        <label className="text-xs font-semibold px-1">Name</label>
+                        {errors.name && touched.name ? (
+                          <div className="text-red-600">{errors.name}</div>
+                        ) : null}
                         <div className="flex">
                           <div
                             className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
@@ -290,7 +303,8 @@ const Register = () => {
                     </div>
                     <div className="flex -mx-3">
                       <div className="w-full px-3 mb-1">
-                        <label htmlFor className="text-xs font-semibold px-1">Email</label>
+                        <label className="text-xs font-semibold px-1">Email</label>
+                        {errors.email && touched.email ? <div className="text-red-600">{errors.email}</div> : null}
                         <div className="flex">
                           <div
                             className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
@@ -305,7 +319,10 @@ const Register = () => {
                     <div>
                       <div className="flex -mx-3">
                         <div className="w-1/2 px-3 mb-1">
-                          <label htmlFor className="text-xs font-semibold px-1">Password</label>
+                          {errors.password && touched.password ? (
+                            <div className="text-red-600">{errors.name}</div>
+                          ) : null}
+                          <label className="text-xs font-semibold px-1">Password</label>
                           <div className="flex">
                             <div
                               className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
@@ -317,7 +334,10 @@ const Register = () => {
                           </div>
                         </div>
                         <div className="w-1/2 px-3 mb-1">
-                          <label htmlFor className="text-xs font-semibold px-1">Confirm Password</label>
+                          {errors.confirmPassword && touched.confirmPassword ? (
+                            <div className="text-red-600">{errors.name}</div>
+                          ) : null}
+                          <label className="text-xs font-semibold px-1">Confirm Password</label>
                           <div className="flex">
                             <div
                               className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"></div>
@@ -331,7 +351,7 @@ const Register = () => {
                       </div>
                       <div className="flex">
                         <div className="w-100 mb-1 px-1">
-                          <label htmlFor className="text-xs font-semibold px-1">Upload Your Photo</label>
+                          <label className="text-xs font-semibold px-1">Upload Your Photo</label>
                           <input
                             className="form-control block w-full px-3 py-2 text-base font-normal text-gray-700 bg-white border-2 border-gray-200 rounded m-0 focus:text-gray-700 focus:bg-white focus:border-indigo-500 focus:outline-none"
                             type="file" id="inputGroupFile02" onChange={handleImageChange}
@@ -341,7 +361,7 @@ const Register = () => {
                         <button onClick={handleUpload} type="button">Upload</button>
                       </div>
                       <div>
-                        <label htmlFor className="text-xs font-semibold px-1">Phone Number</label>
+                        <label className="text-xs font-semibold px-1">Phone Number</label>
                         <div className="flex -mx-3">
                           <div className="w-1/4 px-3 mb-1">
 
@@ -377,13 +397,13 @@ const Register = () => {
                       </div>
                       <div className="flex">
                         <div className="w-full mb-1 px-1">
-                          <label htmlFor className="text-xs font-semibold px-1">Your Birthday</label>
+                          <label className="text-xs font-semibold px-1">Your Birthday</label>
                           <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
                                       className="px-3 py-2 mt-1 w-full rounded-md bg-white border-2 focus:border-indigo-200 focus:bg-white focus:outline-none" />
                         </div>
                       </div>
 
-                      <label htmlFor className="text-xs font-semibold px-1">Your Role</label>
+                      <label className="text-xs font-semibold px-1">Your Role</label>
                       <div className="relative" placeholder="Select your role">
                         <select
                           className="mt-1 mb-2 pl-10 bg-white w-100 appearance-none rounded-md border-2 border-gray-200 py-2.5 px-4 pr-8 leading-tight text-gray-700 focus:border-indigo-500 focus:bg-white focus:outline-none"
@@ -409,14 +429,14 @@ const Register = () => {
                       {
                         title === "tourist" && (
                           <div>
-                            <label htmlFor className="text-xs font-semibold px-1">Your Country</label>
+                            <label className="text-xs font-semibold px-1">Your Country</label>
                             <input type="text" name="country"
                                    className="px-4 py-2 mt-1 w-full rounded-md bg-white border-2 border-gray-200 focus:border-indigo-500 focus:bg-white focus:outline-none"
                                    placeholder="Country"
                                    onChange={handleChange}
                                    value={values.country}
                             />
-                            <label htmlFor className="text-xs font-semibold px-1">Passport No</label>
+                            <label className="text-xs font-semibold px-1">Passport No</label>
                             <input type="text" name="passportNo"
                                    className="px-4 py-2 mt-1 mb-2 w-full rounded-md bg-white border-2 border-gray-200 focus:border-indigo-500 focus:bg-white focus:outline-none"
                                    placeholder="Passport No"
@@ -431,14 +451,14 @@ const Register = () => {
                       {
                         title === "driver" && (
                           <div>
-                            <label htmlFor className="text-xs font-semibold px-1">Driving Licence No</label>
+                            <label className="text-xs font-semibold px-1">Driving Licence No</label>
                             <input type="text" name="licenceNo"
                                    className="px-4 py-2 mt-1 w-full rounded-md bg-white border-2 border-gray-200 focus:border-indigo-500 focus:bg-white focus:outline-none"
                                    placeholder="Driving Licence No"
                                    onChange={handleChange}
                                    value={values.licenceNo}
                             />
-                            <label htmlFor className="text-xs font-semibold px-1">Location</label>
+                            <label className="text-xs font-semibold px-1">Location</label>
                             <div className="relative" placeholder="Select Location">
                               <select
                                 className="mt-1 bg-white  w-full appearance-none rounded-md border-2 border-gray-200 py-2 px-4 pr-8 leading-tight text-gray-700 focus:border-indigo-500 focus:bg-white focus:outline-none"
@@ -472,7 +492,7 @@ const Register = () => {
 
                         title === "guide" && (
                           <div>
-                            <label htmlFor className="text-xs font-semibold px-1">NIC</label>
+                            <label className="text-xs font-semibold px-1">NIC</label>
                             <input type="text" name="nic"
 
                                    className="px-4 py-2 mt-1 mb-2 w-full rounded-md bg-white border-2 border-gray-200 focus:border-indigo-500 focus:bg-white focus:outline-none"
@@ -486,13 +506,14 @@ const Register = () => {
                       }
                       <div className="flex m-3 justify-center">
                         <ReCAPTCHA
-                          sitekey="Your client site key"
+                          sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
                           onChange={onChange}
                         />
                       </div>
                       <div className="flex -mx-3">
                         <div className="w-full px-3 mb-5">
                           <button
+                            type="submit"
                             className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg pl-10 px-3 py-3 font-semibold">REGISTER
                             NOW
                           </button>

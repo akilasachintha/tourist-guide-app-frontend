@@ -1,6 +1,3 @@
-import { Link } from "react-router-dom";
-import { useState } from "react";
-import HeroVehicle from "../../components/hero/HeroVehicle";
 import { useSelector } from "react-redux";
 
 function GuidesHome() {

@@ -15,7 +15,7 @@ const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
   const [image, setImage] = useState();
   const [url, setUrl] = useState(vehicle.userPhotoUrl);
   const navigate = useNavigate();
-  const [progressVal, setProgressVal] = useState(0.00);
+  const [progressVal, setProgressVal] = useState(0);
   const dispatch = useDispatch();
   const storageRef = ref(storage, `updatedVehicleImages/${"img" + v4()}`);
 
@@ -24,18 +24,16 @@ const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
     setImage(newImage);
   };
 
-  console.log(vehicle);
-
   const handleUpload = (e) => {
     if (image == null) {
       return;
     }
-    // const uploadTask = ref(storage, `updatedVehicleImages/${"img" + v4()}`);
+
     const uploadTask = uploadBytesResumable(storageRef, image);
 
     uploadTask.on("state_changed",
       (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
         console.log("Upload is " + progress + "% done");
         setProgressVal(progress);
 
@@ -231,7 +229,7 @@ const EditVehiclesModal = ({ showModal, setShowModal, vehicle }) => {
                         </div>
                       </div>
 
-                      {(progressVal !== 0 || progressVal !== 100.00) ? (
+                      {(progressVal > 0 && progressVal < 100.00) ? (
                         <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                           <div className="bg-blue-600 h-2.5 rounded-full"
                                style={{ width: progressVal?.toString() + "%" }} />
