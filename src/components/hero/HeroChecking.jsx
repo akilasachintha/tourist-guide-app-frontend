@@ -1,66 +1,45 @@
 import React, { useState } from "react";
 import beachVideo2 from "../../assets/videos/beachVideo2.mp4";
-import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBed } from "@fortawesome/free-solid-svg-icons";
-import { faCalendarDays } from "@fortawesome/free-regular-svg-icons";
-import { format } from "date-fns";
-import { DateRange } from "react-date-range";
+import { addDays } from "date-fns";
 import { useNavigate } from "react-router-dom";
+import DateRangePicker from "react-date-range/dist/components/DateRangePicker";
+import { useFormik } from "formik";
+import { useSelector } from "react-redux";
 
 const HeroChecking = () => {
-  const { locations } = useSelector((state) => state.locations);
-  const [filteredLocations, setFilteredLocations] = useState([]);
   const [openDate, setOpenDate] = useState(false);
-  const [destination, setDestination] = useState("");
-  const [searchValue, setSearchValue] = useState("");
-
-  const handleFilter = (event) => {
-    const wordEntered = event.target.value;
-    setSearchValue(wordEntered);
-    const newFilter = locations.filter(({ locationName }) => {
-      return locationName.toLowerCase().includes(wordEntered.toLowerCase());
-    });
-    if (wordEntered === "") {
-      setFilteredLocations([]);
-    } else {
-      setFilteredLocations(newFilter);
-    }
-  };
-
-  const clearInput = () => {
-    setFilteredLocations([]);
-    setSearchValue("");
-  };
-
-
-  const [date, setDate] = useState([
+  const [myModal, setMyModal] = useState(false);
+  const { category } = useSelector((state) => state.category);
+  const [state, setState] = useState([
     {
       startDate: new Date(),
-      endDate: new Date(),
+      endDate: addDays(new Date(), 7),
       key: "selection"
     }
   ]);
-  const [openOptions, setOpenOptions] = useState(false);
-  const [options, setOptions] = useState({
-    adult: 1,
-    children: 0,
-    room: 1
 
-
-  });
   const navigate = useNavigate();
-  const handleOption = (name, operation) => {
-    setOptions(prev => {
-      return {
-        ...prev, [name]: operation === "i" ? options[name] + 1 : options[name] - 1
-      };
-    });
-  };
-  const handleSearch = () => {
-    navigate("/hotels", { state: { destination, date, options } });
 
+
+  const handleSearch = () => {
+    setMyModal(true);
   };
+
+  const formik = useFormik({
+    initialValues: {
+      noOfRooms: 0,
+      roomCategory: "",
+      noOfMembers: ""
+
+    }, onSubmit: (values) => {
+      localStorage.setItem("noOfRooms", values.noOfRooms);
+      localStorage.setItem("roomCategory", values.roomCategory);
+      localStorage.setItem("noOfMembers", values.noOfMembers);
+      const nnn = localStorage.getItem("noOfRooms");
+      const nn = localStorage.getItem("roomCategory");
+      const n = localStorage.getItem("noOfMembers");
+    }
+  });
 
   return (
     <section className="relative h-screen w-full snap-center">
@@ -74,23 +53,111 @@ const HeroChecking = () => {
       <div className="absolute top-0 flex h-full w-full flex-col justify-center text-center text-white">
         <div className="headerSearch">
           <div className="headerSearchItem">
-            <FontAwesomeIcon icon={faCalendarDays} className="headerIcon" />
-            <span onClick={() => setOpenDate(!openDate)}
-                  className="headerSearchText">{`${format(date[0].startDate, "MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
-            {openDate && <DateRange
-              editableDateInputs={true}
-              onChange={item => setDate([item.selection])}
+            {<DateRangePicker
+              className="text-black"
+              onChange={item => setState([item.selection])}
+              showSelectionPreview={true}
               moveRangeOnFirstSelection={false}
-              minDate={new Date()}
-              ranges={date}
-              className="date"
+              months={2}
+              ranges={state}
+              direction="horizontal"
             />}
           </div>
 
           <div className="headerSearchItem">
-            <button className="headerBtn" onClick={handleSearch}>Search</button>
+            <button className="headerBtn bg-blue-500 text-white w-5/12 rounded p-2 px-4 mt-4"
+                    onClick={handleSearch}>Check Hotels
+            </button>
           </div>
 
+        </div>
+        <div>
+          {myModal && (
+            <div className="shadow-lg">
+              <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
+                <div className="p-2 rounded w-75">
+                  <div className="my-5">
+                    <div className="overflow-hidden shadow sm:rounded-md" id="roomFormContent">
+                      <div className="bg-white px-4 py-5 sm:p-6">
+                        <p id="topic">Hotel Name</p>
+                        <p id="topic">Book a Room</p>
+                        <form onSubmit={formik.handleSubmit}>
+                          <div className="grid grid-cols-6 gap-6">
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="first-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                How many rooms
+                              </label>
+                              <div className="col-span-6 sm:col-span-3">
+                                <input
+                                  type="number"
+                                  name="noOfRooms"
+                                  value={formik.values.noOfRooms}
+                                  onChange={formik.handleChange}
+                                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                />
+                              </div>
+                            </div>
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="last-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                Room Category
+                              </label>
+                              <select
+                                name="roomCategory"
+                                value={formik.values.roomCategory}
+                                onChange={formik.handleChange}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              >
+                                <option>Choose...</option>
+                                <option>Chose...</option>
+                                {category.map((category) => (
+                                  <option value={category.categoryType}
+                                  >{category.categoryType}</option>
+
+                                ))}
+                              </select>
+                            </div>
+                            <div className="col-span-6 sm:col-span-3">
+                              <label
+                                htmlFor="last-name"
+                                className="block text-sm font-medium text-gray-700"
+                              >
+                                How many Members
+                              </label>
+                              <input
+                                type="number"
+                                name="noOfMembers"
+                                value={formik.values.noOfMembers}
+                                onChange={formik.handleChange}
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                              />
+                            </div>
+                            <div className="col-span-6 sm:col-span-3">
+                            </div>
+                          </div>
+                          <div className="bg-gray-50 px-4 py-3 text-right sm:px-6" id="bookButton">
+                            <button
+                              type="submit"
+                              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-20 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                            >
+                              Book
+                            </button>
+                          </div>
+                        </form>
+                        <i className="bi bi-x relative top-0 right-0 text-3xl text-black"
+                           onClick={() => setMyModal(!myModal)}></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </section>

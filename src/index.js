@@ -5,11 +5,11 @@ import App from "./App";
 import store from "./redux/store/store";
 import { Provider } from "react-redux";
 import { fetchLocations } from "./redux/store/locationsSlice";
-
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "react-toastify/dist/ReactToastify.css";
 import { fetchVehicles } from "./redux/store/vehiclesSlice";
-import { fetchBookings } from "./redux/store/bookingsSlice";
 import { fetchHotels } from "./redux/store/hotelslice";
 import { fetchAppUser } from "./redux/store/appUserSlice";
 import { fetchGuides } from "./redux/store/guidesSlice";

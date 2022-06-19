@@ -83,29 +83,6 @@ export default function GuideDashboardHome() {
                   </div>
                 </li>
               </NavLink>
-
-              <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-code"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="7 8 3 12 7 16" />
-                    <polyline points="17 8 21 12 17 16" />
-                    <line x1={14} y1={4} x2={10} y2={20} />
-                  </svg>
-                  <span className="ml-2">Deliverables</span>
-                </div>
-              </li>
             </ul>
           </div>
 
@@ -287,7 +264,7 @@ export default function GuideDashboardHome() {
                       <div className="flex items-center">
                         <img
                           alt="profile-pic"
-                          src="https://tuk-cdn.s3.amazonaws.com/assets/components/boxed_layout/bl_1.png"
+                          src={appUser?.userPhotoUrl}
                           className="h-8 w-8 rounded-md"
                         />
                         <p className="ml-2 text-base leading-4 text-gray-800 md:text-xl">
@@ -452,7 +429,7 @@ export default function GuideDashboardHome() {
                         <div className="relative">
                           <img
                             className="h-10 w-10 rounded-full object-cover"
-                            src="https://tuk-cdn.s3.amazonaws.com/assets/components/sidebar_layout/sl_1.png"
+                            src={appUser?.userPhotoUrl}
                             alt="avatar"
                           />
                           <div

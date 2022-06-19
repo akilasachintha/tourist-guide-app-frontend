@@ -35,16 +35,17 @@ import Checking from "./pages/checking/Checking";
 import HotelBookingForm from "./pages/hotels/HotelBookingForm";
 import HotelAddedRoomList from "./pages/dashboard/hotels/HotelAddedRoomList";
 import AdminAcceptNotifications from "./pages/dashboard/admin/AdminAcceptNotifications";
-import Auth from "./pages/auth/Auth";
 import Login from "./pages/auth/login/Login";
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import DriverProfileUpdate from "./pages/dashboard/driver/DriverProfileUpdate";
 import PendingRequests from "./components/errors/PendingRequests";
 import EmailVerification from "./components/errors/EmailVerification";
-import HotelDashboardHome from "./pages/dashboard/hotels/HotelDashboardHome";
+import GuideProfileUpdate from "./pages/dashboard/guide/GuideProfileUpdate";
+import GuideDetails from "./pages/guides/GuideDetails";
 import HotelHome from "./pages/dashboard/hotels/HotelHome";
 import HotelOwnerProfileUpdate from "./pages/dashboard/hotels/HotelOwnerProfileUpdate";
 import HotelUpdate from "./pages/dashboard/hotels/HotelUpdate";
+import Testing from "./Testing";
 
 
 const App = () => {
@@ -81,7 +82,8 @@ const App = () => {
           </Route>
 
           <Route path="guides" element={<UserViewRoutesTwo />}>
-            <Route path="home" element={<GuidesHome />} />
+            <Route index element={<GuidesHome />} />
+            <Route path=":id" element={<GuideDetails />} />
           </Route>
 
           <Route path="dashboard/tourists" element={<ProtectedRoute />}>
@@ -104,33 +106,31 @@ const App = () => {
             <Route path="addVehicles" element={<AddNewVehicle />} />
           </Route>
 
-          <Route path="dashboard/guides" element={<Auth />}>
-            <Route path="" element={<GuideProfile />} />
+          <Route path="dashboard/guides" element={<ProtectedRoute />}>
+            <Route index element={<GuideProfile />} />
+            <Route path="profile" element={<GuideProfileUpdate />} />
           </Route>
-          <Route path="dashboard/hotels" element={<Auth />}>
-            <Route index element={<HotelHome/>} />
 
+
+          <Route path="dashboard/hotels" element={<ProtectedRoute />}>
+            <Route index element={<HotelHome />} />
             <Route path="hotellist" element={<HotelDashboardList />} />
-
             <Route path="hotels/add" element={<AddNewHotel />} />
             <Route path="profile" element={<HotelOwnerProfileUpdate />} />
             <Route path="hotellist/updatehotel/:id" element={<HotelUpdate />} />
             <Route path="hotels/add/hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route path="hotellist/roomdetails" element={<HotelRoomDetails />} />
-            <Route
-              path="hotels/add/hotelfeatures"
-              element={<AddHotelFeatures />}
-            />
+            <Route path="hotels/add/hotelfeatures" element={<AddHotelFeatures />} />
             <Route path="hotellist/:id" element={<HotelAddedRoomList />} />
           </Route>
+
           <Route path="auth/register" element={<Register />} />
           <Route path="auth/forgotpassword" element={<Forgotpassword />} />
           <Route path="auth/newpassword" element={<Newpassword />} />
-
           <Route path="pending" element={<PendingRequests />} />
           <Route path="auth/login" element={<Login />} />
           <Route path="auth/login/verify" element={<EmailVerification />} />
-          <Route path="testing" element={< EmailVerification />} />
+          <Route path="testing" element={< Testing />} />
           <Route path="*" element={<PageNotFoundError />} />
         </Routes>
       </Router>

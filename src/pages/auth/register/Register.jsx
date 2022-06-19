@@ -113,6 +113,8 @@ const Register = () => {
                       console.log(err);
                     });
                 } else if (title === "tourist") {
+                  localStorage.setItem("email", values.email);
+
                   touristGuideAppApi
                     .post("/user/tourist/add", {
                       email: values.email,
@@ -126,14 +128,7 @@ const Register = () => {
                     })
                     .then((res) => {
                       console.log(res.data);
-                      touristGuideAppApi.post(`/sendMail`, {
-                        email: values.email
-                      }).then((res) => {
-                        console.log(res.data);
-                        navigate("/auth/login/verify");
-                      }).catch((err) => {
-                        console.log(err);
-                      });
+                      navigate("/auth/login/verify");
                     })
                     .catch((err) => {
                       console.log(err);

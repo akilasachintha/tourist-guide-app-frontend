@@ -40,7 +40,7 @@ export default function Login() {
           } else if (res.data.status && res.data.userType === "admin") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/admin/");
-          } else if (res.data.status && res.data.userType === "tourist") {
+          } else if (res.data.status && res.data.userType === "tourist" && appUser?.verifyStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/");
           } else if (res.data.status && res.data.userType === "hotelOwner" && appUser.adminStatus === "confirm") {
@@ -49,7 +49,7 @@ export default function Login() {
           } else if (res.data.status && res.data.userType === "guide" && appUser.adminStatus === "confirm") {
             toast.success("Successfully Logged In");
             navigate("/dashboard/guides/");
-          } else {
+          } else if (res.data.status && appUser?.adminStatus === "pending") {
             navigate("/pending");
           }
         })

@@ -3,6 +3,7 @@ import TouristDashboardHome from "../pages/dashboard/tourist/TouristDashboardHom
 import DriverDashboardHome from "../pages/dashboard/driver/DriverDashboardHome";
 import AdminDashboardHome from "../pages/dashboard/admin/AdminDashboardHome";
 import React from "react";
+import GuideDashboardHome from "../pages/dashboard/guide/GuideDashboardHome";
 
 export const ProtectedRoute = ({ children }) => {
   let user = JSON.parse(localStorage.getItem("user"));
@@ -13,6 +14,8 @@ export const ProtectedRoute = ({ children }) => {
     return <DriverDashboardHome />;
   } else if (user?.status && user.userType.toString() === "admin") {
     return <AdminDashboardHome />;
+  } else if (user?.status && user.userType.toString() === "guide") {
+    return <GuideDashboardHome />;
   } else {
     return <Navigate to="/auth/login" />;
   }
