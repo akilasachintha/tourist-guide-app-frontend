@@ -103,12 +103,22 @@
   .hotelDetailsPrice > button {
     border: none;
     padding: 10px 20px;
-    background-color: #0071c2;
+    background-color: red;
     color: white;
     font-weight: bold;
     cursor: pointer;
     border-radius: 5px;
+    font-size: larger;
   }
+  .hotelAddress>span{
+    font-size: 20px;
+  }
+  .hotelDetailsPrice>span{
+    font-size: large;
+    font-family: 'Raleway', sans-serif;
+    color: #0071c2;
+  }
+
   
   .slider{
     position: sticky;

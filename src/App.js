@@ -15,6 +15,7 @@ import AddNewVehicle from "./pages/dashboard/driver/AddNewVehicle";
 import TouristDashboardBookingList from "./pages/dashboard/tourist/TouristDashboardBookingList";
 import BookingDetails from "./pages/dashboard/tourist/BookingDetails";
 
+import GuideBooking from "./components/guides/GuideBooking";
 import List from "./pages/hotels/List";
 import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
@@ -46,6 +47,7 @@ import HotelHome from "./pages/dashboard/hotels/HotelHome";
 import HotelOwnerProfileUpdate from "./pages/dashboard/hotels/HotelOwnerProfileUpdate";
 import HotelUpdate from "./pages/dashboard/hotels/HotelUpdate";
 import Testing from "./Testing";
+import AllHotelList from "./pages/hotels/AllHotelList";
 
 
 const App = () => {
@@ -74,11 +76,12 @@ const App = () => {
             <Route path="checking" element={<Checking />} />
             <Route path="vehicles" element={<VehicleList />} />
             <Route path="vehicles/:id" element={<VehicleDetailPage />} />
-            <Route path="/hotels/" element={<List />} />
+            <Route path="/hotels/" element={<AllHotelList />} />
             <Route path="/driver/" element={<DriverDashboardHome />} />
-
+            <Route path="/booking/guide/" element={<GuideBooking />} />
             <Route path="/hotels/list/:id" element={<HotelDetails/>}/>
             <Route path="/hotels/list/:id/bookingform" element={<HotelBookingForm/>}/>
+            <Route path="/availablehotels" element={<List/>}/>
           </Route>
 
           <Route path="guides" element={<UserViewRoutesTwo />}>

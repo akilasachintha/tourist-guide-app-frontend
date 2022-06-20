@@ -162,7 +162,7 @@ const HotelAddedRoomList = () => {
               />
             </svg>
             <p className="ml-2 text-sm leading-none text-gray-600">
-              {hotelRoom.roomAvailability}
+              Availability : {hotelRoom.roomAvailability}
             </p>
           </div>
         </td>

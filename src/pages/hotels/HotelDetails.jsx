@@ -67,17 +67,17 @@ const HotelDetails = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow">Reserve or Book Now!</button>
+          <button className="bookNow">Book A Guide</button>
           <h1 className="hotelTitle">{hotel[0].name}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
             <span>{hotel[0].no},{hotel[0].town},{hotel[0].district}</span>
           </div>
           <span className="hotelDistance">
-              Excellent location – 500m from center
+
             </span>
           <span className="hotelPriceHighlight">
-              Book a stay over $114 at this property and get a free airport taxi
+
             </span>
           <div className="hotelImages">
             {hotel[0]?.hotelImages.map((photo, i) => (
@@ -93,22 +93,21 @@ const HotelDetails = () => {
           </div>
           <div className="hotelDetails">
             <div className="hotelDetailsTexts">
-              <h1 className="hotelTitle">Stay in the heart of City</h1>
+              <h1 className="hotelTitle">{hotel[0].description}</h1>
               <p className="hotelDesc">
                 {hotel[0].description}
               </p>
             </div>
             <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
+              <h1></h1>
               <span>
-                  Located in the real heart of Krakow, this property has an
-                  excellent location score of 9.8!
+                  Welcome to travelmate Hotel Booking
                 </span>
               <h2>
-                <b>$945</b> (9 nights)
+                <b></b>
               </h2>
               <Link to="./bookingform">
-                <button>Reserve or Book Now</button>
+                <button>Book This Hotel</button>
               </Link>
 
             </div>

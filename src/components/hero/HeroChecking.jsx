@@ -6,6 +6,7 @@ import DateRangePicker from "react-date-range/dist/components/DateRangePicker";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 
+
 const HeroChecking = () => {
   const [openDate, setOpenDate] = useState(false);
   const [myModal, setMyModal] = useState(false);
@@ -17,8 +18,18 @@ const HeroChecking = () => {
       key: "selection"
     }
   ]);
+  const  handleChange = (e) => {
+    for (let i = 0; i < e.target.files.length; i++) {
+      const newImage = e.target.files[i];
+      // newImage["id"] = Math.random();
+      // setImages((prevState) => [...prevState, newImage]);
+    }
+  };
 
   const navigate = useNavigate();
+  const availableHotels = () =>{
+    navigate('/availablehotels');
+  };
 
 
   const handleSearch = () => {
@@ -32,14 +43,18 @@ const HeroChecking = () => {
       noOfMembers: ""
 
     }, onSubmit: (values) => {
-      localStorage.setItem("noOfRooms", values.noOfRooms);
-      localStorage.setItem("roomCategory", values.roomCategory);
+      localStorage.setItem("amount", values.noOfRooms);
+      localStorage.setItem("type", values.roomCategory);
       localStorage.setItem("noOfMembers", values.noOfMembers);
-      const nnn = localStorage.getItem("noOfRooms");
-      const nn = localStorage.getItem("roomCategory");
+      const nnn = localStorage.getItem("amount");
+      const nn = localStorage.getItem("type");
       const n = localStorage.getItem("noOfMembers");
+
+
     }
   });
+
+
 
   return (
     <section className="relative h-screen w-full snap-center">
@@ -96,7 +111,7 @@ const HeroChecking = () => {
                                   name="noOfRooms"
                                   value={formik.values.noOfRooms}
                                   onChange={formik.handleChange}
-                                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-black"
                                 />
                               </div>
                             </div>
@@ -111,7 +126,7 @@ const HeroChecking = () => {
                                 name="roomCategory"
                                 value={formik.values.roomCategory}
                                 onChange={formik.handleChange}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-black"
                               >
                                 <option>Choose...</option>
                                 <option>Chose...</option>
@@ -134,7 +149,7 @@ const HeroChecking = () => {
                                 name="noOfMembers"
                                 value={formik.values.noOfMembers}
                                 onChange={formik.handleChange}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm text-black"
                               />
                             </div>
                             <div className="col-span-6 sm:col-span-3">
@@ -143,6 +158,7 @@ const HeroChecking = () => {
                           <div className="bg-gray-50 px-4 py-3 text-right sm:px-6" id="bookButton">
                             <button
                               type="submit"
+                              onClick={availableHotels}
                               className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-20 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                               Book
