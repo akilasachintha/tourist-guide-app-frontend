@@ -1,15 +1,27 @@
-import React, {  } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-const Userprofile = () => {    
+import ReactStars from "react-stars/dist/react-stars";
 
-return (
+const Userprofile = () => {
+  const [myModal, setMyModal] = useState(true);
 
+  const handleSearch = () => {
+    setMyModal(true);
+  };
+
+  const ratingChanged = (newRating) => {
+    console.log(newRating);
+  };
+
+  return (
     <div className="container mx-auto my-5 p-5">
       <div className="md:flex no-wrap md:-mx-2 ">
         <div className="w-full md:w-3/12 md:mx-2">
           <div className="bg-white p-3 border-t-4 border-green-400">
             <div className="image overflow-hidden">
-              <img className="h-auto w-full mx-auto" src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg" alt="" />
+              <img className="h-auto w-full mx-auto"
+                   src="https://lavinephotography.com.au/wp-content/uploads/2017/01/PROFILE-Photography-112.jpg"
+                   alt="" />
             </div>
             <h1 className="text-gray-900 font-bold text-xl leading-8 my-1">Pulini Tilanka</h1>
             <h3 className="text-gray-900 font-bold text-xl leading-8 my-1">Tourist</h3>
@@ -77,11 +89,54 @@ return (
               </div>
             </div>
             <Link to="auth/register">
-            <button type="button" class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Update My Account</button>
+              <button type="button"
+                      class="inline-block px-6 py-2.5 bg-green-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-green-600 hover:shadow-lg focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-green-700 active:shadow-lg transition duration-150 ease-in-out">Update
+                My Account
+              </button>
             </Link>
           </div>
-         
-          </div>
+          {myModal && (
+            <div>
+              <div
+                className="py-12 bg-gray-700 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                id="modal">
+                <div role="alert" className="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+                  <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+                    <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Rate Your
+                      Trip</h1>
+                    <hr />
+                    <div className="mx-auto w-full my-4">
+                      <ReactStars
+                        count={5}
+                        className="mx-auto text-center text-3xl"
+                        onChange={ratingChanged}
+                        size={100}
+                        color2={"#ffd700"} />
+                    </div>
+                    <div
+                      className="cursor-pointer absolute top-0 right-0 mt-4 mr-5 text-gray-400 hover:text-gray-600 transition duration-150 ease-in-out"
+                      onClick={() => setMyModal(false)}>
+                      <svg xmlns="http://www.w3.org/2000/svg" aria-label="Close"
+                           className="icon icon-tabler icon-tabler-x" width={20} height={20} viewBox="0 0 24 24"
+                           strokeWidth="2.5" stroke="currentColor" fill="none" strokeLinecap="round"
+                           strokeLinejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" />
+                        <line x1={18} y1={6} x2={6} y2={18} />
+                        <line x1={6} y1={6} x2={18} y2={18} />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="w-full flex justify-center py-12" id="button">
+                <button
+                  className="focus:outline-none mx-auto transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm">
+                  Open Modal
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
         </div>
       </div>
  

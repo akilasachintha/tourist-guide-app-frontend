@@ -261,16 +261,16 @@ const AdminDashboardLocations = () => {
             <p className="ml-2 text-sm leading-none text-gray-600"></p>
           </div>
         </td>
-        <td className="pl-5">
-          <button className="rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none">
-            Rating 4.2/5
-          </button>
-        </td>
-        <td className="pl-4">
-          <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">
-            View
-          </button>
-        </td>
+        {/*<td className="pl-5">*/}
+        {/*  <button className="rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none">*/}
+        {/*    Rating 4.2/5*/}
+        {/*  </button>*/}
+        {/*</td>*/}
+        {/*<td className="pl-4">*/}
+        {/*  <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">*/}
+        {/*    View*/}
+        {/*  </button>*/}
+        {/*</td>*/}
         <td>
           <div className="col col-5" data-label="">
             <div className="btn-group dropstart" role="group">
@@ -327,16 +327,16 @@ const AdminDashboardLocations = () => {
                   <p>All</p>
                 </div>
               </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
-                <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
-                  <p>Beach</p>
-                </div>
-              </div>
-              <div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">
-                <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">
-                  <p>Popular</p>
-                </div>
-              </div>
+              {/*<div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">*/}
+              {/*  <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
+              {/*    <p>Beach</p>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
+              {/*<div className="ml-4 rounded-full focus:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-indigo-800 sm:ml-8">*/}
+              {/*  <div className="rounded-full py-2 px-8 text-gray-600 hover:bg-indigo-100 hover:text-indigo-700">*/}
+              {/*    <p>Popular</p>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
             <Link
               to="/dashboard/admin/locations/add"

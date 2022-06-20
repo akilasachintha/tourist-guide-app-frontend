@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { useDispatch, useSelector } from "react-redux";
@@ -512,6 +512,12 @@ const Register = () => {
                             className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg pl-10 px-3 py-3 font-semibold">REGISTER
                             NOW
                           </button>
+                          <div className="text-grey-dark mt-6 justify-center text-center">
+                            Already have an account?
+                            <Link to="/auth/login" className="no-underline border-b border-blue text-blue">
+                              Log in
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     </div>

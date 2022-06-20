@@ -102,6 +102,19 @@ export default function Login() {
                 Sign up here
               </Link>
             </p>
+            <p
+              tabIndex={0}
+              className="mt-4 text-sm font-medium leading-none text-gray-500 focus:outline-none"
+            >
+              Go to Home?{" "}
+              <Link
+                to="/"
+                className="cursor-pointer text-sm font-medium leading-none text-gray-800 hover:text-gray-500 hover:underline focus:text-gray-500 focus:underline focus:outline-none"
+              >
+                {" "}
+                Home Page
+              </Link>
+            </p>
             <button
               aria-label="Continue with google"
               type="button"
