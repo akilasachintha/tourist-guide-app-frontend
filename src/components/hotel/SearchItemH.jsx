@@ -45,8 +45,8 @@ const SearchItemH = () => {
 
   return (
     <div>
-      {availableHotels?.length !== 0 && availableHotels.map((hotelRoom) => (
-        <div className="searchItem" key={hotelRoom.hotelId}>
+      {availableHotels.length !== 0 && availableHotels.map((hotelRoom) => (
+        <div className="searchItem" key={hotelRoom.hotel.hotelId}>
           <img src={hotelRoom.hotel.hotelImages[0]?.url ? hotelRoom.hotel.hotelImages[0]?.url : img1} alt=""
                className="searchItemImg" />
           <div className="siDescrption">

@@ -384,7 +384,7 @@ export default function TouristDashboardHome() {
                 </div>
                 <div className="hidden w-1/2 lg:flex">
                   <div className="flex w-full items-center justify-end pl-8">
-                    <div className="flex h-full w-20 items-center justify-center border-r border-l">
+                    <div className="flex h-full w-20 items-center justify-center border-r border-l mx-4">
                       <div className="relative cursor-pointer text-gray-600">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
@@ -404,24 +404,6 @@ export default function TouristDashboardHome() {
                         </svg>
                         <div className="absolute inset-0 m-auto mt-1 mr-1 h-2 w-2 rounded-full border border-white bg-red-400" />
                       </div>
-                    </div>
-                    <div className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-messages"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                        <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                      </svg>
                     </div>
                     <div
                       className="relative flex cursor-pointer items-center"

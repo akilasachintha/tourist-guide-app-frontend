@@ -5,6 +5,7 @@ import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Login() {
   const [showPass, setShowPass] = useState(false);
@@ -59,6 +60,11 @@ export default function Login() {
         });
     }
   });
+
+  function onChange(value) {
+    console.log("Captcha value:", value);
+  }
+
   return (
     <>
       <form className="bg-white mt-5" onSubmit={formik.handleSubmit}>
@@ -198,6 +204,12 @@ export default function Login() {
               </div>
             </div>
             <div className="mt-8">
+              <div className="flex m-3 justify-center">
+                <ReCAPTCHA
+                  sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+                  onChange={onChange}
+                />
+              </div>
               <button
                 type="submit"
                 className="w-full rounded border bg-indigo-700 py-4 text-sm font-semibold leading-none text-white hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-700 focus:ring-offset-2"

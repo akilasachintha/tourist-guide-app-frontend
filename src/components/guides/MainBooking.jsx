@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchPayment } from "../../redux/store/paymentSlice";
 import touristGuideAppAPI from "../../apis/touristGuideAppAPI";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 const MainBooking = () => {
 
   const { payment } = useSelector((state) => state.payment);
   const [showModal, setShowModal] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   console.log("payment", payment);
   const [advance, setAdvance] = useState(payment * 0.2);
@@ -122,6 +124,7 @@ const MainBooking = () => {
           "Please wait for Confirm your Booking. ?",
           "info"
         );
+        navigate("/dashboard/tourists/bookings")
       })
       .catch((err) => {
         console.log(err);
@@ -164,6 +167,7 @@ const MainBooking = () => {
           "Your Booking has been Canceled.",
           "success"
         );
+        navigate("/");
       }
     });
   }
@@ -275,7 +279,7 @@ const MainBooking = () => {
       </div>
 
 
-      <div className="">
+      <div>
         <div>
           {payment?.length !== 0 && (
             // <div>

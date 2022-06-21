@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchGetUserRatingSlice } from "../../../redux/store/getUserRatingSlice";
 import ReactStars from "react-stars/dist/react-stars";
 import touristGuideAppAPI from "../../../apis/touristGuideAppAPI";
+import { fetchAppUser } from "../../../redux/store/appUserSlice";
 
 const Userprofile = () => {
   const [myModal, setMyModal] = useState(false);
@@ -14,14 +15,20 @@ const Userprofile = () => {
   const [myUserId, setMyUserId] = useState("");
   const dispatch = useDispatch();
 
+  const { appUser } = useSelector((state) => state.appUser);
+
+
   useEffect(() => {
     return () => {
       dispatch(fetchGetUserRatingSlice());
+      dispatch(fetchAppUser());
       if (userRating.length !== 0) {
         setMyModal(true);
       }
     };
   }, [dispatch]);
+
+
 
 
   const ratingChanged = (newRating, e) => {
@@ -53,7 +60,6 @@ const Userprofile = () => {
     console.log(myUserId);
 
   };
-
 
   return (
     <div className="container mx-auto my-5 p-5">
