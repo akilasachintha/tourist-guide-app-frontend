@@ -18,7 +18,7 @@ const HeroChecking = () => {
       key: "selection"
     }
   ]);
-  const  handleChange = (e) => {
+  const handleChange = (e) => {
     for (let i = 0; i < e.target.files.length; i++) {
       const newImage = e.target.files[i];
       // newImage["id"] = Math.random();
@@ -27,9 +27,6 @@ const HeroChecking = () => {
   };
 
   const navigate = useNavigate();
-  const availableHotels = () =>{
-    navigate('/availablehotels');
-  };
 
 
   const handleSearch = () => {
@@ -43,17 +40,28 @@ const HeroChecking = () => {
       noOfMembers: ""
 
     }, onSubmit: (values) => {
-      localStorage.setItem("amount", values.noOfRooms);
-      localStorage.setItem("type", values.roomCategory);
-      localStorage.setItem("noOfMembers", values.noOfMembers);
-      const nnn = localStorage.getItem("amount");
-      const nn = localStorage.getItem("type");
-      const n = localStorage.getItem("noOfMembers");
+      localStorage.setItem("amount", values?.noOfRooms);
+      localStorage.setItem("type", values?.roomCategory);
+      localStorage.setItem("noOfMembers", values?.noOfMembers);
+
+      console.log(state[0].startDate.getUTCDate());
+      localStorage.setItem("startDate", (state[0].startDate.getUTCDate()).toString());
+      console.log(state[0].startDate.getUTCMonth() + 1);
+      localStorage.setItem("startMonth", (state[0].startDate.getUTCMonth() + 1).toString());
+      console.log(state[0].startDate.getUTCFullYear());
+      localStorage.setItem("startYear", (state[0].startDate.getUTCFullYear()).toString());
+
+      console.log(state[0].endDate.getUTCDate());
+      localStorage.setItem("endDate", (state[0].endDate.getUTCDate()).toString());
+      console.log(state[0].endDate.getUTCMonth() + 1);
+      localStorage.setItem("endMonth", (state[0].endDate.getUTCMonth() + 1).toString());
+      console.log(state[0].endDate.getUTCFullYear());
+      localStorage.setItem("endYear", (state[0].endDate.getUTCFullYear()).toString());
 
 
+      navigate("/availablehotels");
     }
   });
-
 
 
   return (
@@ -158,7 +166,6 @@ const HeroChecking = () => {
                           <div className="bg-gray-50 px-4 py-3 text-right sm:px-6" id="bookButton">
                             <button
                               type="submit"
-                              onClick={availableHotels}
                               className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-20 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                             >
                               Book

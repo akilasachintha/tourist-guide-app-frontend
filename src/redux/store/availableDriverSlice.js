@@ -5,7 +5,10 @@ export const fetchAvailableDrivers = createAsyncThunk(
   "availableDrivers/fetchAvailableDrivers",
   async () => {
     try {
-      const response = await touristGuideAppAPI.get("/user/guide/getByAvailability");
+      let location = localStorage.getItem("location");
+      const response = await touristGuideAppAPI.get("/user/driver/getByAvailabilityAndLocation",{
+        params : {id : location},
+      });
       return response.data;
     } catch (error) {
       console.log(error.response.body);
@@ -14,27 +17,27 @@ export const fetchAvailableDrivers = createAsyncThunk(
 );
 
 const initialState = {
-  availableGuides: [],
+  availableDrivers: [],
   loading: "idle" //"idle" | "pending" | "succeeded" | "failed"
 };
 
 // Then, handle actions in your reducers:
-const availableGuideSlice = createSlice({
-  name: "availableGuides",
+const availableDriverSlice = createSlice({
+  name: "availableDrivers",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchAvailableGuides.pending, (state) => {
+    builder.addCase(fetchAvailableDrivers.pending, (state) => {
       state.loading = "pending";
     });
-    builder.addCase(fetchAvailableGuides.fulfilled, (state, action) => {
-      state.availableGuides = action.payload;
+    builder.addCase(fetchAvailableDrivers.fulfilled, (state, action) => {
+      state.availableDrivers = action.payload;
       state.loading = "succeeded";
     });
-    builder.addCase(fetchAvailableGuides.rejected, (state) => {
+    builder.addCase(fetchAvailableDrivers.rejected, (state) => {
       state.loading = "failed";
     });
   }
 });
 
-export default availableGuideSlice.reducer;
+export default availableDriverSlice.reducer;

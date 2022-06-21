@@ -259,7 +259,7 @@ const VehicleDetails = () => {
                                 className="bg-yellow-500 text-white p-2 ml-6 rounded text-sm w-auto float-right ">
                           Cancel
                         </button>
-                        <button type="submit" className="bg-gray-500 text-white p-2 rounded text-sm w-auto float-right">
+                        <button  type="submit" className="bg-gray-500 text-white p-2 rounded text-sm w-auto float-right">
                           Confirm Booking
                         </button>
                       </div>

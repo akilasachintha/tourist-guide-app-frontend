@@ -12,6 +12,7 @@ import {
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 const HotelDetails = () => {
@@ -19,6 +20,8 @@ const HotelDetails = () => {
   const [open, setOpen] = useState(false);
   const { hotels } = useSelector((state) => state.hotels);
   const { id } = useParams();
+
+
 
   const handleOpen = (i) => {
     setSlideNumber(i);
@@ -40,6 +43,8 @@ const HotelDetails = () => {
   const hotel = hotels.filter(({ hotelId }) => {
     return hotelId.toString() === id;
   });
+
+
 
   return (
     <div>
@@ -67,7 +72,9 @@ const HotelDetails = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button className="bookNow">Book A Guide</button>
+          <button type="submit" className="bookNow" onClick={localStorage.setItem('hotel',id) }></button>
+
+
           <h1 className="hotelTitle">{hotel[0].name}</h1>
           <div className="hotelAddress">
             <FontAwesomeIcon icon={faLocationDot} />
@@ -117,6 +124,7 @@ const HotelDetails = () => {
       </div>)}
     </div>
   );
+
 };
 
 export default HotelDetails;

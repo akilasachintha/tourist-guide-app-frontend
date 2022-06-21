@@ -102,7 +102,7 @@ export default function AddNewLocation() {
           console.log(res.data);
           Swal.fire(
             "Successfully Added!",
-            "Your file has been deleted.",
+            "Your Location is Added.",
             "success"
           );
           navigate("/dashboard/admin");

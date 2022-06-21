@@ -8,8 +8,12 @@ export const fetchAvailableHotels = createAsyncThunk(
       let user = JSON.parse(localStorage.getItem("user"));
       let gettype = localStorage.getItem("type");
       let getamount = localStorage.getItem("amount");
+      let startDay = parseInt(JSON.parse(localStorage.getItem("startDate")))
+      let startMonth =parseInt(JSON.parse(localStorage.getItem("startMonth")))
+      let startYear = parseInt(JSON.parse(localStorage.getItem("startYear"))) -2000
+      let checkIn = startDay*24+startMonth*24*30+startYear*24*30*12
       const response = await touristGuideAppAPI.get("/hotel/hotelRoom/getAvailableHotels", {
-        params: { type: gettype, amount: getamount }
+        params: { type: gettype, amount: getamount,startCount : checkIn.toString() }
       });
       return response.data;
     } catch (error) {

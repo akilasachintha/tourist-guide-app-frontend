@@ -11,6 +11,9 @@ import roomCategorySlice from "./roomCategorySlice";
 import avilableHotelSlice from "./avilableHotelSlice";
 import hotelsByIdSlice from "./hotelsByIdSlice";
 import availableGuideSlice from "./availableGuideSlice";
+import availableDriverSlice from "./availableDriverSlice";
+import paymentSlice from "./paymentSlice";
+import vehicleByDriverSlice from "./vehicleByDriverSlice";
 
 export default configureStore({
   reducer: {
@@ -23,8 +26,11 @@ export default configureStore({
     guides: guidesSlice,
     category: roomCategorySlice,
     adminApproval: adminApprovalSlice,
-    availableHotels:avilableHotelSlice,
-    hotelsById:hotelsByIdSlice,
-    availableGuides:availableGuideSlice
+    availableHotels: avilableHotelSlice,
+    hotelsById: hotelsByIdSlice,
+    availableGuides: availableGuideSlice,
+    availableDrivers: availableDriverSlice,
+    payment: paymentSlice,
+    vehiclesByDriver: vehicleByDriverSlice
   }
 });

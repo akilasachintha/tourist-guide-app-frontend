@@ -8,10 +8,10 @@ import {fetchAvailableHotels} from "../../redux/store/avilableHotelSlice";
 const SearchItemH = () => {
   const { hotels } = useSelector((state) => state.hotels);
   const { availableHotels } = useSelector((state) => state.availableHotels);
- //localStorage.setItem('type','B');
-// localStorage.setItem('amount','1');
- let gettype = localStorage.getItem('type');
- let getamount = localStorage.getItem('amount');
+ // localStorage.setItem('type','B');
+ // localStorage.setItem('amount','1');
+ // let gettype = localStorage.getItem('type');
+ // let getamount = localStorage.getItem('amount');
 
  function onClick(event , data){
    console.log(data);

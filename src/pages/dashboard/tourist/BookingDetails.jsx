@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import img2 from "./pics/vehicle.jpg";
 import img5 from "./pics/booking.png"
+import touristGuideAppAPI from "../../../apis/touristGuideAppAPI";
 
 function BookingDetails() {
   const { id } = useParams();
@@ -19,6 +20,17 @@ function BookingDetails() {
     return bookingId.toString() === id;
   });
 
+  function cancelBooking(event , data){
+    touristGuideAppAPI.put('/booking/cancelBooking/',{
+      bookingId:data
+    })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div>
@@ -123,8 +135,10 @@ function BookingDetails() {
     <button className="rounded-full white py-1 px-3 font-bold text-white hover:bg-black">
                       
                     </button>
-                    <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black">
-                      Change Booking
+                    <button className="rounded-full bg-black py-1 px-3 font-bold text-white hover:bg-black"
+                            onClick={event => cancelBooking(event,booking[0].bookingId)}
+                    >
+                      Cancel Booking
                     </button>
     </div>
                     

@@ -21,6 +21,9 @@ const LocationDetails = () => {
     setOpen(true);
   };
 
+  localStorage.setItem('location',id);
+
+
   const handleMove = (direction) => {
     let newSlideNumber;
 
