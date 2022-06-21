@@ -112,6 +112,59 @@ const HotelBookingForm = () => {
                   </button>
                 </div>
               </form>
+              <div className="hotelroomdetailtable">
+
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                  <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                      <th scope="col" className="px-6 py-3">
+                        Room Category discription
+                      </th>
+                      <th scope="col" className="px-6 py-3">
+                        Category Type
+                      </th>
+
+                      <th scope="col" className="px-6 py-3">
+                        Select
+                      </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    {category.map((category)=>(
+                      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" className="px-6 py-4 font-medium text-gray-900 dark:text-white whitespace-nowrap text-black">
+                          {category.description}
+                        </th>
+                        <td className="px-6 py-4">
+                          {category.categoryType
+                          }
+                        </td>
+
+                        <td className="px-6 py-4 text-right">
+                          <button>Select</button>
+                        </td>
+                      </tr>
+                    ))}
+
+
+                    </tbody>
+                  </table>
+
+                </div>
+                <div className="bg-gray-50 px-4 py-3 text-right sm:px-6" id="bookButton">
+                  <button
+                    type="submit"
+                    className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-20 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    Book
+                  </button>
+                </div>
+
+
+
+              </div>
             </div>
           </div>
         </div>

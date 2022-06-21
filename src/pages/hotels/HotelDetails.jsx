@@ -72,7 +72,6 @@ const HotelDetails = () => {
           </div>
         )}
         <div className="hotelWrapper">
-          <button type="submit" className="bookNow" onClick={localStorage.setItem('hotel',id) }></button>
 
 
           <h1 className="hotelTitle">{hotel[0].name}</h1>

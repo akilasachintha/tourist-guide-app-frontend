@@ -127,6 +127,23 @@ const MainDetails = () => {
         console.log(err);
       });
   }
+
+  function cancle(){
+    localStorage.removeItem("driver")
+    localStorage.removeItem("vehicle")
+    localStorage.removeItem("hotel")
+    localStorage.removeItem("guide")
+    localStorage.removeItem("amount")
+    localStorage.removeItem("type")
+    localStorage.removeItem("startDate")
+    localStorage.removeItem("startMonth")
+    localStorage.removeItem("startYear")
+    localStorage.removeItem("endDate")
+    localStorage.removeItem("endMonth")
+    localStorage.removeItem("endYear")
+    localStorage.removeItem("dayCount")
+    localStorage.removeItem("location")
+  }
   return (
     <div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
@@ -169,6 +186,7 @@ const MainDetails = () => {
                           <Link to="/locations">
                             <button
                               className="flex rounded-md bg-black py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600"
+                            onClick={cancle}
                             >
                               CANCLE
                             </button>
