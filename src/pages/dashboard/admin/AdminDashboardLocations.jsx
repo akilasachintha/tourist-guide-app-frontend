@@ -309,14 +309,6 @@ const AdminDashboardLocations = () => {
             <p className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
               Locations
             </p>
-            <div className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
-              <p>Sort By:</p>
-              <select className="ml-1 bg-transparent focus:text-indigo-600 focus:outline-none">
-                <option className="text-sm text-indigo-800">Latest</option>
-                <option className="text-sm text-indigo-800">Oldest</option>
-                <option className="text-sm text-indigo-800">Latest</option>
-              </select>
-            </div>
           </div>
         </div>
         <div className="bg-white py-4 px-4 md:py-7 md:px-8 xl:px-10">

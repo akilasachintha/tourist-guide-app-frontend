@@ -10,8 +10,6 @@ import { useFormik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
-import { fetchVehicles } from "../../../redux/store/vehiclesSlice";
-import { fetchAppUser } from "../../../redux/store/appUserSlice";
 import { fetchHotels } from "../../../redux/store/hotelslice";
 import { fetchHotelsById } from "../../../redux/store/hotelsByIdSlice";
 
@@ -41,7 +39,6 @@ export default function HotelUpdate() {
     const uploadTask = ref(storage, `hotelUpdatedImages/${"img" + v4()}`);
     uploadBytes(uploadTask, image)
       .then((snapshot) => {
-
         getDownloadURL(snapshot.ref).then((url) => {
           console.log(url);
           setUrls(urls);
@@ -72,7 +69,8 @@ export default function HotelUpdate() {
       let user = JSON.parse(localStorage.getItem("user"));
       touristGuideAppApi
         .put(`/hotel/update/${myHotel[0].hotelId}`, {
-          name: values.name
+          name: values.name,
+          description: values.description
         })
         .then((res) => {
           console.log(res.data);
@@ -134,15 +132,13 @@ export default function HotelUpdate() {
                       >
                         Description
                       </label>
-                      <input
-                        type="text"
-                        //disabled={true}
+                      <textarea
                         name="description"
                         autoComplete="family-name"
                         className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         value={formik.values.description}
                         onChange={formik.handleChange}
-                      />
+                      ></textarea>
                     </div>
                   </div>
 
@@ -169,43 +165,6 @@ export default function HotelUpdate() {
                       </label>
                     </div>
                   </div>
-
-
-                  <div className="grid grid-cols-6 gap-6">
-                    {/*<div className="col-span-6 sm:col-span-3">*/}
-                    {/*  <label*/}
-                    {/*    htmlFor="dob"*/}
-                    {/*    className="block text-sm font-medium text-gray-700"*/}
-                    {/*  >*/}
-                    {/*    Date of Birth*/}
-                    {/*  </label>*/}
-                    {/*  <input*/}
-                    {/*    type="date"*/}
-                    {/*    name="dob"*/}
-                    {/*    className="mt-1 box-border block w-full rounded-md border border-gray-300 p-1 focus:border-black focus:ring-black sm:text-sm"*/}
-                    {/*    onChange={formik.handleChange}*/}
-                    {/*    value={formik.values.dob}*/}
-                    {/*  />*/}
-                    {/*</div>*/}
-
-                    {/*<div className="col-span-6 sm:col-span-3">*/}
-                    {/*  <label*/}
-                    {/*    htmlFor="phoneNo"*/}
-                    {/*    className="block text-sm font-medium text-gray-700"*/}
-                    {/*  >*/}
-                    {/*    Phone No*/}
-                    {/*  </label>*/}
-                    {/*  <input*/}
-                    {/*    name="phoneNo"*/}
-                    {/*    type="text"*/}
-                    {/*    autoComplete="family-name"*/}
-                    {/*    className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"*/}
-                    {/*    value={formik.values.phoneNo}*/}
-                    {/*    onChange={formik.handleChange}*/}
-                    {/*  />*/}
-                    {/*</div>*/}
-                  </div>
-
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
                   <button

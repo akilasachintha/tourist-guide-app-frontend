@@ -10,9 +10,7 @@ import { useFormik } from "formik";
 
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import { fetchLocations } from "../../../redux/store/locationsSlice";
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const districts = ["Colombo", "Gampaha", "Kalutara", "Kandy", "Matale", "Nuwara Eliya", "Galle", "Matara", "Hambantota", "Jaffna", "Kilinochchi", "Mannar", "Vavuniya", "Mullaitivu", "Batticaloa", "Ampara", "Trincomalee", "Kurunegala", "Puttalam", "Anuradhapura", "Polonnaruwa", "Badulla", "Moneragala", "Ratnapura", "Kegalle"];
 
@@ -83,14 +81,12 @@ export default function AddNewHotel() {
 
         })
         .then((res) => {
-          alert("work");
           console.log(res.data);
           Swal.fire("Successfully Added!", "Your Hotel Is Uploaded.", "success");
           navigate("/dashboard/hotels");
           dispatch(fetchLocations());
         })
         .catch((err) => {
-          alert("error");
           console.log(err);
           toast.error("Server Error");
         });
@@ -127,6 +123,7 @@ export default function AddNewHotel() {
                       <input
                         type="text"
                         name="name"
+                        required={true}
                         className="mt-1 box-border block w-full rounded-md border border-gray-300 p-1 focus:border-black focus:ring-black sm:text-sm"
                         onChange={formik.handleChange}
                         value={formik.values.name}
@@ -138,14 +135,15 @@ export default function AddNewHotel() {
                         htmlFor="district"
                         className="block text-sm font-medium text-gray-700"
                       >
-                        Location
+                        Location near to Hotel
                       </label>
                       <select
                         id="locationId"
                         className="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                         value={formik.values.locationId}
+                        required={true}
                         onChange={formik.handleChange}>
-                        <option>Choose ...</option>
+                        <option>Choose...</option>
                         {locations.map((location) => (<option value={location.locationId}
                         >{location.locationName}</option>))}
                       </select>
@@ -203,22 +201,19 @@ export default function AddNewHotel() {
                       />
                     </div>
 
-
                     <div className="col-span-6 sm:col-span-3">
                       <label
                         htmlFor="category"
                         className="block text-sm font-medium text-gray-700"
                       >
                         Description
-
                       </label>
-                      <input
+                      <textarea
                         name="description"
-                        type="text"
                         className="mt-1 block w-full rounded-md border border-gray-300 p-1 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         value={formik.values.description}
                         onChange={formik.handleChange}
-                      />
+                      ></textarea>
                     </div>
 
 
@@ -251,7 +246,7 @@ export default function AddNewHotel() {
                             htmlFor="inputGroupFile05"
                             className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
                           >
-                            {urls && <span>Upload a file</span>}
+                            {urls && <span onClick={handleUpload}>Upload a file</span>}
                             <input
                               id="inputGroupFile05"
                               type="file"
@@ -260,7 +255,6 @@ export default function AddNewHotel() {
                               className="sr-only"
                               onChange={handleChange}
                               aria-label="Upload"
-                              onClick={handleUpload}
                             />
                             <div>
                               {urls.map((url, i) => (<img
@@ -283,16 +277,6 @@ export default function AddNewHotel() {
                   </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                  <div
-                    className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                  >
-                    <Link to="./hotellist/roomdetails">
-                      <p className="text-sm font-medium leading-none text-white">
-                        Next
-                      </p>
-                    </Link>
-
-                  </div>
                   <div className="savehotel">
                     <button
                       type="submit"

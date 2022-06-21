@@ -92,7 +92,7 @@ const AdminAcceptNotifications = () => {
             console.log(err);
             Swal.fire("Error!", "", "error");
           });
-        } else if (e.target.title === "hotelroom") {
+        } else if (e.target.title === "hotelRoom") {
           touristGuideAppAPI.put(`approve/room/${e.target.value}`)
             .then((res) => {
               console.log(res.data);
@@ -228,15 +228,6 @@ const AdminAcceptNotifications = () => {
               className="text-base font-bold leading-normal text-gray-800 focus:outline-none sm:text-lg md:text-xl lg:text-2xl">
               Notifications
             </p>
-            <div
-              className="flex cursor-pointer items-center rounded bg-gray-200 py-3 px-4 text-sm font-medium leading-none text-gray-600 hover:bg-gray-300">
-              <p>Sort By:</p>
-              <select className="ml-1 bg-transparent focus:text-indigo-600 focus:outline-none">
-                <option className="text-sm text-indigo-800">Latest</option>
-                <option className="text-sm text-indigo-800">Oldest</option>
-                <option className="text-sm text-indigo-800">Latest</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -491,7 +482,7 @@ const AdminAcceptNotifications = () => {
                         d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
                       ></path>
                     </svg>
-                    <h3 className="text-lg font-medium text-pink-700 dark:text-pink-800">{room.roomNo} - Hotel</h3>
+                    <h3 className="text-lg font-medium text-pink-700 dark:text-pink-800">{room.roomNo} - Hotel Room</h3>
                   </div>
                   <div className="mt-2 mb-4 text-sm text-pink-700 dark:text-pink-800">
 

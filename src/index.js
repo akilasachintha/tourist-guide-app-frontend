@@ -19,7 +19,7 @@ import { fetchAdminApprovalDrivers, fetchAdminApprovalVehicles } from "./redux/s
 import { fetchHotelsById } from "./redux/store/hotelsByIdSlice";
 import { fetchAvailableGuides } from "./redux/store/availableGuideSlice";
 import { fetchPayment } from "./redux/store/paymentSlice";
-import { fetchVehiclesByDriver } from "./redux/store/vehicleByDriverSlice";
+import { fetchVehiclesByDriver } from "./redux/store/vehiclesByDriverSlice";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 let user = JSON.parse(localStorage.getItem('user'));

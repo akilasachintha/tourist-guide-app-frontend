@@ -5,8 +5,8 @@ export const fetchVehiclesByDriver = createAsyncThunk(
   "vehiclesByDriver/fetchVehiclesByDriver",
   async () => {
     try {
-      let driver = JSON.parse(localStorage.getItem('driver'));
-      const response = await touristGuideAppAPI.get(`/vehicles/${driver.userId}`);
+      let driver = localStorage.getItem("driver");
+      const response = await touristGuideAppAPI.get(`/vehicles/${driver}`);
       console.log(response.data);
       return response.data;
     } catch (error) {

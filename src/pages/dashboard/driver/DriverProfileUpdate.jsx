@@ -32,10 +32,6 @@ function LinearProgressWithLabel(props) {
 }
 
 LinearProgressWithLabel.propTypes = {
-  /**
-   * The value of the progress indicator for the determinate and buffer variants.
-   * Value between 0 and 100.
-   */
   value: PropTypes.number.isRequired
 };
 
@@ -116,9 +112,9 @@ export default function DriverProfileUpdate() {
         .then((res) => {
           console.log(res.data);
           Swal.fire(
-            "Please Wait for Approval of Admin!",
-            "Your vehicle is reviewed by admin of the System. Please be patient.",
-            "info"
+            "Successfully Updated!",
+            "Your profile is Successfully Updated.",
+            "success"
           );
           navigate("/dashboard/drivers");
           dispatch(fetchVehicles());

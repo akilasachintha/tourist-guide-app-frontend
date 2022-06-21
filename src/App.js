@@ -22,7 +22,6 @@ import GuideBooking from "./components/guides/GuideBooking";
 import List from "./pages/hotels/List";
 import AddNewHotel from "./pages/dashboard/hotels/AddNewHotel";
 import HotelDashboardList from "./pages/dashboard/hotels/HotelDashboardList";
-import AddHotelFeatures from "./pages/dashboard/hotels/AddHotelFeatures";
 import Register from "./pages/auth/register/Register";
 import Forgotpassword from "./pages/auth/forgotpassword/Forgotpassword";
 import Newpassword from "./pages/auth/newpassword/Newpassword";
@@ -73,26 +72,24 @@ const App = () => {
         />
         <Routes>
           <Route path="/" element={<UserViewRoutes />}>
-            <Route path="" element={<Home />} />
-            <Route path="locations" element={<Location />} />
+            {/*<Route path="" element={<Home />} />*/}
+            <Route path="" element={<Location />} />
             <Route path="locations/:id" element={<LocationDetailPage />} />
             <Route path="checking" element={<Checking />} />
             <Route path="vehicles" element={<VehicleList />} />
             <Route path="vehicles/:id" element={<VehicleDetailPage />} />
             <Route path="hotels/" element={<AllHotelList />} />
             <Route path="driver/" element={<DriverDashboardHome />} />
+            <Route path="guides" element={<GuidesHome />} />
+            <Route path="guides/:id" element={<GuideDetails />} />
             <Route path="booking/guide/" element={<GuideBooking />} />
             <Route path="booking/driver/" element={<DriverBooking />} />
             <Route path="booking/vehicle/" element={<VehicleBooking />} />
+            <Route path="booking/vehicle/:id" element={<VehicleDetailPage />} />
             <Route path="booking/main/" element={<MainBooking />} />
             <Route path="hotels/list/:id" element={<HotelDetails/>}/>
-            <Route path="hotels/list/:id/bookingform" element={<HotelBookingForm/>}/>
-            <Route path="availablehotels" element={<List/>}/>
-          </Route>
-
-          <Route path="guides" element={<UserViewRoutesTwo />}>
-            <Route index element={<GuidesHome />} />
-            <Route path=":id" element={<GuideDetails />} />
+            <Route path="hotels/list/:id/bookingform" element={<HotelBookingForm />} />
+            <Route path="booking/availablehotels" element={<List />} />
           </Route>
 
           <Route path="dashboard/tourists" element={<ProtectedRoute />}>
@@ -129,7 +126,6 @@ const App = () => {
             <Route path="hotellist/updatehotel/:id" element={<HotelUpdate />} />
             <Route path="hotels/add/hotellist/roomdetails" element={<HotelRoomDetails />} />
             <Route path="hotellist/roomdetails" element={<HotelRoomDetails />} />
-            <Route path="hotels/add/hotelfeatures" element={<AddHotelFeatures />} />
             <Route path="hotellist/:id" element={<HotelAddedRoomList />} />
           </Route>
 

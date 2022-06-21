@@ -1,10 +1,9 @@
 import React from "react";
 import { useFormik } from "formik";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import touristGuideAppApi from "../../../apis/touristGuideAppAPI";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchHotels } from "../../../redux/store/hotelslice";
 
@@ -19,7 +18,6 @@ const HotelRoomDetails = () => {
     initialValues: {
       roomNo: 0,
       roomCondition: "",
-      roomAvailability: "",
       price: 0,
       categoryType: "",
       hotelId: 0
@@ -31,11 +29,9 @@ const HotelRoomDetails = () => {
           categoryType: values.categoryType,
           roomNo: values.roomNo,
           roomCondition: values.roomCondition,
-          roomAvailability: values.roomAvailability,
           price: values.price
         })
         .then((res) => {
-          alert("work");
           console.log(res.data);
           Swal.fire(
             "Successfully Added!",
@@ -46,9 +42,8 @@ const HotelRoomDetails = () => {
           dispatch(fetchHotels());
         })
         .catch((err) => {
-          alert("error");
           console.log(err);
-          toast.error("Server Error");
+          toast.error("Please Fill this form Correctly");
         });
     }
   });
@@ -56,7 +51,7 @@ const HotelRoomDetails = () => {
     <div>
       <div>
         <p>Add hotel Rooms</p>
-        <div className="overflow-hidden shadow sm:rounded-md">
+        <div className="overflow-hidden shadow sm:rounded-md mt-4">
           <div className="bg-white px-4 py-5 sm:p-6">
             <form onSubmit={formik.handleSubmit}>
               <div className="grid grid-cols-6 gap-6">
@@ -71,10 +66,11 @@ const HotelRoomDetails = () => {
                     <input
                       type="number"
                       name="roomNo"
+                      required={true}
                       onChange={formik.handleChange}
                       value={formik.values.roomNo}
 
-                      className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                      className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                     />
                   </div>
                 </div>
@@ -84,38 +80,17 @@ const HotelRoomDetails = () => {
                     htmlFor="last-name"
                     className="block text-sm font-medium text-gray-700"
                   >
-                    Room Avilability
-                  </label>
-                  <select
-                    id="roomAvailability"
-                    onChange={formik.handleChange}
-                    value={formik.values.roomAvailability}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  >
-                    <option>Chose...</option>
-                    {freeRoom.map((free) => (
-                      <option value={free}
-                      >{free}</option>
-                    ))}
-                  </select>
-                </div>
-
-
-                <div className="col-span-6 sm:col-span-3">
-                  <label
-                    htmlFor="last-name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
                     Room Condition
                   </label>
-                  <input
-                    type="text"
-                    name="roomCondition"
-                    onChange={formik.handleChange}
+                  <select
+                    id="roomCondition"
                     value={formik.values.roomCondition}
-
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  />
+                    onChange={formik.handleChange}
+                    className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    <option>Chose...</option>
+                    <option value="good"> Good</option>
+                    <option value="average"> Average</option>
+                  </select>
                 </div>
 
                 <div className="col-span-6 sm:col-span-3">
@@ -128,10 +103,11 @@ const HotelRoomDetails = () => {
                   <input
                     type="text"
                     name="price"
+                    required={true}
                     onChange={formik.handleChange}
                     value={formik.values.price}
 
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                    className="mt-1 block w-full p-2 rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
 
@@ -146,11 +122,11 @@ const HotelRoomDetails = () => {
                     id="categoryType"
                     value={formik.values.categoryType}
                     onChange={formik.handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    className="mt-1 block w-full rounded-md p-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     <option>Chose...</option>
                     {category.map((category) => (
                       <option value={category.categoryType}
-                      >{category.categoryType}</option>
+                      >{category.description}</option>
                     ))}
                   </select>
                 </div>
@@ -167,7 +143,7 @@ const HotelRoomDetails = () => {
                     id="hotelId"
                     value={formik.values.hotelId}
                     onChange={formik.handleChange}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    className="mt-1 block w-full rounded-md  p-2 border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     <option>Chose...</option>
                     {hotels.map((hotel) => (
                       <option value={hotel.hotelId}
@@ -175,22 +151,9 @@ const HotelRoomDetails = () => {
                     ))}
                   </select>
                 </div>
-
-
               </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-
+              <div className="bg-gray-50 px-4 py-4 text-right sm:px-6">
                 <button
-                  type="reset"
-                  className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  Add more Rooms
-                </button>
-              </div>
-              <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-
-                <button
-
                   type="submit"
                   className="inline-flex justify-center rounded-md border border-transparent bg-indigo-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >

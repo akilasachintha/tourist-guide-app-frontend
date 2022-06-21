@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { fetchAppUser } from "../../../redux/store/appUserSlice";
+import { fetchCheckingHotelStatus } from "../../../redux/store/checkingHotelStatusSlice";
+import touristGuideAppAPI from "../../../apis/touristGuideAppAPI";
 
 export default function HotelDashboardHome() {
   const [show, setShow] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [notificationShow, setNotificationShow] = useState(false);
   const { appUser } = useSelector((state) => state.appUser);
+  const [myNotifyModal, setMyNotifyModal] = useState(false);
+  const [myBookingId, setMyBookingId] = useState(0);
+  const { hotelBookings } = useSelector((state) => state.hotelBookings);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -16,9 +21,33 @@ export default function HotelDashboardHome() {
     navigate("/auth/login");
   }
 
+
+  const myBookingHotel = hotelBookings.filter(({ bookingId }) => {
+    return bookingId = myBookingId;
+  });
+
   useEffect(() => {
     dispatch(fetchAppUser());
+    dispatch(fetchCheckingHotelStatus());
   }, [dispatch]);
+
+  const handleManageBtn = (e) => {
+    setMyBookingId(e.target.value);
+    setMyNotifyModal(true);
+  };
+
+  console.log(myBookingId);
+
+  const handleAccept = () => {
+    touristGuideAppAPI.get("/booking/hotelBooking/confirm", {
+      params: { id: myBookingId }
+    }).then((res) => {
+      console.log(res.data);
+      setMyNotifyModal(false);
+      dispatch(fetchCheckingHotelStatus());
+    });
+  };
+
 
   return (
     <div>
@@ -88,7 +117,7 @@ export default function HotelDashboardHome() {
                 </li>
               </NavLink>
 
-              <NavLink to="/dashboard/drivers/profile">
+              <NavLink to="/dashboard/hotels/profile">
                 <li className="mb-4 cursor-pointer py-2 pl-6 text-sm leading-3">
                   <div className="flex items-center">
                     <svg
@@ -112,28 +141,6 @@ export default function HotelDashboardHome() {
                 </li>
               </NavLink>
 
-              <li className="cursor-pointer py-2 pl-6 text-sm leading-3">
-                <div className="flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="icon icon-tabler icon-tabler-code"
-                    width={20}
-                    height={20}
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="currentColor"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path stroke="none" d="M0 0h24v24H0z" />
-                    <polyline points="7 8 3 12 7 16" />
-                    <polyline points="17 8 21 12 17 16" />
-                    <line x1={14} y1={4} x2={10} y2={20} />
-                  </svg>
-                  <span className="ml-2">Deliverables</span>
-                </div>
-              </li>
             </ul>
           </div>
 
@@ -378,6 +385,54 @@ export default function HotelDashboardHome() {
 
           <div className="w-full">
             {/* Navigation starts */}
+
+
+            {notificationShow && (<div
+              className="w-full absolute z-10 right-0 mt-5 h-full overflow-x-hidden transform translate-x-0 transition ease-in-out duration-700"
+              id="notification">
+              <div className="2xl:w-3/12 bg-gray-50 h-screen overflow-y-auto p-8 absolute right-0">
+                <div className="flex items-center justify-between">
+                  <p className="text-2xl font-semibold leading-6 text-gray-800">Notifications</p>
+                  <div className="cursor-pointer" onClick={() => setNotificationShow(!notificationShow)}>
+                    <svg width={24} height={24} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M18 6L6 18" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round"
+                            strokeLinejoin="round" />
+                      <path d="M6 6L18 18" stroke="#4B5563" strokeWidth="1.25" strokeLinecap="round"
+                            strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                </div>
+
+                {hotelBookings.length !== 0 && hotelBookings.map((book) => (
+                  (
+                    <div className="w-full p-3 mt-4 bg-green-100 rounded flex items-center">
+                      <div
+                        className="w-8 h-8 border rounded-full border-red-200 flex items-center flex-shrink-0 justify-center">
+                        <img src="https://img.icons8.com/ios-filled/50/undefined/appointment-reminders--v1.png"
+                             alt="img" />
+                      </div>
+                      <div className="pl-3 w-full flex items-center justify-between">
+                        <p className="text-sm leading-none text-green-700">Accept Or Reject Booking</p>
+                        <button type="button"
+                                className="text-xs leading-3 cursor-pointer underline text-right text-green-700"
+                                value={book.bookingId}
+                                onClick={handleManageBtn}>Manage
+                        </button>
+                      </div>
+                    </div>
+                  )
+                ))}
+
+                <div className="flex items-center justiyf-between">
+                  <hr className="w-full" />
+                  <p className="text-sm flex flex-shrink-0 leading-normal px-3 py-16 text-gray-500">Thats it for now
+                    :)</p>
+                  <hr className="w-full" />
+                </div>
+              </div>
+            </div>)}
+
+
             <nav
               className="relative z-10 flex h-16 items-center justify-end bg-white shadow lg:items-stretch lg:justify-between">
               <div className="hidden w-full pr-6 lg:flex">
@@ -394,7 +449,8 @@ export default function HotelDashboardHome() {
                 <div className="hidden w-1/2 lg:flex">
                   <div className="flex w-full items-center justify-end pl-8">
                     <div className="flex h-full w-20 items-center justify-center border-r border-l">
-                      <div className="relative cursor-pointer text-gray-600">
+                      <div className="relative cursor-pointer text-gray-600"
+                           onClick={() => setNotificationShow(!notificationShow)}>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="icon icon-tabler icon-tabler-bell"
@@ -417,26 +473,7 @@ export default function HotelDashboardHome() {
                       </div>
                     </div>
                     <div
-                      className="mr-4 flex h-full w-20 cursor-pointer items-center justify-center border-r text-gray-600">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="icon icon-tabler icon-tabler-messages"
-                        width={28}
-                        height={28}
-                        viewBox="0 0 24 24"
-                        strokeWidth="1.5"
-                        stroke="currentColor"
-                        fill="none"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <path stroke="none" d="M0 0h24v24H0z" />
-                        <path d="M21 14l-3 -3h-7a1 1 0 0 1 -1 -1v-6a1 1 0 0 1 1 -1h9a1 1 0 0 1 1 1v10" />
-                        <path d="M14 15v2a1 1 0 0 1 -1 1h-7l-3 3v-10a1 1 0 0 1 1 -1h2" />
-                      </svg>
-                    </div>
-                    <div
-                      className="relative flex cursor-pointer items-center"
+                      className="relative flex cursor-pointer items-center ml-2"
                       onClick={() => setProfile(!profile)}
                     >
                       <div className="rounded-full">
@@ -560,6 +597,125 @@ export default function HotelDashboardHome() {
               {/* Remove class [ border-dashed border-2 border-gray-300 ] to remove dotted border */}
               <div className="h-full w-full rounded">
                 {/* Place your content here */}
+
+                {myNotifyModal && (<div>
+                  <div
+                    className="py-12 bg-gray-700 transition duration-150 ease-in-out z-10 absolute top-0 right-0 bottom-0 left-0"
+                    id="modal">
+                    <div role="alert" className="container mx-auto w-11/12 md:w-2/3 max-w-lg">
+                      <div className="relative py-8 px-5 md:px-10 bg-white shadow-md rounded border border-gray-400">
+                        <div className="w-full flex justify-start text-gray-600 mb-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-wallet"
+                               width={52} height={52} viewBox="0 0 24 24" strokeWidth={1} stroke="currentColor"
+                               fill="none" strokeLinecap="round" strokeLinejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <path
+                              d="M17 8v-3a1 1 0 0 0 -1 -1h-10a2 2 0 0 0 0 4h12a1 1 0 0 1 1 1v3m0 4v3a1 1 0 0 1 -1 1h-12a2 2 0 0 1 -2 -2v-12" />
+                            <path d="M20 12v4h-4a2 2 0 0 1 0 -4h4" />
+                          </svg>
+                        </div>
+                        <h1 className="text-gray-800 font-lg font-bold tracking-normal leading-tight mb-4">Hotel Booking
+                          Details</h1>
+
+                        <div className="flex mb-5">
+                          <div className="w-1/2 h-12 mr-2">
+                            <label htmlFor="name"
+                                   className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                              Check In Date
+                            </label>
+                            <input id="name"
+                                   value={myBookingHotel[0]?.checkInDate.split(".").join("-")}
+                                   type="date"
+                                   disabled={true}
+                                   className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                   placeholder="James" />
+                          </div>
+                          <div className="w-1/2 h-12">
+                            <label htmlFor="name"
+                                   className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                              Check Out Date
+                            </label>
+                            <input id="name"
+                                   value={myBookingHotel[0]?.checkOutDate.split(".").join("-")}
+                                   type="date"
+                                   disabled={true}
+                                   className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                   placeholder="James" />
+                          </div>
+                        </div>
+
+                        <label htmlFor="email2"
+                               className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                          No of Members
+                        </label>
+                        <div className="relative mb-3 mt-2">
+                          <input id="email2"
+                                 className="text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-4 text-sm border-gray-300 rounded border"
+                                 disabled={true}
+                                 value={myBookingHotel[0]?.noOfMembers} />
+                        </div>
+
+                        <div className="flex mb-5">
+                          <div className="w-1/2 h-12 mr-2">
+                            <label htmlFor="name"
+                                   className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                              Paid Amount
+                            </label>
+                            <input id="name"
+                                   value={myBookingHotel[0]?.paidAmount}
+                                   type="text"
+                                   disabled={true}
+                                   className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                   placeholder="James" />
+                          </div>
+                          <div className="w-1/2 h-12">
+                            <label htmlFor="name"
+                                   className="text-gray-800 text-sm font-bold leading-tight tracking-normal">
+                              Fully Payment Amount
+                            </label>
+                            <input id="name"
+                                   value={myBookingHotel[0]?.fullPayment}
+                                   type="text"
+                                   disabled={true}
+                                   className="mb-5 mt-2 text-gray-600 focus:outline-none focus:border focus:border-indigo-700 font-normal w-full h-10 flex items-center pl-3 text-sm border-gray-300 rounded border"
+                                   placeholder="James" />
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-center w-full">
+                          <button
+                            type="button"
+                            onClick={handleAccept}
+                            className="focus:outline-none transition duration-150 ease-in-out hover:bg-indigo-600 bg-green-700 rounded text-white px-8 py-2 text-sm">Accept
+                          </button>
+                          <button
+                            className="focus:outline-none ml-3 bg-red-700 transition duration-150 text-white ease-in-out hover:border-gray-400 hover:bg-gray-300 border rounded px-8 py-2 text-sm"
+                            onClick="modalHandler()">
+                            Reject
+                          </button>
+                        </div>
+                        <div
+                          className="cursor-pointer absolute top-0 right-0 text-gray-400 hover:text-gray-300 transition duration-150 ease-in-out m-3"
+                          onClick={() => setMyNotifyModal(false)}>
+                          <svg xmlns="http://www.w3.org/2000/svg" aria-label="Close"
+                               className="icon icon-tabler icon-tabler-x" width={20} height={20} viewBox="0 0 24 24"
+                               strokeWidth="2.5" stroke="currentColor" fill="none" strokeLinecap="round"
+                               strokeLinejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" />
+                            <line x1={18} y1={6} x2={6} y2={18} />
+                            <line x1={6} y1={6} x2={18} y2={18} />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-full flex justify-center py-12" id="button">
+                    <button
+                      className="focus:outline-none mx-auto transition duration-150 ease-in-out hover:bg-indigo-600 bg-indigo-700 rounded text-white px-4 sm:px-8 py-2 text-xs sm:text-sm"
+                      onClick="modalHandler(true)">
+                      Open Modal
+                    </button>
+                  </div>
+                </div>)}
                 <Outlet />
               </div>
             </div>

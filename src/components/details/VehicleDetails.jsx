@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
 import vehicleVideo from "../../assets/videos/vehicleVideo.mp4";
-import avatar from "../../assets/images/avatar/avatar.png";
-import DatePicker from "react-datepicker";
+import { fetchVehicles } from "../../redux/store/vehiclesSlice";
 
 const VehicleDetails = () => {
   const { id } = useParams();
@@ -11,10 +10,33 @@ const VehicleDetails = () => {
   const [startDate, setStartDate] = useState(new Date());
   const { appUser } = useSelector((state) => state.appUser);
   const { vehicles } = useSelector((state) => state.vehicles);
+  const driver = localStorage.getItem("driver");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const vehicle = vehicles.filter(({ vehicleId }) => {
     return vehicleId.toString() === id;
   });
+
+  let user = JSON.parse(localStorage.getItem("user"));
+
+  const handleBooking = () => {
+    if (!user || user.userType !== "tourist") {
+      navigate("/auth/login");
+    } else {
+      navigate("/checking");
+    }
+  };
+
+
+  console.log(vehicle[0]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(fetchVehicles());
+    };
+  }, [dispatch]);
+
 
   return (
     <div>
@@ -93,7 +115,7 @@ const VehicleDetails = () => {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setShowModal(true)}
+                    onClick={handleBooking}
                     className="
 						flex w-full items-center justify-center
 						bg-gray-800
@@ -158,119 +180,98 @@ const VehicleDetails = () => {
         </div>
       </div>
 
-      {showModal && (
-        <div className="shadow-lg">
-          <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
-            <div className="p-2 rounded w-75">
-              <div className="my-5">
-                <div className="row">
-                  <div className="col-md-10 mx-auto col-12 card border-0 p-4">
-                    <div>
-                      <h1 className="text-3xl text-black align-middle my-2 text-center">Vehicle Booking</h1>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-4 col-12 my-auto">
-                        <img
-                          src={vehicle[0].vehiclePhotoUrl}
-                          alt="selected room" />
-                      </div>
-                      <div className="col-md-8 col-12">
-                        <table className="table">
-                          <thead className="thead-light">
-                          <tr>
-                            <th className="my-auto">Driver</th>
-                            <td>
-                              <div
-                                className="relative flex cursor-pointer items-center"
-                              >
-                                <div className="relative flex cursor-pointer items-center">
-                                  <div className="rounded-full">
-                                    <div className="relative">
-                                      <img
-                                        className="h-10 w-10 rounded-full object-cover"
-                                        src={appUser.userPhotoUrl || avatar}
-                                        alt="avatar"
-                                      />
-                                      <div
-                                        className="absolute inset-0 m-auto mb-0 mr-0 h-2 w-2 rounded-full border border-white bg-green-400" />
-                                    </div>
-                                  </div>
-                                  <p className="mx-3 text-sm text-black"> {appUser.name} </p>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <th>Vehicle Modal</th>
-                            <td> {vehicle[0].vehicleModal} </td>
-                          </tr>
-                          <tr>
-                            <th>Vehicle Type</th>
-                            <td>{vehicle[0].vehicleType}</td>
-                          </tr>
-                          <tr>
-                            <th>Price Per Km</th>
-                            <td>{vehicle[0].priceForKm}</td>
-                          </tr>
-                          <tr>
-                            <th>Ratings</th>
-                            <td>4.2/5</td>
-                          </tr>
-                          </thead>
-                        </table>
-                      </div>
-                    </div>
-                    <div className="row my-3">
-                      <div className="col-md-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="Fromdate" className="font-weight-bolder mr-3">From Date </label>
-                          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                      className="form-control" disabled/>
-                        </div>
+      {/*{showModal && (*/}
+      {/*  <div className="shadow-lg">*/}
+      {/*    <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">*/}
+      {/*      <div className="p-2 rounded w-75">*/}
+      {/*        <div className="my-5">*/}
+      {/*          <div className="row">*/}
+      {/*            <div className="col-md-10 mx-auto col-12 card border-0 p-4">*/}
+      {/*              <div>*/}
+      {/*                <h1 className="text-3xl text-black align-middle my-2 text-center">Vehicle Booking</h1>*/}
+      {/*              </div>*/}
+      {/*              <div className="row">*/}
+      {/*                <div className="col-md-4 col-12 my-auto">*/}
+      {/*                  <img*/}
+      {/*                    src={vehicle[0].vehiclePhotoUrl}*/}
+      {/*                    alt="selected room" />*/}
+      {/*                </div>*/}
+      {/*                <div className="col-md-8 col-12">*/}
+      {/*                  <table className="table">*/}
+      {/*                    <thead className="thead-light">*/}
+      {/*                    <tr>*/}
+      {/*                      <th>Vehicle Modal</th>*/}
+      {/*                      <td> {vehicle[0].vehicleModal} </td>*/}
+      {/*                    </tr>*/}
+      {/*                    <tr>*/}
+      {/*                      <th>Vehicle Type</th>*/}
+      {/*                      <td>{vehicle[0].vehicleType}</td>*/}
+      {/*                    </tr>*/}
+      {/*                    <tr>*/}
+      {/*                      <th>Price Per Km</th>*/}
+      {/*                      <td>{vehicle[0].priceForKm}</td>*/}
+      {/*                    </tr>*/}
+      {/*                    <tr>*/}
+      {/*                      <th>Ratings</th>*/}
+      {/*                      <td>4.2/5</td>*/}
+      {/*                    </tr>*/}
+      {/*                    </thead>*/}
+      {/*                  </table>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <div className="row my-3">*/}
+      {/*                <div className="col-md-6 col-12">*/}
+      {/*                  <div className="form-group">*/}
+      {/*                    <label htmlFor="Fromdate" className="font-weight-bolder mr-3">From Date </label>*/}
+      {/*                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}*/}
+      {/*                                className="form-control" disabled/>*/}
+      {/*                  </div>*/}
 
-                      </div>
-                      <div className="col-md-6 col-12">
-                        <div className="form-group">
-                          <label htmlFor="Todate" className="font-weight-bolder mr-3">To Date </label>
-                          <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}
-                                      className="form-control"  disabled/>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6 col-12">
-                        <h6 className="font-weight-bolder my-2">Number of days : 0</h6>
-                        <mark>Please make sure Checkin time is from 9 am to 12 pm</mark>
-                      </div>
-                      <div className="col-md-6 col-12">
-                        <h6 className="font-weight-bold my-2">Price per day : <span
-                          className="badge badge-info">Rs 1000</span>
-                        </h6>
-                        <h6 className="font-weight-bold">Total Price to be paid : <span
-                          className="text-primary">Rs 1400</span></h6>
-                      </div>
-                    </div>
+      {/*                </div>*/}
+      {/*                <div className="col-md-6 col-12">*/}
+      {/*                  <div className="form-group">*/}
+      {/*                    <label htmlFor="Todate" className="font-weight-bolder mr-3">To Date </label>*/}
+      {/*                    <DatePicker selected={startDate} onChange={(date) => setStartDate(date)}*/}
+      {/*                                className="form-control"  disabled/>*/}
+      {/*                  </div>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*              <div className="row">*/}
+      {/*                <div className="col-md-6 col-12">*/}
+      {/*                  <h6 className="font-weight-bolder my-2">Number of days : 0</h6>*/}
+      {/*                  <mark>Please make sure Checkin time is from 9 am to 12 pm</mark>*/}
+      {/*                </div>*/}
+      {/*                <div className="col-md-6 col-12">*/}
+      {/*                  <h6 className="font-weight-bold my-2">Price per day : <span*/}
+      {/*                    className="badge badge-info">Rs 1000</span>*/}
+      {/*                  </h6>*/}
+      {/*                  <h6 className="font-weight-bold">Total Price to be paid : <span*/}
+      {/*                    className="text-primary">Rs 1400</span></h6>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
 
-                    <div className="py-4 flex">
-                      <div className="w-1/2"></div>
-                      <div className="w-1/2">
-                        <button type="submit"
-                                onClick={() => setShowModal(false)}
-                                className="bg-yellow-500 text-white p-2 ml-6 rounded text-sm w-auto float-right ">
-                          Cancel
-                        </button>
-                        <button  type="submit" className="bg-gray-500 text-white p-2 rounded text-sm w-auto float-right">
-                          Confirm Booking
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {/*              <div className="py-4 flex">*/}
+      {/*                <div className="w-1/2"></div>*/}
+      {/*                <div className="w-1/2">*/}
+      {/*                  <button type="submit"*/}
+      {/*                          onClick={() => setShowModal(false)}*/}
+      {/*                          className="bg-yellow-500 text-white p-2 ml-6 rounded text-sm w-auto float-right ">*/}
+      {/*                    Cancel*/}
+      {/*                  </button>*/}
+      {/*                  <Link to="/booking/main">*/}
+      {/*                    <button  type="submit" className="bg-gray-500 text-white p-2 rounded text-sm w-auto float-right">*/}
+      {/*                      Confirm Booking*/}
+      {/*                    </button>*/}
+      {/*                  </Link>*/}
+      {/*                </div>*/}
+      {/*              </div>*/}
+      {/*            </div>*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      {/*  </div>*/}
+      {/*)}*/}
     </div>
   );
 

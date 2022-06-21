@@ -1,11 +1,8 @@
-import React, { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchGuides } from "../../redux/store/guidesSlice";
 import img from "../../assets/images/guide.jpg";
-import { fetchAvailableGuides } from "../../redux/store/availableGuideSlice";
 import { fetchAvailableDrivers } from "../../redux/store/availableDriverSlice";
-import { useState } from "react";
 
 const DriverBooking = () => {
   const { availableDrivers } = useSelector((state) => state.availableDrivers);
@@ -25,6 +22,22 @@ const DriverBooking = () => {
     <div>
       <div className="absolute top-0 h-20 w-full bg-black">
       </div>
+      <nav aria-label="breadcrumb" className="bg-custom-light rounded px-4 pt-24 ">
+        <ol className="breadcrumb mb-0">
+          <li className="breadcrumb-item">
+            <Link
+              className="text-decoration-none link-secondary"
+              to="/vehicle"
+              replace
+            >
+              Booking
+            </Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            Drivers
+          </li>
+        </ol>
+      </nav>
       {showModal && (
         <div className="shadow-lg">
           <div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex items-center justify-center">
@@ -48,13 +61,10 @@ const DriverBooking = () => {
                 {/* Modal body */}
                 <div className="p-6 space-y-6">
                   <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    With less than a month to go before the European Union enacts new consumer privacy laws for its
-                    citizens, companies around the world are updating their terms of service agreements to comply.
-                  </p>
-                  <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is
-                    meant to ensure a common set of data rights in the European Union. It requires organizations to
-                    notify users as soon as possible of high-risk data breaches that could personally affect them.
+                    When you are select a Driver for your tour make sure to check her/his price, rating, and language
+                    that guide fluent with.
+                    After selecting a guide according to your needs, click Select Guide button to Confirm your
+                    Selection.
                   </p>
                 </div>
                 {/* Modal footer */}
@@ -63,7 +73,7 @@ const DriverBooking = () => {
           </div>
         </div>
       )}
-      <div className="pt-24 px-2">
+      <div className="pt-4 px-3">
         <>
           <div
             id="alert-additional-content-5"
@@ -87,16 +97,11 @@ const DriverBooking = () => {
                 This is a dark alert
               </h3>
             </div>
-            <div className="mt-2 mb-4 text-sm text-gray-700 dark:text-gray-300">
-              More info about this info dark goes here. This example text is going to
-              run a bit longer so that you can see how spacing within an alert works
-              with this kind of content.
-            </div>
             <div className="flex">
               <button
                 type="button"
                 onClick={() => setShowModal(true)}
-                className="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600"
+                className="text-white mt-3 bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-xs px-3 py-1.5 mr-2 text-center inline-flex items-center dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-600"
               >
                 <svg
                   className="-ml-0.5 mr-2 h-4 w-4"
@@ -118,43 +123,49 @@ const DriverBooking = () => {
         </>
       </div>
 
-      <div className="mx-auto px-4 sm:px-6 lg:px-4 py-12">
-        <div className="text-center pb-12">
+      <div className="mx-auto px-5 sm:px-6 lg:px-4 pt-3">
+
+        <div className="flex mb-4">
+          <div className="w-1/2 h-12" ></div>
+          <div className="w-1/2 h-12" >
+            <div className="absolute right-4"><Link to="/booking/main">
+              <button
+                className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600">
+                SKIP DRIVERS & CONTINUE YOUR BOOKING <i className="bi bi-arrow-right ml-2"></i>
+              </button>
+            </Link></div>
+          </div>
         </div>
+        <h1 className="text-3xl font-bold text-center py-4">Driver Booking</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {availableDrivers.length !== 0 && (
             availableDrivers.map((driver) => (
-              <div className="no-underline cursor-pointer" key={driver.userId}>
+              <div className="no-underline cursor-pointer"
+                   key={driver.userId}>
                 <div
-                  className="w-full bg-white rounded-lg sahdow-lg overflow-hidden flex flex-col justify-center items-center">
-                  <div>
-                    <img className="object-center object-cover w-[350px] h-[300px]"
-                         src={driver.userPhotoUrl ? driver.userPhotoUrl : img}
-                         alt="photo" />
+                  className="max-w-sm bg-white shadow-2xl rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+
+                  <img className="rounded-t-lg h-56 w-full object-cover"
+                       src={driver.userPhotoUrl ? driver.userPhotoUrl : img} alt="" />
+                  <div className="p-5 text-center">
+                    <div>
+                      <h5
+                        className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-black">{driver.name}</h5>
+                    </div>
+                    <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">{driver.email}</p>
+                    <Link to="/booking/vehicle">
+                      <button onClick={event => onclick(event, driver.userId)}
+                              className="inline-flex items-center py-2 px-3 text-sm font-medium text-center text-white bg-black rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        Check Vehicles Belongs to Me
+                      </button>
+                    </Link>
                   </div>
-                  <div className="text-center py-8 sm:py-6">
-                    <p className="text-xl text-gray-700 font-bold mb-2">Name - {driver.name}</p>
-                    <p className="text-base text-gray-400 font-normal">Email - {driver.email}</p>
-                    <p className="text-base text-gray-400 font-normal">Rating - {driver.rating}</p>
-                  </div>
-                  <Link to="/booking/vehicle">
-                    <button
-                      className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600"
-                      onClick={event => onclick(event, driver.userId)}>
-                      SELECT
-                    </button>
-                  </Link>
                 </div>
               </div>
             ))
           )}
         </div>
-        <Link to="/booking/main">
-          <button
-            className="flex rounded-md bg-blue-500 py-2 px-4 text-white transition-all duration-150 ease-in-out hover:bg-blue-600">
-            NEXT
-          </button>
-        </Link>
+
       </div>
     </div>
   );

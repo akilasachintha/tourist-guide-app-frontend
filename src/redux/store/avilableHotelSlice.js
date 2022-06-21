@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice, getType } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import touristGuideAppAPI from "../../apis/touristGuideAppAPI";
 
 export const fetchAvailableHotels = createAsyncThunk(
@@ -15,7 +15,9 @@ export const fetchAvailableHotels = createAsyncThunk(
       const response = await touristGuideAppAPI.get("/hotel/hotelRoom/getAvailableHotels", {
         params: { type: gettype, amount: getamount,startCount : checkIn.toString() }
       });
+      console.log(response.data);
       return response.data;
+
     } catch (error) {
       console.log(error.response.body);
     }

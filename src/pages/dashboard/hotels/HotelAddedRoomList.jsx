@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
-const PER_PAGE = 6;
+const PER_PAGE = 5;
 
 const HotelAddedRoomList = () => {
   const { hotels } = useSelector((state) => state.hotels);
@@ -17,7 +17,7 @@ const HotelAddedRoomList = () => {
   };
 
   const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil((hotelRooms ? hotels.length : 0) / PER_PAGE);
+  const pageCount = Math.ceil(hotelRooms.length / PER_PAGE);
 
   const currentPageData = hotelRooms
     .slice(offset, offset + PER_PAGE)
@@ -239,42 +239,10 @@ const HotelAddedRoomList = () => {
         </td>
         <td className="pl-5">
           <button className="rounded bg-red-100 py-3 px-3 text-sm leading-none text-red-700 focus:outline-none">
-            Status
+            {hotelRoom.adminStatus}
           </button>
         </td>
         <td className="pl-4">
-          {/*<Link to="./:id">*/}
-          {/*  <button className="rounded bg-gray-100 py-3 px-5 text-sm leading-none text-gray-600 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-offset-2">*/}
-          {/*    View*/}
-          {/*  </button>*/}
-          {/*</Link>*/}
-        </td>
-        <td>
-          <div className="col col-5" data-label="">
-            <div className="btn-group dropstart" role="group">
-              <button
-                type="button"
-                className="bi bi-three-dots-vertical dropdown-btn"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              ></button>
-              <ul className="dropdown-menu">
-                <li className="list-item">
-                  <button className="dropdown-item" type="button">
-                    <i className="bi bi-pencil"></i> Edit
-                  </button>
-                </li>
-                {<li
-                  className="list-item"
-
-                >
-                  <button className="dropdown-item icon-red" type="button">
-                    <i className="bi bi-trash"></i> Delete
-                  </button>
-                </li>}
-              </ul>
-            </div>
-          </div>
         </td>
       </tr>
     ));

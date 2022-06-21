@@ -3,16 +3,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import img1 from "../../assets/images/cards/img-2.jpg";
 
 
-import {
-  faCircleArrowLeft,
-  faCircleArrowRight,
-  faCircleXmark,
-  faLocationDot
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 
 
 const HotelDetails = () => {
@@ -21,13 +16,10 @@ const HotelDetails = () => {
   const { hotels } = useSelector((state) => state.hotels);
   const { id } = useParams();
 
-
-
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
   };
-
   const handleMove = (direction) => {
     let newSlideNumber;
 
@@ -36,7 +28,6 @@ const HotelDetails = () => {
     } else {
       newSlideNumber = slideNumber === 5 ? 0 : slideNumber + 1;
     }
-
     setSlideNumber(newSlideNumber);
   };
 
@@ -44,10 +35,10 @@ const HotelDetails = () => {
     return hotelId.toString() === id;
   });
 
-
-
   return (
     <div>
+      <div className="navlist">
+      </div>
       {hotels.length !== 0 && (<div className="hotelContainer">
         {open && (
           <div className="slider">
@@ -109,13 +100,6 @@ const HotelDetails = () => {
               <span>
                   Welcome to travelmate Hotel Booking
                 </span>
-              <h2>
-                <b></b>
-              </h2>
-              <Link to="./bookingform">
-                <button>Book This Hotel</button>
-              </Link>
-
             </div>
           </div>
         </div>

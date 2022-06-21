@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import beachVideo2 from "../../assets/videos/beachVideo2.mp4";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleArrowLeft, faCircleArrowRight, faCircleXmark } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,7 @@ const LocationDetails = () => {
   const { id } = useParams();
   const [open, setOpen] = useState(false);
   const { locations } = useSelector((state) => state.locations);
+  const navigate = useNavigate();
 
   const location = locations.filter(({ locationId }) => {
     return locationId.toString() === id;
@@ -21,8 +22,16 @@ const LocationDetails = () => {
     setOpen(true);
   };
 
-  localStorage.setItem('location',id);
+  localStorage.setItem("location", id);
+  let user = JSON.parse(localStorage.getItem("user"));
 
+  const handleBooking = () => {
+    if (!user || user.userType !== "tourist") {
+      navigate("/auth/login");
+    }else{
+      navigate("/checking");
+    }
+  };
 
   const handleMove = (direction) => {
     let newSlideNumber;
@@ -131,8 +140,9 @@ const LocationDetails = () => {
                       <p className="text-sm leading-none">{location[0].town}</p>
                     </div>
                   </div>
-                  <Link
-                    to="/checking"
+                  <button
+                    type="button"
+                    onClick={handleBooking}
                     className="
 						flex w-full items-center justify-center
 						bg-gray-800
@@ -185,7 +195,7 @@ const LocationDetails = () => {
                       />
                     </svg>
                     Book a Hotel Near to Location
-                  </Link>
+                  </button>
                   <div>
                     <p className="mt-7 text-base leading-normal lg:leading-tight">
                       {location[0].description}

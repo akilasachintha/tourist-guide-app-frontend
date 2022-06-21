@@ -33,12 +33,8 @@ const Navbar = () => {
 
   const navItems = [
     {
-      name: "Home",
-      path: "/"
-    },
-    {
       name: "Destinations",
-      path: "/locations"
+      path: "/"
     },
     {
       name: "Hotels",

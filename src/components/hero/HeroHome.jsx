@@ -20,12 +20,14 @@ const HeroHome = () => {
           <h2 className="py-6 text-2xl">What are you waiting for?</h2>
           <div className="my-2 flex items-center justify-center">
             <Link to="/locations">
-              <button className="mx-2 rounded-md border border-white bg-transparent px-8 py-3 text-lg text-white transition duration-150 ease-in-out hover:border-white hover:bg-white hover:text-black">
+              <button
+                className="mx-2 rounded-md border border-white bg-transparent px-8 py-3 text-lg text-white transition duration-150 ease-in-out hover:border-white hover:bg-white hover:text-black">
                 Get Started
               </button>
             </Link>
-            <button className="mx-2 rounded-md border border-white bg-white px-8 py-3 text-lg text-black transition duration-150 ease-in-out hover:border-white hover:bg-transparent hover:text-white">
-              Watch Trailer <BsPlayCircle className="inline" size={24} />
+            <button
+              className="mx-2 rounded-md border border-white bg-white px-8 py-3 text-lg text-black transition duration-150 ease-in-out hover:border-white hover:bg-transparent hover:text-white">
+              Register <BsPlayCircle className="inline" size={24} />
             </button>
           </div>
         </div>

@@ -156,49 +156,49 @@ function VehicleList() {
         </div>
 
         <div className="row mt-lg-3 mb-4">
-          <div className="d-none d-lg-block col-lg-3">
-            <div className="rounded border shadow-sm">
-              <FilterMenuLeft />
-            </div>
-          </div>
-          <div className="col-lg-9">
+          {/*<div className="d-none d-lg-block col-lg-3">*/}
+          {/*  <div className="rounded border shadow-sm">*/}
+          {/*    <FilterMenuLeft />*/}
+          {/*  </div>*/}
+          {/*</div>*/}
+          <div className="col-lg-12">
             <div className="d-flex flex-column h-100">
-              <div className="row mb-3">
-                <div className="col-lg-3 d-none d-lg-block">
-                  <select
-                    className="form-select"
-                    aria-label="Default select example"
-                    defaultValue=""
-                  >
-                    {categories.map((categoty, index) => (
-                      <option value="" key={index}>
-                        {categoty}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="col-lg-9 col-xl-5 offset-xl-4 d-flex flex-row">
-                  <div className="input-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      placeholder="Search Vehicles..."
-                      aria-label="search input"
-                    />
-                    <button className="btn btn-dark"><i className="bi bi-search"></i></button>
-                  </div>
-                  <button
-                    className="btn btn-dark ms-2 d-none d-lg-inline"
-                    onClick={changeViewType}
-                  >
-                    <i className="bi bi-arrow-down-square"></i>
-                  </button>
-                </div>
-              </div>
+              {/*<div className="row mb-3">*/}
+              {/*  /!*<div className="col-lg-3 d-none d-lg-block">*!/*/}
+              {/*  /!*  <select*!/*/}
+              {/*  /!*    className="form-select"*!/*/}
+              {/*  /!*    aria-label="Default select example"*!/*/}
+              {/*  /!*    defaultValue=""*!/*/}
+              {/*  /!*  >*!/*/}
+              {/*  /!*    {categories.map((categoty, index) => (*!/*/}
+              {/*  /!*      <option value="" key={index}>*!/*/}
+              {/*  /!*        {categoty}*!/*/}
+              {/*  /!*      </option>*!/*/}
+              {/*  /!*    ))}*!/*/}
+              {/*  /!*  </select>*!/*/}
+              {/*  /!*</div>*!/*/}
+              {/*  <div className="col-lg-9 col-xl-5 offset-xl-4 d-flex flex-row">*/}
+              {/*    <div className="input-group">*/}
+              {/*      <input*/}
+              {/*        className="form-control"*/}
+              {/*        type="text"*/}
+              {/*        placeholder="Search Vehicles..."*/}
+              {/*        aria-label="search input"*/}
+              {/*      />*/}
+              {/*      <button className="btn btn-dark"><i className="bi bi-search"></i></button>*/}
+              {/*    </div>*/}
+              {/*    <button*/}
+              {/*      className="btn btn-dark ms-2 d-none d-lg-inline"*/}
+              {/*      onClick={changeViewType}*/}
+              {/*    >*/}
+              {/*      <i className="bi bi-arrow-down-square"></i>*/}
+              {/*    </button>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
               <div
                 className={
-                  "row row-cols-1 row-cols-md-2 row-cols-lg-2 g-3 mb-4 flex-shrink-0 " +
-                  (viewType.grid ? "row-cols-xl-3" : "row-cols-xl-2")
+                  "row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4 mb-4 flex-shrink-0 " +
+                  (viewType.grid ? "row-cols-xl-4" : "row-cols-xl-2")
                 }
               >
 

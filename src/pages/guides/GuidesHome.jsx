@@ -3,6 +3,7 @@ import { fetchGuides } from "../../redux/store/guidesSlice";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import img from "../../assets/images/guide.jpg";
+import React from "react";
 
 function GuidesHome() {
   const { guides } = useSelector((state) => state.guides);
@@ -17,6 +18,8 @@ function GuidesHome() {
 
   return (
     <div>
+      <div className="navlist">
+      </div>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-4 py-12">
         <div className="text-center pb-12">
         </div>
